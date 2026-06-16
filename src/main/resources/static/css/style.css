@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background:#f4f7fb;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.custom-navbar{
+    background: linear-gradient(
+            135deg,
+            #1e3a8a,
+            #2563eb,
+            #3b82f6
+    );
+}
+
+.footer{
+    background: linear-gradient(
+            135deg,
+            #1e3a8a,
+            #2563eb,
+            #3b82f6
+    );
+
+    color:white;
+}
+
+.main-content{
+    min-height:80vh;
+}

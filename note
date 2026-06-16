@@ -110,3 +110,52 @@ Movie
   Movie     1 - N Showtime
   Room      1 - N Showtime
   Showtime  1 - N Booking
+
+
+CORE-01: Đăng ký, đăng nhập. Mật khẩu lưu trong database bắt buộc phải được băm (hash) bảo mật.
+
+USER
+Đăng ký
+Đăng nhập
+Xem phim
+Xem suất chiếu
+Đặt vé
+Hủy vé
+Xem lịch sử mua vé
+Xem hồ sơ cá nhân
+
+STAFF
+Đăng nhập
+Xem hồ sơ cá nhân
+Tra cứu đơn hàng
+Xác nhận thanh toán
+In vé giấy
+
+
+ADMIN
+Đăng nhập
+Xem hồ sơ cá nhân
+CRUD Phim
+CRUD Suất chiếu
+Quản lý phòng chiếu
+Xem báo cáo doanh thu
+
+GIAO DIỆN:
+templates
+│
+├── auth
+│   ├── login.html
+│   └── register.html
+│
+├── profile
+│   ├── profile.html
+│   ├── edit-profile.html
+│   └── change-password.html
+│
+├── home
+│   └── index.html
+│
+└── layouts
+    ├── header.html
+    ├── footer.html
+    └── navbar.html
