@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,4 +62,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;
+
+    //dùng confirmPassword cho register form
+    @Transient
+    private String confirmPassword;
 }

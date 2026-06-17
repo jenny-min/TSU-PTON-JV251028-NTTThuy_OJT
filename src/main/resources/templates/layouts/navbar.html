@@ -1,0 +1,25 @@
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">
+            My Smart Cinema
+        </a>
+
+        <div class="ms-auto">
+
+            <div class="dropdown">
+                <button class="btn btn btn-outline-light me-2 dropdown-toggle"
+                        data-bs-toggle="dropdown">
+               <span class="me-3">
+                    Xin chào, <b th:text="${username}"></b>
+                </span>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="/profile">Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</nav>

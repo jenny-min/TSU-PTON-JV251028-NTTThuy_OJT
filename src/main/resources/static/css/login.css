@@ -8,10 +8,10 @@
 .auth-card{
     width:420px;
     background:white;
-    padding:40px;
     border-radius:20px;
-    box-shadow:
-            0 15px 35px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    margin: 80px auto;
+    padding: 30px;
 }
 
 .auth-card h2{

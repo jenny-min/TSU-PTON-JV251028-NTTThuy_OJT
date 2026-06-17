@@ -32,3 +32,27 @@ body{
 .main-content{
     min-height:80vh;
 }
+
+.dashboard-container {
+    padding: 30px;
+}
+
+.card-box {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.2s;
+}
+
+.card-box:hover {
+    transform: translateY(-3px);
+}
+
+.welcome {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.error-text {
+    font-size: 13px;
+    color: red;
+}
