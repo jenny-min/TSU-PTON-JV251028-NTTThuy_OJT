@@ -159,3 +159,18 @@ templates
     ├── header.html
     ├── footer.html
     └── navbar.html
+
+CORE-2: Kiểm soát truy cập.
+Khách hàng không được vào trang của Nhân viên rạp;
+Nhân viên rạp không được vào trang cấu hình của Admin.
+USER:
+  /home
+  /profile
+
+STAFF:
+  /staff/movies
+  /staff/bookings
+
+ADMIN:
+  /admin/users
+  /admin/config

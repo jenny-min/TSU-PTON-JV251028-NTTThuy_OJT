@@ -22,7 +22,20 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
+                        // public
                         .requestMatchers("/login", "/register", "/css/**").permitAll()
+
+                        // USER + STAFF + ADMIN
+                        .requestMatchers("/home").hasAnyRole("USER", "STAFF", "ADMIN")
+
+                        // STAFF area (rạp phim)
+                        .requestMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
+
+                        // ADMIN
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("USER", "STAFF", "ADMIN")
+
+                        // còn lại phải login
                         .anyRequest().authenticated()
                 )
 
