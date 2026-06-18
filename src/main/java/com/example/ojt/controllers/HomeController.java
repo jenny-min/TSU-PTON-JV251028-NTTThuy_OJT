@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @GetMapping("/home")
     public String home(Model model, Authentication authentication) {
-
-        model.addAttribute("username", authentication.getName());
-
-        return "/home/dashboard";
+        if (authentication != null) {
+            model.addAttribute("username", authentication.getName());
+        }
+        return "home/index";
     }
 }

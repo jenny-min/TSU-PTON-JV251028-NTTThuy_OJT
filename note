@@ -174,3 +174,68 @@ STAFF:
 ADMIN:
   /admin/users
   /admin/config
+
+
+CORE 3: Quản lý Hồ sơ cá nhân (Profile) cho từng loại người dùng
+
+USER
+Xem hồ sơ cá nhân
+Cập nhật thông tin cá nhân
+
+/user/dashboard
+
+- Xem phim
+- Đặt vé
+- Chọn ghế
+- Hủy vé
+- Lịch sử mua vé
+
+STAFF
+Xem hồ sơ nhân viên
+Cập nhật thông tin được phép sửa
+
+/staff/dashboard
+
+- Kiểm tra vé
+- Xuất vé tại quầy
+
+
+ADMIN
+Xem hồ sơ Admin
+Cập nhật thông tin cá nhân
+
+/admin/dashboard
+
+- Quản lý phim
+- Quản lý lịch chiếu
+- Báo cáo doanh thu
+- Quản lý người dùng
+
+controller/
+ └── ProfileController
+
+service/
+ └── UserService
+
+dto/
+ ├── UpdateProfileRequest
+ └── ChangePasswordRequest
+
+ templates/
+ ├── layouts/
+ │   ├── admin-layout.html
+ │   ├── staff-layout.html
+ │   └── user-layout.html
+ |
+ ├── profile/
+ │   └── index.html
+ |   └── change-password.html (nâng cao)
+ │
+ ├── admin/
+ │   └── dashboard.html
+ │
+ ├── staff/
+ │   └── dashboard.html
+ │
+ └── user/
+     └── dashboard.html

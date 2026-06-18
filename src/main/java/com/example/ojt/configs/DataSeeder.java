@@ -37,6 +37,16 @@ public class DataSeeder implements CommandLineRunner {
 
             ur.save(user);
 
+            User staff = User.builder()
+                    .username("staff")
+                    .password(passwordEncoder.encode("staff123"))
+                    .fullName("Staff")
+                    .email("staff@gmail.com")
+                    .role(Role.STAFF)
+                    .build();
+
+            ur.save(staff);
+
         }
     }
 }

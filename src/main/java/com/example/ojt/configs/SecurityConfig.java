@@ -1,5 +1,6 @@
 package com.example.ojt.configs;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -9,7 +10,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final CustomAuthenticationSuccessHandler successHandler;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -23,16 +27,18 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         // public
-                        .requestMatchers("/login", "/register", "/css/**").permitAll()
+                        .requestMatchers("/login", "/register", "/css/**", "/home", "/").permitAll()
 
-                        // USER + STAFF + ADMIN
-                        .requestMatchers("/home").hasAnyRole("USER", "STAFF", "ADMIN")
+                        //profile
+                        .requestMatchers("/profile/**").hasAnyRole("USER","STAFF","ADMIN")
 
                         // STAFF area (rạp phim)
                         .requestMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
 
                         // ADMIN
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        //USER
                         .requestMatchers("/user/**").hasAnyRole("USER", "STAFF", "ADMIN")
 
                         // còn lại phải login
@@ -42,8 +48,9 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .successHandler(successHandler)
                         .failureUrl("/login?error")
+                        .permitAll()
                 )
 
                 .logout(logout -> logout

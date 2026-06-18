@@ -1,7 +1,6 @@
 package com.example.ojt.controllers;
 
 import com.example.ojt.dtos.requests.RegisterRequest;
-import com.example.ojt.entities.User;
 import com.example.ojt.repositories.UserRepository;
 import com.example.ojt.roles.Gender;
 import com.example.ojt.services.AuthService;
