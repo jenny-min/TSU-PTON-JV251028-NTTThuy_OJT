@@ -1,19 +1,25 @@
 package com.example.ojt.controllers;
 
 import com.example.ojt.entities.User;
+import com.example.ojt.services.CustomUserDetails;
 import com.example.ojt.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping
@@ -61,7 +67,7 @@ public class ProfileController {
                     "error",
                     "Mật khẩu hiện tại không đúng");
 
-            return "redirect:/change-password";
+            return "redirect:/profile/change-password";
         }
 
         if (!newPassword.equals(confirmPassword)) {
@@ -70,7 +76,7 @@ public class ProfileController {
                     "error",
                     "Xác nhận mật khẩu không khớp");
 
-            return "redirect:/change-password";
+            return "redirect:/profile/change-password";
         }
 
         user.setPassword(
@@ -83,5 +89,35 @@ public class ProfileController {
                 "Đổi mật khẩu thành công");
 
         return "redirect:/profile";
+    }
+
+    @PostMapping("/profile/update")
+    public String updateProfile(
+            @AuthenticationPrincipal CustomUserDetails principal,
+            @ModelAttribute User user,
+            @RequestParam("avatarFile") MultipartFile file
+    ) throws IOException {
+
+        user.setId(principal.getUser().getId());
+
+        if (!file.isEmpty()) {
+
+            String fileName =
+                    UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+            Path uploadPath =
+                    Paths.get("uploads/avatars");
+
+            Files.createDirectories(uploadPath);
+
+            file.transferTo(
+                    uploadPath.resolve(fileName)
+            );
+
+            user.setAvatarUrl("/uploads/avatars/" + fileName);
+        }
+        us.updateProfile(user);
+
+        return "redirect:/dashboard";
     }
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Error 500</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white flex items-center justify-center h-screen">
+<div class="text-center">
+    <h1 class="text-4xl font-bold">403</h1>
+    <p>Bạn không có quyền truy cập trang này</p>
+    <a th:href="@{/home}" class="text-red-400">Quay về trang chủ</a>
+</div>
+</body>
+</html>

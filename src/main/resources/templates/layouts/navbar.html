@@ -1,24 +1,58 @@
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark custom-navbar">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">
-            My Smart Cinema
-        </a>
+<nav th:fragment="navbar"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     class="bg-gray-900 shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+            <div class="text-2xl font-bold text-red-500">
+                Smart Cinema
+            </div>
 
-        <div class="ms-auto">
+            <ul class="hidden md:flex gap-8 font-medium">
+                <li><a th:href="@{/home}" class="hover:text-red-500 transition">Trang chủ</a></li>
+                <li><a href="#" class="hover:text-red-500 transition">Phim</a></li>
+                <li><a href="#" class="hover:text-red-500 transition">Lịch chiếu</a></li>
+                <li><a href="#" class="hover:text-red-500 transition">Khuyến mãi</a></li>
+            </ul>
 
-            <div class="dropdown">
-                <button class="btn btn btn-outline-light me-2 dropdown-toggle"
-                        data-bs-toggle="dropdown">
-               <span class="me-3">
-                    Xin chào, <b th:text="${username}"></b>
-                </span>
+            <!-- Chưa đăng nhập -->
+            <div sec:authorize="isAnonymous()" class="flex gap-3">
+                <button class="border border-red-500 px-4 py-2 rounded-lg hover:bg-red-500 transition">
+                    <a th:href="@{/login}">Đăng nhập</a>
                 </button>
 
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="/profile">Thông tin cá nhân</a></li>
-                    <li><a class="dropdown-item" href="/profile/change-password">Đổi mật khẩu</a></li>
-                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
-                </ul>
+                <button class="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                    <a th:href="@{/register}">Đăng ký</a>
+                </button>
+            </div>
+
+            <!-- Đã đăng nhập -->
+            <div sec:authorize="isAuthenticated()" class="flex items-center gap-3">
+                <!-- PROFILE LINK -->
+                <a th:href="@{/dashboard}"
+                   class="flex items-center gap-2 hover:opacity-80 transition">
+
+                <span class="text-white font-medium">
+                    Xin chào,
+                    <span sec:authentication="name"></span>
+                </span>
+
+                    <img th:src="${#authentication.principal.user.avatarUrl != null
+                      ? #authentication.principal.user.avatarUrl
+                      : '/images/default-avatar.png'}"
+                         class="w-10 h-10 rounded-full border-2 border-red-500 object-cover">
+
+                </a>
+
+                <form th:action="@{/logout}" method="post">
+                    <input type="hidden"
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}" />
+
+                    <button class="text-sm text-red-400 hover:text-red-300">
+                        Đăng xuất
+                    </button>
+                </form>
+
             </div>
 
         </div>

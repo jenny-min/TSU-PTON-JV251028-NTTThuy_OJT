@@ -175,7 +175,6 @@ ADMIN:
   /admin/users
   /admin/config
 
-
 CORE 3: Quản lý Hồ sơ cá nhân (Profile) cho từng loại người dùng
 
 USER
@@ -239,3 +238,30 @@ dto/
  │
  └── user/
      └── dashboard.html
+
+GIAO DIỆN
+home
+header
+Navbar
+Hero Banner
+Phim đang chiếu
+Phim sắp chiếu
+Footer
+
+
+tone màu:
+Background: bg-slate-900
+Card:       bg-slate-800
+Primary:    bg-red-600
+Text:       text-white
+
+
+////////DATA
+User:
+nva nva111
+
+Việc chưa làm được ngày 19/6:
+- Chỉnh lại form cập nhật cho đẹp
+- Chưa xóa ảnh cũ sau khi cập nhật
+- Chưa hiện ảnh trước khi cập nhật
+- Chưa cập nhật ảnh đại diện ngay khi lưu và trả về dashboard, phải đăng nhập lại mới hiện ảnh

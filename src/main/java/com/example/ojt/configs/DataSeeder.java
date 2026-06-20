@@ -24,7 +24,6 @@ public class DataSeeder implements CommandLineRunner {
                     .email("admin@gmail.com")
                     .role(Role.ADMIN)
                     .build();
-
             ur.save(admin);
 
             User user = User.builder()
@@ -34,7 +33,6 @@ public class DataSeeder implements CommandLineRunner {
                     .email("user@gmail.com")
                     .role(Role.USER)
                     .build();
-
             ur.save(user);
 
             User staff = User.builder()
@@ -44,9 +42,7 @@ public class DataSeeder implements CommandLineRunner {
                     .email("staff@gmail.com")
                     .role(Role.STAFF)
                     .build();
-
             ur.save(staff);
-
         }
     }
 }

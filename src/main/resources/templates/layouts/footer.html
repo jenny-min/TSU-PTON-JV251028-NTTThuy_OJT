@@ -1,7 +1,54 @@
-<footer th:fragment="footer">
-    <div class="footer">
-        <div class="container text-center">
-            <p>© 2026 Smart Cinema. All Rights Reserved.</p>
+<footer th:fragment="footer" class="bg-gray-900 py-10">
+    <div class="container mx-auto px-6">
+
+        <div
+                class="grid md:grid-cols-3 gap-8">
+
+            <div>
+                <h3 class="text-2xl font-bold text-red-500">
+                    Smart Cinema
+                </h3>
+
+                <p class="text-gray-400 mt-3">
+                    Hệ thống đặt vé xem phim trực tuyến.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-3">
+                    Liên kết
+                </h4>
+
+                <ul class="space-y-2 text-gray-400">
+                    <li>
+                        <a th:href="@{/home}">Trang chủ</a>
+                    </li>
+                    <li>Phim đang chiếu</li>
+                    <li>Lịch chiếu</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-3">
+                    Liên hệ
+                </h4>
+
+                <p class="text-gray-400">
+                    Email: support@smart-cinema.com
+                </p>
+
+                <p class="text-gray-400">
+                    Hotline: 1900 1234
+                </p>
+            </div>
+
         </div>
+
+        <hr class="border-gray-800 my-8">
+
+        <p class="text-center text-gray-500">
+            © 2026 Smart Cinema Booking. All rights reserved.
+        </p>
+
     </div>
 </footer>
