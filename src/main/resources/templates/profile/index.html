@@ -8,125 +8,121 @@
 
 <!-- CONTENT -->
 <div layout:fragment="content">
-    <div class="container mx-auto">
-        <div class="profile-card">
-            <h3 class="text-center mb-4">Thông tin cá nhân</h3>
-
-            <form th:action="@{/profile/update}"
-                  th:object="${user}"
-                  method="post"
+    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Cập nhật tài khoản</h2>
+        </div>
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form th:action="@{/profile/update}" th:object="${user}" method="POST"
+                  class="space-y-6"
                   enctype="multipart/form-data">
-
                 <input type="hidden"
                        th:name="${_csrf.parameterName}"
-                       th:value="${_csrf.token}">
+                       th:value="${_csrf.token}" />
+                <!-- Username -->
+                <div>
+                    <label for="username" class="block text-sm/6 font-medium text-gray-100">Tên đăng nhập</label>
+                    <div class="mt-2">
+                        <input th:field="*{username}" id="username" type="text" name="username" required autocomplete="username"
+                               class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                    </div>
+                </div>
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm/6 font-medium text-gray-100">Email</label>
+                    <div class="mt-2">
+                        <input th:field="*{email}" id="email" type="email" name="email" required autocomplete="email"
+                               class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
+                </div>
+                <!-- Password -->
+                <div>
+                    <div class="flex items-center justify-between">
+                        <label for="password" class="block text-sm/6 font-medium text-gray-100">Mật khẩu</label>
+                        <div class="mt-2">
+                            <input th:field="*{password}" id="password" type="password" name="password" required autocomplete="password" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
+                    </div>
+                </div>
+                <!-- Confirm Password -->
+                <div>
+                    <div class="flex items-center justify-between">
+                        <label for="re-password" class="block text-sm/6 font-medium text-gray-100">Xác nhận mật khẩu</label>
+                        <div class="mt-2">
+                            <input th:field="*{confirmPassword}" id="re-password" type="password" name="re-password" required autocomplete="re-password" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
+                    </div>
+                </div>
+                <!-- Full Name -->
+                <div>
+                    <label for="fullName" class="block text-sm/6 font-medium text-gray-100">Họ và tên</label>
+                    <div class="mt-2">
+                        <input th:field="*{fullName}" id="fullName" type="text" name="fullName" required autocomplete="fullName" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
+                </div>
+                <!-- Phone -->
+                <div>
+                    <label for="phone" class="block text-sm/6 font-medium text-gray-100">Số điện thoại</label>
+                    <div class="mt-2">
+                        <input th:field="*{phone}" id="phone" type="text" name="phone" required autocomplete="phone" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
+                </div>
+                <!-- Gender -->
+                <div class="sm:col-span-3">
+                    <label for="gender" class="block text-sm/6 font-medium text-white">Giới tính</label>
+                    <div class="mt-2 grid grid-cols-1">
+                        <select th:field="*{gender}" id="gender" name="gender" autocomplete="gender"
+                                class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
+                            <option value="">-- Select --</option>
 
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                            <option th:each="g : ${genders}"
+                                    th:value="${g}"
+                                    th:text="${g.label}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Birthday -->
+                <div>
+                    <label for="birthday" class="block text-sm/6 font-medium text-gray-100">Ngày sinh</label>
+                    <div class="mt-2">
+                        <input th:field="*{birthday}" id="birthday" type="date" name="birthday" required autocomplete="birthday" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                    </div>
+                </div>
 
-                    <!-- Username -->
-                    <div class="col-md-6 mb-3 sm:col-span-4">
-                        <label class="form-label">Tên đăng nhập</label>
-                        <input type="text"
-                               class="form-control readonly-field"
-                               th:value="*{username}"
-                               readonly>
+                <!-- Address -->
+                <div>
+                    <label for="address" class="block text-sm/6 font-medium text-gray-100">Địa chỉ</label>
+                    <div class="mt-2">
+                        <input th:field="*{address}" id="address" type="text" name="address" autocomplete="address" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
+
+                    </div>
+                </div>
+
+                <!-- Avatar -->
+                <div>
+                    <label for="avatarFile" class="block text-sm/6 font-medium text-gray-100">Avatar</label>
+                    <!--Xem trước ảnh-->
+                    <div class="mt-2">
+                        <img id="avatarPreview" th:src="${user.avatarUrl != null
+                                ? user.avatarUrl : '/uploads/default-avatar.jpg'}"
+                             alt="Avatar Preview" class="img-thumbnail rounded-circle"
+                             style="width: 150px; height: 150px; object-fit: cover" />
                     </div>
 
-                    <!-- Email -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email"
-                               class="form-control readonly-field"
-                               th:value="*{email}"
-                               readonly>
-                    </div>
-
-                    <!-- Full Name -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Họ tên</label>
-                        <input type="text"
-                               class="form-control"
-                               th:field="*{fullName}">
-                    </div>
-
-                    <!-- Phone -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Điện thoại</label>
-                        <input type="text"
-                               class="form-control"
-                               th:field="*{phone}">
-                    </div>
-
-                    <!-- Gender -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Giới tính</label>
-                        <div class="mt-2 grid grid-cols-1">
-                            <select th:field="*{gender}" id="gender" name="gender" autocomplete="gender" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
-                                <option value="">-- Select --</option>
-
-                                <option th:each="g : ${genders}"
-                                        th:value="${g}"
-                                        th:text="${g.label}">
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Birthday -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Ngày sinh</label>
-                        <input type="date"
-                               class="form-control"
-                               th:field="*{birthday}">
-                    </div>
-
-                    <!-- Address -->
-                    <div class="col-12 mb-4">
-                        <label class="form-label">Địa chỉ</label>
-                        <textarea class="form-control"
-                                  rows="3"
-                                  th:field="*{address}"></textarea>
-                    </div>
-
-                    <!-- Ảnh đại diện -->
-                    <div class="col-12 mb-4 text-center">
-
-                        <label class="form-label">Ảnh đại diện</label>
-
-                        <!-- upload file -->
-                        <input type="file"
-                               id="avatarFile"
+                    <div class="mt-2">
+                        <input id="avatarFile"
+                               type="file"
                                name="avatarFile"
                                accept="image/*"
-                               class="form-control">
-
+                               class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
                     </div>
-
                 </div>
 
-                <div class="text-center mb-4">
-                    <button type="submit"
-                            class="btn btn-primary btn-save">
-                        Lưu thay đổi
+                <div>
+                    <button type="submit" class="flex w-full justify-center rounded-md border border-red-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-red-500 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                        Cập nhật
                     </button>
                 </div>
-
             </form>
         </div>
     </div>
-
 </div>
-<script>
-    //Khi có sự kiện change của input file
-    document.getElementById('avatarFile')
-        .addEventListener('change', function (e) {
-
-            const file = e.target.files[0];
-
-            if (file) {
-                document.getElementById('avatarPreview').src =
-                    URL.createObjectURL(file);
-            }
-        });
-</script>
+<!--Script-->
+<script th:src="@{/js/profile/previewAvatar}"></script>
 </html>

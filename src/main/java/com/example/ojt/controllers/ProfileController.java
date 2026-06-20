@@ -1,11 +1,14 @@
 package com.example.ojt.controllers;
 
 import com.example.ojt.entities.User;
+import com.example.ojt.roles.Gender;
 import com.example.ojt.services.CustomUserDetails;
 import com.example.ojt.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,6 +38,7 @@ public class ProfileController {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy"));
 
         model.addAttribute("user", user);
+        model.addAttribute("genders", Gender.values());
         return "profile/index";
     }
 
@@ -55,68 +60,58 @@ public class ProfileController {
             Authentication authentication,
             RedirectAttributes redirectAttributes) {
 
-        User user = us.findByUsername(authentication.getName())
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy user"));
+        try {
+            us.changePassword(
+                    authentication.getName(),
+                    currentPassword,
+                    newPassword,
+                    confirmPassword
+            );
 
-        if (!passwordEncoder.matches(
-                currentPassword,
-                user.getPassword())) {
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    "Đổi mật khẩu thành công");
+
+        } catch (RuntimeException e) {
 
             redirectAttributes.addFlashAttribute(
                     "error",
-                    "Mật khẩu hiện tại không đúng");
-
-            return "redirect:/profile/change-password";
+                    e.getMessage());
         }
-
-        if (!newPassword.equals(confirmPassword)) {
-
-            redirectAttributes.addFlashAttribute(
-                    "error",
-                    "Xác nhận mật khẩu không khớp");
-
-            return "redirect:/profile/change-password";
-        }
-
-        user.setPassword(
-                passwordEncoder.encode(newPassword));
-
-        us.save(user);
-
-        redirectAttributes.addFlashAttribute(
-                "success",
-                "Đổi mật khẩu thành công");
 
         return "redirect:/profile";
     }
 
     @PostMapping("/profile/update")
     public String updateProfile(
-            @AuthenticationPrincipal CustomUserDetails principal,
+            @AuthenticationPrincipal
+            CustomUserDetails principal,
             @ModelAttribute User user,
-            @RequestParam("avatarFile") MultipartFile file
+            @RequestParam("avatarFile")
+            MultipartFile file
     ) throws IOException {
 
-        user.setId(principal.getUser().getId());
+        user.setId(
+                principal.getUser().getId());
 
-        if (!file.isEmpty()) {
+        us.updateProfile(user, file);
 
-            String fileName =
-                    UUID.randomUUID() + "_" + file.getOriginalFilename();
+        User updatedUser =
+                us.findById(user.getId());
 
-            Path uploadPath =
-                    Paths.get("uploads/avatars");
+        CustomUserDetails newPrincipal =
+                new CustomUserDetails(updatedUser);
 
-            Files.createDirectories(uploadPath);
+        Authentication auth =
+                new UsernamePasswordAuthenticationToken(
+                        newPrincipal,
+                        null,
+                        newPrincipal.getAuthorities()
+                );
 
-            file.transferTo(
-                    uploadPath.resolve(fileName)
-            );
-
-            user.setAvatarUrl("/uploads/avatars/" + fileName);
-        }
-        us.updateProfile(user);
+        SecurityContextHolder
+                .getContext()
+                .setAuthentication(auth);
 
         return "redirect:/dashboard";
     }

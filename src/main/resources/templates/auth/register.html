@@ -58,7 +58,8 @@
                 <div class="sm:col-span-3">
                     <label for="gender" class="block text-sm/6 font-medium text-white">Giới tính</label>
                     <div class="mt-2 grid grid-cols-1">
-                        <select th:field="*{gender}" id="gender" name="gender" autocomplete="gender" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
+                        <select th:field="*{gender}" id="gender" name="gender" autocomplete="gender"
+                                class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
                             <option value="">-- Select --</option>
 
                             <option th:each="g : ${genders}"
