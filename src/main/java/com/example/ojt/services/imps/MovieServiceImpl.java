@@ -1,5 +1,8 @@
 package com.example.ojt.services.imps;
 
+import com.example.ojt.dtos.movie.CreateMovieRequest;
+import com.example.ojt.dtos.movie.MovieResponse;
+import com.example.ojt.dtos.movie.UpdateMovieRequest;
 import com.example.ojt.entities.Genre;
 import com.example.ojt.entities.Movie;
 import com.example.ojt.repositories.GenreRepository;
@@ -13,8 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,50 +26,106 @@ public class MovieServiceImpl implements MovieService {
     private final GenreRepository genreRepository;
 
     @Override
-    public Page<Movie> getMovies(int page, int size) {
+    public Page<MovieResponse> getMovies(int page, int size) {
+
         Pageable pageable = PageRequest.of(page, size);
-        return movieRepository.findAll(pageable);
+
+        return movieRepository.findAll(pageable)
+                .map(this::toResponse);
     }
 
     @Override
-    public Movie getMovieById(Long id) {
-        return movieRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy phim"));
+    public MovieResponse getMovieById(Long id) {
+
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Không tìm thấy phim"));
+
+        return toResponse(movie);
     }
 
     @Override
-    public Movie addMovie(Movie movie, List<Long> genreIds) {
+    public Movie addMovie(CreateMovieRequest request) {
 
-        Set<Genre> genres = new HashSet<>(
-                genreRepository.findAllById(genreIds)
-        );
+        Movie movie = new Movie();
+
+        movie.setTitle(request.getTitle());
+        movie.setDescription(request.getDescription());
+        movie.setDuration(request.getDuration());
+        movie.setReleaseDate(request.getReleaseDate());
+        movie.setLanguage(request.getLanguage());
+        movie.setPosterUrl(request.getPosterUrl());
+        movie.setTrailerUrl(request.getTrailerUrl());
+        movie.setAgeRating(request.getAgeRating());
+        movie.setStatus(request.getStatus());
+        movie.setCreatedAt(LocalDateTime.now());
+
+        Set<Genre> genres =
+                new HashSet<>(
+                        genreRepository.findAllById(
+                                request.getGenreIds()
+                        ));
 
         movie.setGenres(genres);
-
-        movie.setCreatedAt(LocalDateTime.now());
 
         return movieRepository.save(movie);
     }
 
     @Override
-    public Movie editMovie(Long id, Movie movie, List<Long> genreIds) {
-        Movie existingMovie = getMovieById(id);
+    public UpdateMovieRequest getMovieForEdit(Long id) {
 
-        existingMovie.setTitle(movie.getTitle());
-        existingMovie.setDescription(movie.getDescription());
-        existingMovie.setDuration(movie.getDuration());
-        existingMovie.setReleaseDate(movie.getReleaseDate());
-        existingMovie.setLanguage(movie.getLanguage());
-        existingMovie.setPosterUrl(movie.getPosterUrl());
-        existingMovie.setTrailerUrl(movie.getTrailerUrl());
-        existingMovie.setAgeRating(movie.getAgeRating());
-        existingMovie.setStatus(movie.getStatus());
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Không tìm thấy phim"));
 
-        Set<Genre> genres = new HashSet<>(genreRepository.findAllById(genreIds));
+        return UpdateMovieRequest.builder()
+                .movieId(movie.getMovieId())
+                .title(movie.getTitle())
+                .description(movie.getDescription())
+                .duration(movie.getDuration())
+                .releaseDate(movie.getReleaseDate())
+                .language(movie.getLanguage())
+                .posterUrl(movie.getPosterUrl())
+                .trailerUrl(movie.getTrailerUrl())
+                .ageRating(movie.getAgeRating())
+                .status(movie.getStatus())
+                .genreIds(movie.getGenres()
+                                .stream()
+                                .map(Genre::getGenreId)
+                                .collect(Collectors.toSet())
+                )
+                .build();
+    }
 
-        existingMovie.setGenres(genres);
+    @Override
+    public Movie editMovie(
+            Long id,
+            UpdateMovieRequest request
+    ) {
 
-        return movieRepository.save(existingMovie);
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Không tìm thấy phim"));
+
+        movie.setTitle(request.getTitle());
+        movie.setDescription(request.getDescription());
+        movie.setDuration(request.getDuration());
+        movie.setReleaseDate(request.getReleaseDate());
+        movie.setLanguage(request.getLanguage());
+        movie.setPosterUrl(request.getPosterUrl());
+        movie.setTrailerUrl(request.getTrailerUrl());
+        movie.setAgeRating(request.getAgeRating());
+        movie.setStatus(request.getStatus());
+
+        Set<Genre> genres =
+                new HashSet<>(
+                        genreRepository.findAllById(
+                                request.getGenreIds()
+                        ));
+
+        movie.setGenres(genres);
+
+        return movieRepository.save(movie);
     }
 
     @Override
@@ -84,4 +143,22 @@ public class MovieServiceImpl implements MovieService {
 
         System.out.println("DELETE DONE");
     }
+
+    private MovieResponse toResponse(Movie movie) {
+        return MovieResponse.builder()
+                .movieId(movie.getMovieId())
+                .title(movie.getTitle())
+                .description(movie.getDescription())
+                .duration(movie.getDuration())
+                .releaseDate(movie.getReleaseDate())
+                .language(movie.getLanguage())
+                .posterUrl(movie.getPosterUrl())
+                .trailerUrl(movie.getTrailerUrl())
+                .ageRating(movie.getAgeRating())
+                .status(movie.getStatus())
+                .createdAt(movie.getCreatedAt())
+                .genres( movie.getGenres()
+                        .stream()
+                        .map(Genre::getGenreName)
+                        .collect(Collectors.toSet()) ) .build(); }
 }

@@ -62,8 +62,4 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;
-
-    //dùng confirmPassword cho register form
-    @Transient
-    private String confirmPassword;
 }

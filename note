@@ -274,7 +274,63 @@ tìm hiểu thêm về thymeleaf:
 - Viết hàm js gọi về các trang(nếu có thời gian) - LINK VÀO HTML
 
 
-??Việc cần làm
-Phân lại css theo từng section và thêm vào html
-CRUD movie ok
 chưa render ra trang chủ (+ phân trang, thêm tìm kiếm theo tên, thể loại phim)
+
+2026/06/24
+CORE-5: bài toán kiểm tra khoảng thời gian
+Showtime
+- id
+- movie
+- room
+- startTime
+- endTime
+
+endTime = startTime
+          + duration
+          + cleaningTime;
+
+Existing:
+start1 ----- end1
+
+New:
+start2 ----- end2
+
+start1 < end2
+&&
+start2 < end1 =>Conflict
+Cần xử lý querry join bảng
+tạo showtime cần tránh xung đột giờ chiếu
+
+dtos
+├── auth
+│   ├── RegisterRequest ok
+│   ├── LoginRequest ok
+│   └── ChangePasswordRequest ok
+│
+├── profile
+│   ├── UpdateProfileRequest ok
+|   ├── ChangePasswordRequest ok
+│   └── ProfileResponse ok
+│
+├── movie
+│   ├── CreateMovieRequest ok
+│   ├── UpdateMovieRequest ok
+│   └── MovieResponse ok
+│
+├── showtime
+│   ├── CreateShowtimeRequest
+│   └── ShowtimeResponse
+│
+└── booking
+    ├── BookingRequest
+    ├── BookingResponse
+    └── TicketResponse
+
+Cần sửa
+AdminController
+
+MovieService
+
+GenreService
+
+entity

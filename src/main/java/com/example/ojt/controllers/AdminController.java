@@ -1,5 +1,8 @@
 package com.example.ojt.controllers;
 
+import com.example.ojt.dtos.movie.CreateMovieRequest;
+import com.example.ojt.dtos.movie.MovieResponse;
+import com.example.ojt.dtos.movie.UpdateMovieRequest;
 import com.example.ojt.entities.Movie;
 import com.example.ojt.roles.MovieStatus;
 import com.example.ojt.services.interfaces.GenreService;
@@ -34,7 +37,8 @@ public class AdminController {
             @RequestParam(defaultValue = "5") int size,
             Model model) {
 
-        Page<Movie> moviePage = movieService.getMovies(page, size);
+        Page<MovieResponse> moviePage =
+                movieService.getMovies(page, size);
 
         model.addAttribute("moviePage", moviePage);
         model.addAttribute("movies", moviePage.getContent());
@@ -44,7 +48,7 @@ public class AdminController {
     //Load trang thêm
     @GetMapping("/movies/create")
     public String createForm(Model model) {
-        model.addAttribute("movie", new Movie());
+        model.addAttribute("movie", new CreateMovieRequest());
         model.addAttribute("genres", genreService.findAll());
         model.addAttribute("movieStatuses", MovieStatus.values());
         return "admin/movies/create";
@@ -53,13 +57,17 @@ public class AdminController {
     //Thêm phim
     @PostMapping("/movies/create")
     public String saveCreate(
-            @Valid @ModelAttribute("movie") Movie movie,
+            @Valid
+            @ModelAttribute("movie")
+            CreateMovieRequest request,
             BindingResult result,
-            @RequestParam(required = false) List<Long> genreIds,
             Model model) {
 
-        if (genreIds == null || genreIds.isEmpty()) {
-            result.rejectValue("genres", "error.genres",
+        if (request.getGenreIds() == null || request.getGenreIds().isEmpty()) {
+
+            result.rejectValue(
+                    "genreIds",
+                    "error.genreIds",
                     "Phim phải có ít nhất một thể loại");
         }
 
@@ -69,17 +77,20 @@ public class AdminController {
             return "admin/movies/create";
         }
 
-        movieService.addMovie(movie, genreIds);
+        movieService.addMovie(request);
         return "redirect:/admin/movies";
     }
 
     //Load trang edit
     @GetMapping("/movies/edit/{id}")
     public String editForm(@PathVariable Long id, Model model) {
-        Movie movie = movieService.getMovieById(id);
-        model.addAttribute("movie", movie);
+        MovieResponse movie = movieService.getMovieById(id);
+        model.addAttribute("movie", movieService.getMovieForEdit(id));
+
         model.addAttribute("genres", genreService.findAll());
+
         model.addAttribute("movieStatuses", MovieStatus.values());
+
         return "admin/movies/edit";
     }
 
@@ -87,9 +98,10 @@ public class AdminController {
     @PostMapping("/movies/edit/{id}")
     public String saveEdit(
             @PathVariable Long id,
-            @Valid @ModelAttribute("movie") Movie movie,
+            @Valid
+            @ModelAttribute("movie")
+            UpdateMovieRequest request,
             BindingResult result,
-            @RequestParam(required = false) List<Long> genreIds,
             Model model
     ) {
 
@@ -99,7 +111,7 @@ public class AdminController {
             return "admin/movies/edit";
         }
 
-        movieService.editMovie(id, movie, genreIds);
+        movieService.editMovie(id, request);
 
         return "redirect:/admin/movies";
     }

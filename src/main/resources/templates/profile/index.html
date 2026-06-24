@@ -5,9 +5,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/dashboard-base}">
 
-
-<!-- CONTENT -->
 <div layout:fragment="content">
+
     <div class="profile-wrapper">
 
         <div class="profile-card p-4 p-md-5">
@@ -17,8 +16,8 @@
             </h2>
 
             <form th:action="@{/profile/update}"
-                  th:object="${user}"
-                  method="POST"
+                  th:object="${profileForm}"
+                  method="post"
                   enctype="multipart/form-data">
 
                 <input type="hidden"
@@ -32,8 +31,10 @@
                         <label class="form-label">
                             Tên đăng nhập
                         </label>
-                        <input th:field="*{username}"
-                               class="form-control">
+
+                        <input th:value="${profile.username}"
+                               class="form-control"
+                               readonly>
                     </div>
 
                     <!-- Email -->
@@ -41,29 +42,10 @@
                         <label class="form-label">
                             Email
                         </label>
-                        <input th:field="*{email}"
-                               type="email"
-                               class="form-control">
-                    </div>
 
-                    <!-- Password -->
-                    <div class="col-md-6">
-                        <label class="form-label">
-                            Mật khẩu
-                        </label>
-                        <input th:field="*{password}"
-                               type="password"
-                               class="form-control">
-                    </div>
-
-                    <!-- Confirm Password -->
-                    <div class="col-md-6">
-                        <label class="form-label">
-                            Xác nhận mật khẩu
-                        </label>
-                        <input th:field="*{confirmPassword}"
-                               type="password"
-                               class="form-control">
+                        <input th:value="${profile.email}"
+                               class="form-control"
+                               readonly>
                     </div>
 
                     <!-- Full Name -->
@@ -71,6 +53,7 @@
                         <label class="form-label">
                             Họ và tên
                         </label>
+
                         <input th:field="*{fullName}"
                                class="form-control">
                     </div>
@@ -80,6 +63,7 @@
                         <label class="form-label">
                             Số điện thoại
                         </label>
+
                         <input th:field="*{phone}"
                                class="form-control">
                     </div>
@@ -92,6 +76,7 @@
 
                         <select th:field="*{gender}"
                                 class="form-select">
+
                             <option value="">
                                 -- Chọn giới tính --
                             </option>
@@ -100,6 +85,7 @@
                                     th:value="${g}"
                                     th:text="${g.label}">
                             </option>
+
                         </select>
                     </div>
 
@@ -132,10 +118,9 @@
                         </label>
 
                         <img id="avatarPreview"
-                             th:src="${user.avatarUrl != null ? user.avatarUrl : '/uploads/default-avatar.jpg'}"
+                             th:src="${profile.avatarUrl != null ? profile.avatarUrl : '/uploads/default-avatar.jpg'}"
                              class="avatar-preview mb-3"
                              alt="Avatar">
-
 
                         <input id="avatarFile"
                                type="file"
@@ -144,13 +129,17 @@
                                class="form-control">
                     </div>
 
-                    <!-- Button -->
+                    <!-- Submit -->
                     <div class="col-12 mt-3">
+
                         <button type="submit"
                                 class="btn btn-danger btn-lg w-100 btn-update">
+
                             <i class="bi bi-check-circle me-2"></i>
                             Cập nhật
+
                         </button>
+
                     </div>
 
                 </div>
@@ -160,7 +149,9 @@
         </div>
 
     </div>
+
 </div>
-<!--Script-->
-<script th:src="@{/js/profile/previewAvatar}"></script>
+
+<script th:src="@{/js/profile/previewAvatar.js}"></script>
+
 </html>
