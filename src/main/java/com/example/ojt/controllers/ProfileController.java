@@ -3,7 +3,7 @@ package com.example.ojt.controllers;
 import com.example.ojt.entities.User;
 import com.example.ojt.roles.Gender;
 import com.example.ojt.services.CustomUserDetails;
-import com.example.ojt.services.UserService;
+import com.example.ojt.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,14 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 @RequestMapping

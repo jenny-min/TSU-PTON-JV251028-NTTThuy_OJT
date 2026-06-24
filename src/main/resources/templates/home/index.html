@@ -1,13 +1,89 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="vi"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/base}">
 
 <div layout:fragment="content">
-    <h1 class="text-4xl font-bold">
-        Trang chủ
-    </h1>
+    <!--  SECTION HERO  -->
+    <section class="cinema-hero text-center text-white">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-4">
+                Smart Cinema
+            </h1>
+
+            <p class="fs-4 text-light mb-4">
+                Đặt vé phim trực tuyến mọi lúc mọi nơi
+            </p>
+
+            <a
+               class="btn btn-danger btn-lg px-4">
+                Khám phá phim
+            </a>
+        </div>
+    </section>
+
+    <!--  SECTION QUICK-BOOKING  -->
+    <section class="quick-booking container">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md">
+                        <select class="form-select">
+                            <option>Chọn phim</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md">
+                        <select class="form-select">
+                            <option>Chọn rạp</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md">
+                        <input type="date" class="form-control">
+                    </div>
+
+                    <div class="col-md">
+                        <button class="btn btn-danger w-100">
+                            Đặt vé
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--  SECTION OVERVIEW-MOVIE  -->
+    <section class="overview-movie container py-5">
+        <div class="movie-grid">
+            <div class="card movie-card">
+                <div class="poster-wrapper">
+                    <span class="movie-age">
+                        T16
+                    </span>
+                    <img src="https://placehold.co/300x450"
+                         alt="Movie"
+                         class="movie-poster">
+                </div>
+
+                <div class="card-body">
+                    <h5 class="movie-title">Movie Name
+                    </h5>
+
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-light flex-fill text-dark">
+                            Chi tiết
+                        </a>
+
+                        <a class="btn btn-danger flex-fill">
+                            Đặt vé
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 </html>

@@ -56,7 +56,6 @@ public class Movie {
 
     private LocalDateTime createdAt;
 
-    @NotEmpty(message = "Phim phải có ít nhất một thể loại")
     @ManyToMany
     @JoinTable(
             name = "movie_genres",

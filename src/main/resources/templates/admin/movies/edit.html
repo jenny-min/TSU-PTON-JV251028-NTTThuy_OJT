@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<!-- CONTENT -->
+<div layout:fragment="content">
+    <div class="container py-4">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3 class="mb-0">Thêm phim mới</h3>
+            </div>
+
+            <div class="card-body">
+                <form th:action="@{/admin/movies/edit/{id}(id=${movie.movieId})}"
+                      th:object="${movie}"
+                      method="post">
+
+                    <!-- Tên phim -->
+                    <div class="mb-3">
+                        <label class="form-label">Tên phim</label>
+                        <input type="text"
+                               class="form-control"
+                               th:field="*{title}">
+                        <div class="text-danger"
+                             th:errors="*{title}"></div>
+                    </div>
+
+                    <!-- Mô tả -->
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea rows="5"
+                                  class="form-control"
+                                  th:field="*{description}">
+                        </textarea>
+                        <div class="text-danger"
+                             th:errors="*{description}"></div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Thời lượng -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Thời lượng (phút)</label>
+                            <input type="number"
+                                   min="1"
+                                   class="form-control"
+                                   th:field="*{duration}">
+                            <div class="text-danger"
+                                 th:errors="*{duration}"></div>
+                        </div>
+
+                        <!-- Ngày phát hành -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ngày phát hành</label>
+                            <input type="date"
+                                   class="form-control"
+                                   th:field="*{releaseDate}">
+                            <div class="text-danger"
+                                 th:errors="*{releaseDate}"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Ngôn ngữ -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ngôn ngữ</label>
+                            <input type="text"
+                                   class="form-control"
+                                   th:field="*{language}">
+                            <div class="text-danger"
+                                 th:errors="*{language}"></div>
+                        </div>
+
+                        <!-- Độ tuổi -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Độ tuổi giới hạn</label>
+                            <select class="form-select"
+                                    th:field="*{ageRating}">
+                                <option value="">-- Chọn độ tuổi --</option>
+                                <option value="P">P</option>
+                                <option value="K">K</option>
+                                <option value="T13">T13</option>
+                                <option value="T16">T16</option>
+                                <option value="T18">T18</option>
+                            </select>
+                            <div class="text-danger"
+                                 th:errors="*{ageRating}"></div>
+                        </div>
+                    </div>
+
+                    <!-- Poster -->
+                    <div class="mb-3">
+                        <label class="form-label">Poster URL</label>
+                        <input type="text"
+                               class="form-control"
+                               th:field="*{posterUrl}">
+                    </div>
+
+                    <!-- Trailer -->
+                    <div class="mb-3">
+                        <label class="form-label">Trailer URL</label>
+                        <input type="text"
+                               class="form-control"
+                               th:field="*{trailerUrl}">
+                    </div>
+
+                    <!-- Trạng thái -->
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select"
+                                th:field="*{status}">
+                            <option value="">-- Chọn trạng thái --</option>
+                            <option th:each="status : ${movieStatuses}"
+                                    th:value="${status}"
+                                    th:text="${status}">
+                            </option>
+                        </select>
+                        <div class="text-danger"
+                             th:errors="*{status}"></div>
+                    </div>
+
+                    <!-- Thể loại -->
+                    <div class="mb-3">
+                        <label class="form-label">Thể loại</label>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-2"
+                                 th:each="genre : ${genres}">
+                                <div class="form-check">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="genreIds"
+                                           th:value="${genre.genreId}"
+                                           th:checked="${movie.genres.contains(genre)}">
+
+                                    <label class="form-check-label"
+                                           th:for="'genre-' + ${genre.genreId}"
+                                           th:text="${genre.genreName}">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-danger"
+                             th:if="${#fields.hasErrors('genres')}"
+                             th:errors="*{genres}">
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Lưu phim
+                        </button>
+
+                        <a th:href="@{/admin/movies}"
+                           class="btn btn-secondary">
+                            Quay lại
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

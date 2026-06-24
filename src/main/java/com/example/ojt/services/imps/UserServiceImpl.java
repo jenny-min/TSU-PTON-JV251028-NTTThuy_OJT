@@ -2,7 +2,7 @@ package com.example.ojt.services.imps;
 
 import com.example.ojt.entities.User;
 import com.example.ojt.repositories.UserRepository;
-import com.example.ojt.services.UserService;
+import com.example.ojt.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

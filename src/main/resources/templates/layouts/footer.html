@@ -1,54 +1,70 @@
-<footer th:fragment="footer" class="bg-gray-950 py-10">
-    <div class="container mx-auto px-6">
+<footer th:fragment="footer" class="cinema-footer py-5 mt-auto">
 
-        <div
-                class="grid md:grid-cols-3 gap-8">
-
-            <div>
-                <h3 class="text-2xl font-bold text-red-500">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Logo -->
+            <div class="col-md-4">
+                <h3 class="fw-bold text-danger mb-3">
                     Smart Cinema
                 </h3>
-
-                <p class="text-gray-400 mt-3">
-                    Hệ thống đặt vé xem phim trực tuyến.
+                <p class="text-secondary mb-0">
+                    Hệ thống đặt vé xem phim trực tuyến hiện đại,
+                    nhanh chóng và tiện lợi.
                 </p>
             </div>
 
-            <div>
-                <h4 class="font-bold mb-3">
+            <!-- Liên kết -->
+            <div class="col-md-4">
+                <h5 class="fw-bold text-white mb-3">
                     Liên kết
-                </h4>
-
-                <ul class="space-y-2 text-gray-400">
-                    <li>
-                        <a th:href="@{/home}">Trang chủ</a>
+                </h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a th:href="@{/home}"
+                           class="footer-link">
+                            Trang chủ
+                        </a>
                     </li>
-                    <li>Phim đang chiếu</li>
-                    <li>Lịch chiếu</li>
+
+                    <li class="mb-2">
+                        <a href="#"
+                           class="footer-link">
+                            Phim đang chiếu
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a href="#"
+                           class="footer-link">
+                            Lịch chiếu
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            <div>
-                <h4 class="font-bold mb-3">
+            <!-- Liên hệ -->
+            <div class="col-md-4">
+                <h5 class="fw-bold text-white mb-3">
                     Liên hệ
-                </h4>
+                </h5>
 
-                <p class="text-gray-400">
+                <p class="text-secondary mb-2">
                     Email: support@smart-cinema.com
                 </p>
 
-                <p class="text-gray-400">
+                <p class="text-secondary mb-0">
                     Hotline: 1900 1234
                 </p>
             </div>
 
         </div>
 
-        <hr class="border-gray-800 my-8">
+        <hr class="footer-divider my-4">
 
-        <p class="text-center text-gray-500">
+        <div class="text-center text-secondary">
             © 2026 Smart Cinema Booking. All rights reserved.
-        </p>
+        </div>
 
     </div>
+
 </footer>

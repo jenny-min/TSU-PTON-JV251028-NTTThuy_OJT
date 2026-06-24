@@ -5,6 +5,578 @@
 }
 
 body{
-    color: #eeeeee;
+    background-color: #0d0c0ce6;
+    color: #eeeeee!important;
     font-family:'Segoe UI',sans-serif;
+}
+
+.card{
+    background:#1f1f1f;
+}
+
+.btn-danger{
+    background:#e50914;
+}
+
+.text-white {
+    color: white;
+}
+
+.text-dark {
+    color: black;
+}
+
+.page-content {
+    background: linear-gradient(
+            135deg,
+            #1c1c1c 0%,
+            #121212 50%,
+            #0d0d0d 100%
+    );
+    min-height: 100%;
+    color: white;
+}
+
+/*NAVBAR*/
+.cinema-navbar {
+    background: #0f0f0f;
+    box-shadow: 0 2px 10px rgba(0,0,0,.3);
+}
+
+.cinema-navbar .nav-link {
+    color: #ffffff;
+    font-weight: 500;
+    transition: all .3s ease;
+}
+
+.cinema-navbar .nav-link:hover {
+    color: #dc3545;
+}
+
+.cinema-navbar .navbar-brand {
+    letter-spacing: 1px;
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #dc3545;
+    transition: .3s;
+}
+
+.user-avatar:hover {
+    transform: scale(1.08);
+}
+
+.btn {
+    transition: all .3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: scale(.96);
+}
+
+/*SIDEBAR*/
+.dashboard-body {
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: #111827;
+    color: white;
+    padding: 1.5rem;
+    box-shadow: 4px 0 10px rgba(0,0,0,.15);
+}
+
+.user-avatar {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #dc3545;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 12px 16px;
+    margin-bottom: 6px;
+
+    color: #dee2e6;
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    transition: all .3s ease;
+}
+
+.sidebar-link:hover {
+    background-color: #1f2937;
+    color: #ffffff;
+
+    transform: translateX(4px);
+}
+
+.sidebar hr {
+    border-color: #495057;
+    margin: 1rem 0;
+}
+
+.btn {
+    transition: all .3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/*LOGIN PAGE*/
+.login-card {
+    background: #1a1a1a;
+    color: white;
+    border-radius: 15px;
+}
+
+.login-card .card-body {
+    background: #1a1a1a;
+}
+
+.login-card .form-control {
+    background: #2c2c2c;
+    border-color: #444;
+    color: white;
+}
+
+.login-card .form-control:focus {
+    background: #2c2c2c;
+    color: white;
+}
+
+.login-card .form-label {
+    color: #ddd;
+}
+
+/*REGISTER PAGE*/
+.register-card {
+    background: #1a1a1a;
+    color: white;
+}
+
+.register-card .card-body {
+    background: #1a1a1a;
+}
+
+.register-card .form-control,
+.register-card .form-select {
+    background: #2c2c2c;
+    border-color: #444;
+    color: white;
+}
+
+.register-card .form-control:focus,
+.register-card .form-select:focus {
+    background: #2c2c2c;
+    color: white;
+}
+
+.register-card .form-label {
+    color: #ddd;
+}
+
+/*Hero Section*/
+.hero-section {
+    padding: 80px 0;
+}
+
+.cinema-hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+            linear-gradient(
+                    rgba(0,0,0,.7),
+                    rgba(0,0,0,.7)
+            ),
+            url('/images/banners/cinema-banner.jpg');
+
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-btn {
+    transition: all .3s ease;
+}
+
+.hero-btn:hover {
+    transform: translateY(-3px);
+}
+
+.hero-btn:active {
+    transform: scale(.97);
+}
+
+/*QUICK BOOKING*/
+.quick-booking {
+    margin-top: -50px; /* đè lên banner */
+    position: relative;
+    z-index: 10;
+    padding: 0 1rem;
+}
+
+.quick-booking .card {
+    background: rgba(31, 31, 31, 0.95);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+.quick-booking .card-body {
+    padding: 1.5rem;
+}
+
+.quick-booking .form-control,
+.quick-booking .form-select {
+    height: 50px;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 12px;
+}
+
+.quick-booking .form-control:focus,
+.quick-booking .form-select:focus {
+    background: #2a2a2a;
+    color: #fff;
+    border-color: #e50914;
+    box-shadow: 0 0 0 .2rem rgba(229,9,20,.25);
+}
+
+.quick-booking .btn-danger {
+    height: 50px;
+    border-radius: 12px;
+    font-weight: 600;
+    background: #e50914;
+    border: none;
+    transition: all .3s ease;
+}
+
+.quick-booking .btn-danger:hover {
+    background: #ff1e2d;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .quick-booking {
+        margin-top: 20px;
+    }
+
+    .quick-booking .row > div {
+        margin-bottom: 10px;
+    }
+}
+
+/*OVERVIEW-MOVIE*/
+.overview-movie {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.section-header h2 {
+    color: #fff;
+    font-weight: 700;
+    margin: 0;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.movie-card {
+    background: #1f1f1f;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: all .3s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,.4);
+}
+
+.movie-card .card-body {
+    background: rgba(31, 31, 31, 0.95);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.poster-wrapper {
+    position: relative;
+}
+
+.movie-poster {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+}
+
+.movie-age {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+
+    background: #e50914;
+    color: #fff;
+
+    padding: 5px 10px;
+    border-radius: 8px;
+
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.movie-content {
+    padding: 16px;
+}
+
+.movie-title {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.movie-info {
+    color: #aaa;
+    font-size: .9rem;
+    margin-bottom: 16px;
+}
+
+.movie-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.movie-actions .btn {
+    flex: 1;
+    border-radius: 10px;
+}
+
+.movie-actions .btn-danger {
+    background: #e50914;
+    border: none;
+}
+
+.movie-actions .btn-danger:hover {
+    background: #ff1f2d;
+}
+
+@media (max-width: 1200px) {
+    .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .movie-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+
+
+
+
+
+/*PROFILE*/
+ .profile-wrapper {
+     min-height: 100vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 40px 15px;
+     color: black;
+ }
+
+.profile-card {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 8px 30px rgba(0,0,0,.4);
+    transition: all .3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+}
+
+.form-control,
+.form-select {
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: black;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: rgba(255,255,255,0.12);
+    color: black;
+    border-color: #dc3545;
+    box-shadow: 0 0 0 .25rem rgba(220,53,69,.25);
+}
+
+.form-control::placeholder {
+    color: #adb5bd;
+}
+
+.avatar-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.15);
+    transition: .3s;
+}
+
+.avatar-preview:hover {
+    transform: scale(1.05);
+}
+
+.card-title {
+    letter-spacing: 1px;
+}
+
+.btn-update {
+    transition: .3s;
+}
+
+.btn-update:hover {
+    transform: translateY(-2px);
+}
+
+/*CHANGE PASSWORD*/
+.password-wrapper {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+    color: black;
+}
+
+.password-card {
+    width: 100%;
+    max-width: 550px;
+
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(12px);
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    box-shadow:
+            0 8px 30px rgba(0,0,0,.4);
+
+    transition: all .3s ease;
+}
+
+.password-card:hover {
+    transform: translateY(-4px);
+}
+
+.form-control {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    color: white;
+}
+
+.form-control::placeholder {
+    color: #adb5bd;
+}
+
+.form-control:focus {
+    background: rgba(255,255,255,.12);
+    color: white;
+
+    border-color: #dc3545;
+
+    box-shadow:
+            0 0 0 .25rem rgba(220,53,69,.25);
+}
+
+.btn-change {
+    font-weight: 600;
+    letter-spacing: .5px;
+    transition: all .3s ease;
+}
+
+.btn-change:hover {
+    transform: translateY(-2px);
+    box-shadow:
+            0 6px 18px rgba(220,53,69,.4);
+}
+
+.card-title {
+    letter-spacing: 1px;
+}
+
+/*FOOTER*/
+.cinema-footer {
+    background: #0f0f0f;
+    box-shadow: 0 2px 10px rgba(0,0,0,.3);
+}
+
+.footer-divider {
+    border-color: #adb5bd;
+}
+
+.footer-link {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+.footer-link:hover {
+    color: #dc3545;
+    padding-left: 4px;
+}
+
+.cinema-footer h5,
+.cinema-footer h3 {
+    letter-spacing: 0.5px;
 }

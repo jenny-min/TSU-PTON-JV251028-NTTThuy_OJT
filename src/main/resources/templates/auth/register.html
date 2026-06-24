@@ -1,105 +1,182 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="vi"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/base}">
 
 <div layout:fragment="content">
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Đăng ký</h2>
-        </div>
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form th:action="@{/register}" th:object="${user}" method="POST" class="space-y-6">
-                <input type="hidden"
-                       th:name="${_csrf.parameterName}"
-                       th:value="${_csrf.token}" />
-                <!-- Username -->
-                <div>
-                    <label for="username" class="block text-sm/6 font-medium text-gray-100">Tên đăng nhập</label>
-                    <div class="mt-2">
-                        <input th:field="*{username}" id="username" type="text" name="username" required autocomplete="username" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
-                </div>
-                <!-- Email -->
-                <div>
-                    <label for="email" class="block text-sm/6 font-medium text-gray-100">Email</label>
-                    <div class="mt-2">
-                        <input th:field="*{email}" id="email" type="email" name="email" required autocomplete="email" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
-                </div>
-                <!-- Password -->
-                <div>
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm/6 font-medium text-gray-100">Mật khẩu</label>
-                        <div class="mt-2">
-                            <input th:field="*{password}" id="password" type="password" name="password" required autocomplete="password" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
-                    </div>
-                </div>
-                <!-- Confirm Password -->
-                <div>
-                    <div class="flex items-center justify-between">
-                        <label for="re-password" class="block text-sm/6 font-medium text-gray-100">Xác nhận mật khẩu</label>
-                        <div class="mt-2">
-                            <input th:field="*{confirmPassword}" id="re-password" type="password" name="re-password" required autocomplete="re-password" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
-                    </div>
-                </div>
-                <!-- Full Name -->
-                <div>
-                    <label for="fullName" class="block text-sm/6 font-medium text-gray-100">Họ và tên</label>
-                    <div class="mt-2">
-                        <input th:field="*{fullName}" id="fullName" type="text" name="fullName" required autocomplete="fullName" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
-                </div>
-                <!-- Phone -->
-                <div>
-                    <label for="phone" class="block text-sm/6 font-medium text-gray-100">Số điện thoại</label>
-                    <div class="mt-2">
-                        <input th:field="*{phone}" id="phone" type="text" name="phone" required autocomplete="phone" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" /></div>
-                </div>
-                <!-- Gender -->
-                <div class="sm:col-span-3">
-                    <label for="gender" class="block text-sm/6 font-medium text-white">Giới tính</label>
-                    <div class="mt-2 grid grid-cols-1">
-                        <select th:field="*{gender}" id="gender" name="gender" autocomplete="gender"
-                                class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
-                            <option value="">-- Select --</option>
 
-                            <option th:each="g : ${genders}"
-                                    th:value="${g}"
-                                    th:text="${g.label}">
-                            </option>
-                        </select>
+    <div class="container py-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="card register-card shadow-lg border-0">
+
+                    <div class="card-body p-4 p-md-5">
+
+                        <h2 class="text-center text-white fw-bold mb-4">
+                            Đăng ký tài khoản
+                        </h2>
+
+                        <form th:action="@{/register}"
+                              th:object="${user}"
+                              method="post">
+
+                            <input type="hidden"
+                                   th:name="${_csrf.parameterName}"
+                                   th:value="${_csrf.token}" />
+
+                            <div class="row">
+
+                                <!-- Username -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        Tên đăng nhập
+                                    </label>
+                                    <input th:field="*{username}"
+                                           type="text"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        Email
+                                    </label>
+                                    <input th:field="*{email}"
+                                           type="email"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        Mật khẩu
+                                    </label>
+                                    <input th:field="*{password}"
+                                           type="password"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        Xác nhận mật khẩu
+                                    </label>
+                                    <input th:field="*{confirmPassword}"
+                                           type="password"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- Full Name -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        Họ và tên
+                                    </label>
+                                    <input th:field="*{fullName}"
+                                           type="text"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        Số điện thoại
+                                    </label>
+                                    <input th:field="*{phone}"
+                                           type="text"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- Gender -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        Giới tính
+                                    </label>
+
+                                    <select th:field="*{gender}"
+                                            class="form-select">
+
+                                        <option value="">
+                                            -- Chọn giới tính --
+                                        </option>
+
+                                        <option th:each="g : ${genders}"
+                                                th:value="${g}"
+                                                th:text="${g.label}">
+                                        </option>
+
+                                    </select>
+                                </div>
+
+                                <!-- Birthday -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        Ngày sinh
+                                    </label>
+
+                                    <input th:field="*{birthday}"
+                                           type="date"
+                                           class="form-control"
+                                           required>
+                                </div>
+
+                                <!-- Address -->
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">
+                                        Địa chỉ
+                                    </label>
+
+                                    <input th:field="*{address}"
+                                           type="text"
+                                           class="form-control">
+                                </div>
+
+                            </div>
+
+                            <div class="d-grid mt-3">
+                                <button type="submit"
+                                        class="btn btn-danger register-btn">
+                                    Đăng ký
+                                </button>
+                            </div>
+
+                        </form>
+
+                        <div th:if="${param.error}"
+                             class="alert alert-danger mt-3">
+                            Có lỗi xảy ra khi đăng ký!
+                        </div>
+
+                        <p class="text-center text-white mt-4 mb-0">
+
+                            Đã có tài khoản?
+
+                            <a th:href="@{/login}"
+                               class="fw-semibold text-white text-decoration-none">
+                                Đăng nhập ngay!
+                            </a>
+
+                        </p>
+
                     </div>
-                </div>
-                <!-- Birthday -->
-                <div>
-                    <label for="birthday" class="block text-sm/6 font-medium text-gray-100">Ngày sinh</label>
-                    <div class="mt-2">
-                        <input th:field="*{birthday}" id="birthday" type="date" name="birthday" required autocomplete="birthday" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
-                    </div>
+
                 </div>
 
-                <!-- Address -->
-                <div>
-                    <label for="address" class="block text-sm/6 font-medium text-gray-100">Địa chỉ</label>
-                    <div class="mt-2">
-                        <input th:field="*{address}" id="address" type="text" name="address" autocomplete="address" class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
-
-                    </div>
-                </div>
-
-
-                <div>
-                    <button type="submit" class="flex w-full justify-center rounded-md border border-red-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-red-500 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Đăng ký</button>
-                </div>
-            </form>
-            <div th:if="${param.error}"
-                 class="rounded-md bg-red-500/20 border border-red-500 p-3 text-red-300">
-                Sai tài khoản hoặc mật khẩu!
             </div>
-            <p class="mt-10 text-center text-sm/6 text-gray-400">
-                Đã có tài khoản?
-                <a th:href="@{/login}" class="font-semibold text-gray-100 hover:text-indigo-300"> Đăng nhập ngay!</a>
-            </p>
+
         </div>
+
     </div>
+
 </div>
+
 </html>

@@ -1,4 +1,4 @@
-    document
+document
         .getElementById("avatarFile")
         .addEventListener("change", function (e) {
         const file = e.target.files[0];

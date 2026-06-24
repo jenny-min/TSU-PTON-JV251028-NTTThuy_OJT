@@ -1,4 +1,4 @@
-package com.example.ojt.services;
+package com.example.ojt.services.interfaces;
 
 import com.example.ojt.entities.User;
 import org.springframework.web.multipart.MultipartFile;

@@ -228,3 +228,53 @@ Text:       text-white
 ////////DATA
 User:
 nva nva111
+
+2026/06/21
+CORE-04: Admin thực hiện quản lý (Thêm/Xem/Sửa/Xóa) cho danh mục Phim.
+Các danh mục "Thể loại phim", "Phòng chiếu" sẽ được hardcode (seed data) trực tiếp trong Database
+để làm dữ liệu nền tảng cho hệ thống.
+
+templates
+└── admin
+    └── movie
+        ├── index.html
+        ├── create.html
+        └── edit.html
+
+        Roadmap CORE-04
+        ✅ Tạo entity Genre ok
+        ✅ Tạo entity Room ok
+        ✅ Seed dữ liệu ok
+        ✅ Tạo entity Movie ok
+        ✅ Repository ok
+        ✅ Service
+        ✅ CRUD Controller
+        ✅ Giao diện CRUD
+        ✅ Validation
+        ⏭ Upload poster (nếu yêu cầu)
+        ⏭ Phân quyền chỉ Admin được truy cập
+
+
+Thêm link css khi dùng thymeleaf
+ <!--  fragment riêng cho CSS  -->
+    <th:block layout:fragment="css"></th:block>
+
+Thêm link vào trang cần thêm
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</th:block>
+
+2026/06/24
+tìm hiểu thêm về thymeleaf:
+- th:fragment
+- th:replace
+- th:block layout:fragment
+- layout:decorate
+- Viết hàm js phân trang và tìm kiếm (thêm) - LINK VÀO HTML
+- Viết hàm js gọi về các trang(nếu có thời gian) - LINK VÀO HTML
+
+
+??Việc cần làm
+Phân lại css theo từng section và thêm vào html
+CRUD movie ok
+chưa render ra trang chủ (+ phân trang, thêm tìm kiếm theo tên, thể loại phim)

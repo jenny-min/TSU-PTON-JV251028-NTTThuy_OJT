@@ -1,0 +1,304 @@
+/* ===== HEADER ===== */
+.overview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.overview-title h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.overview-title p {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+/* ===== BUTTON ===== */
+.btn-add-movie {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+    transition: all .25s ease;
+}
+
+.btn-add-movie:hover {
+    transform: translateY(-2px);
+    color: white;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, .35);
+}
+
+/* ===== TABLE WRAPPER ===== */
+.movie-table-wrapper {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,.06);
+}
+
+/* ===== TABLE ===== */
+.table {
+    margin-bottom: 0;
+    background: white;
+}
+
+.table thead th {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 700;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 16px;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    padding: 8px;
+    color: #334155;
+    border-color: #f1f5f9;
+}
+
+.table tbody tr {
+    transition: all .2s ease;
+}
+
+.table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* ===== POSTER ===== */
+.table img {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+
+/* ===== GENRE TAG ===== */
+.genre-tag {
+    display: inline-block;
+    margin: 2px;
+    padding: 4px 10px;
+
+    border-radius: 999px;
+
+    background: #dbeafe;
+    color: #1d4ed8;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ===== STATUS ===== */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-showing {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-coming {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-ended {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.btn-warning,
+.btn-danger {
+    border-radius: 8px;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+/* ===== EMPTY DATA ===== */
+.empty-data {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
+
+/* ===== PAGE ===== */
+.overview-movie {
+    background: #f8fafc;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+/* ===== HEADER ===== */
+.overview-header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.overview-title h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.overview-title p {
+    color: #64748b;
+    margin: 0;
+}
+
+/* ===== BUTTON ADD ===== */
+.btn-add-movie {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+
+    padding: 12px 18px;
+    border-radius: 10px;
+
+    background: linear-gradient(
+            135deg,
+            #ef4444,
+            #dc2626
+    );
+    border-color: #dc2626;
+    color: white;
+
+    box-shadow: 0 4px 12px rgba(220, 38, 38, .4);
+
+    font-weight: 600;
+
+    transition: .2s;
+}
+
+.btn-add-movie:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+    color: #fff;
+
+    transform: translateY(-2px);
+}
+
+/* ===== TABLE ===== */
+.movie-table {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,.06);
+}
+
+.movie-table thead {
+    background: #f1f5f9;
+}
+
+.movie-table thead th {
+    color: #334155;
+    font-weight: 700;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 16px;
+}
+
+.movie-table tbody td {
+    vertical-align: middle;
+    padding: 16px;
+    color: #334155;
+    border-color: #f1f5f9;
+}
+
+.movie-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* ===== POSTER ===== */
+.movie-table img {
+    width: 70px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+
+/* ===== STATUS ===== */
+.status-active {
+    display: inline-block;
+    padding: 5px 2px;
+    border-radius: 999px;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-coming {
+    display: inline-block;
+    padding: 5px 2px;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-ended {
+    display: inline-block;
+    padding: 5px 2px;
+    border-radius: 999px;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* ===== GENRE ===== */
+.genre-tag {
+    display: inline-block;
+    margin: 2px;
+    padding: 4px 2px;
+    border-radius: 999px;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.btn-warning {
+    border-radius: 8px;
+}
+
+.btn-danger {
+    border-radius: 8px;
+}
+
+/* ===== EMPTY DATA ===== */
+.empty-movie {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
