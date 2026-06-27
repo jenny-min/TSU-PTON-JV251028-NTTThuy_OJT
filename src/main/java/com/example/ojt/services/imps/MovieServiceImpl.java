@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,11 @@ import java.util.stream.Collectors;
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
+
+    @Override
+    public List<Movie> getAllMovies() {
+        return movieRepository.findAll();
+    }
 
     @Override
     public Page<MovieResponse> getMovies(int page, int size) {

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface MovieService {
+    List<Movie> getAllMovies();
 
     Page<MovieResponse> getMovies(int page, int size);
 

@@ -298,7 +298,8 @@ start2 ----- end2
 start1 < end2
 &&
 start2 < end1 =>Conflict
-Cần xử lý querry join bảng
+
+Cần xử lý query join bảng
 tạo showtime cần tránh xung đột giờ chiếu
 
 dtos
@@ -318,19 +319,11 @@ dtos
 │   └── MovieResponse ok
 │
 ├── showtime
-│   ├── CreateShowtimeRequest
-│   └── ShowtimeResponse
+│   ├── CreateShowtimeRequest ok
+|   ├── UpdateShowtimeRequest ok
+│   └── ShowtimeResponse ok
 │
 └── booking
-    ├── BookingRequest
-    ├── BookingResponse
-    └── TicketResponse
-
-Cần sửa
-AdminController
-
-MovieService
-
-GenreService
-
-entity
+    ├── BookingRequest ok
+    ├── BookingResponse ok
+    └── TicketResponse ok
