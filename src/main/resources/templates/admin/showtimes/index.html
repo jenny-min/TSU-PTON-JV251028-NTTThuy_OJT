@@ -92,7 +92,11 @@
                             <td th:text="${#temporals.format(showtime.endTime,'dd/MM/yyyy HH:mm')}"></td>
                             <td th:text="${#numbers.formatDecimal(showtime.ticketPrice,0,'COMMA',0,'POINT')} + ' VNĐ'"></td>
                             <td>
-                                <span class="badge bg-success"
+                                <span class="badge"
+                                      th:classappend="
+                                            ${showtime.status.name() == 'SCHEDULED'} ? ' bg-primary' :
+                                            (${showtime.status.name() == 'ONGOING'} ? ' bg-success' :
+                                            (${showtime.status.name() == 'ENDED'} ? ' bg-secondary' : ' bg-danger'))"
                                       th:text="${showtime.status}">
                                 </span>
                             </td>
@@ -105,10 +109,9 @@
                                 <form method="post"
                                       th:action="@{/admin/showtimes/delete/{id}(id=${showtime.showtimeId})}"
                                       style="display:inline;">
-                                    <button
+                                    <button type="submit"
                                             class="btn btn-danger btn-sm"
                                             onclick="return confirm('Xóa suất chiếu này?')">
-
                                         Xóa
                                     </button>
                                 </form>
@@ -119,5 +122,8 @@
             </div>
         </div>
     </div>
+
+    <!--  PAGINATION -->
+    <div th:replace="~{layouts/pagination :: pagination(${showtimePage}, '/admin/showtimes')}"></div>
 </div>
 </html>

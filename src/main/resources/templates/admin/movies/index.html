@@ -108,7 +108,7 @@
             </table>
         </div>
     <!--  PAGINATION -->
-    <div th:replace="~{layouts/pagination :: pagination}"></div>
+    <div th:replace="~{layouts/pagination :: pagination(${moviePage}, '/admin/movies')}"></div>
 </div>
 
 </html>

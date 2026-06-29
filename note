@@ -327,3 +327,22 @@ dtos
     ├── BookingRequest ok
     ├── BookingResponse ok
     └── TicketResponse ok
+
+2026/06/29
+CORE-6: Seat payment
+Flow
+Client
+    |
+    | BookingRequest
+    |
+BookingService
+    |
+@Transactional
+    |
+    |-- kiểm tra ghế
+    |
+    |-- tạo Invoice
+    |
+    |-- tạo Ticket
+    |
+Commit
