@@ -1,0 +1,332 @@
+
+/* =========================
+   GLOBAL
+========================= */
+body {
+    background: #f5f6fa;
+    color: #212529;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   CARD GLOBAL (UNIFIED)
+========================= */
+.card {
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.08);
+    background: #fff;
+}
+
+.card-header {
+    background: #fff;
+    border-bottom: 1px solid #ececec;
+    padding: 18px 25px;
+}
+
+.card-header h5 {
+    font-weight: 700;
+    color: #212529;
+}
+
+.card-body {
+    background: #fff;
+}
+
+/* =========================
+   PROFILE
+========================= */
+.profile-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 5px 18px rgba(0,0,0,.08);
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #e50914;
+    margin-bottom: 15px;
+}
+
+.profile-name {
+    color: #212529;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.profile-email {
+    color: #6c757d;
+    font-size: 15px;
+    margin-bottom: 18px;
+}
+
+/* =========================
+   MINI STAT CARDS
+========================= */
+.mini-card {
+    background: #f8f9fa;
+    border-radius: 14px;
+    padding: 25px 15px;
+    transition: .25s;
+    border: 1px solid #ececec;
+    height: 100%;
+    text-align: center;
+}
+
+.mini-card:hover {
+    transform: translateY(-4px);
+    border-color: #e50914;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.mini-card i {
+    font-size: 30px;
+    color: #e50914;
+    margin-bottom: 12px;
+}
+
+.mini-card h4 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.mini-card small {
+    color: #6c757d;
+}
+
+/* =========================
+   BOOKING PAGE
+========================= */
+.booking-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.movie-poster {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.movie-meta {
+    display: flex;
+    gap: 25px;
+    margin-top: 15px;
+    color: #6c757d;
+    flex-wrap: wrap;
+}
+
+/* =========================
+   SCREEN
+========================= */
+.screen-wrapper {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.screen {
+    width: 80%;
+    margin: auto;
+    background: #d9d9d9;
+    border-radius: 100px;
+    padding: 12px;
+    font-weight: bold;
+    letter-spacing: 6px;
+    box-shadow: 0 12px 20px rgba(0,0,0,.15);
+}
+
+/* =========================
+   SEAT MAP
+========================= */
+.seat-map {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.seat-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.row-label {
+    width: 35px;
+    font-weight: bold;
+    line-height: 42px;
+}
+
+.seat {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: .2s;
+    cursor: pointer;
+}
+
+/* seat states */
+.available {
+    background: #e9ecef;
+}
+
+.available:hover {
+    background: #ffd54f;
+}
+
+.selected {
+    background: #ffc107;
+    color: #000;
+}
+
+.booked {
+    background: #dc3545;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.vip {
+    background: #8e44ad;
+    color: #fff;
+}
+
+/* =========================
+   LEGEND
+========================= */
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+
+.legend-seat {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+/* =========================
+   SUMMARY
+========================= */
+.summary-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    position: sticky;
+    top: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 18px 0;
+}
+
+.summary-item span {
+    color: #6c757d;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-total h3 {
+    color: #e50914;
+    font-weight: 700;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.btn-warning {
+    background: #e50914;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 12px;
+}
+
+.btn-warning:hover {
+    background: #c40812;
+    color: #fff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 20px;
+    }
+
+    .screen {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .seat {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+.showtime-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: 0.25s;
+    background: #fff;
+}
+
+.showtime-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.showtime-movie {
+    font-size: 18px;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 10px;
+}
+
+.showtime-info {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.showtime-info i {
+    color: #e50914;
+    margin-right: 6px;
+}
+
+.showtime-price {
+    color: #198754;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}

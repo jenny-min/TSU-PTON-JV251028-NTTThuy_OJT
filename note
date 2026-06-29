@@ -327,3 +327,5 @@ dtos
     ├── BookingRequest ok
     ├── BookingResponse ok
     └── TicketResponse ok
+
+    th:src="${movie.posterUrl}"

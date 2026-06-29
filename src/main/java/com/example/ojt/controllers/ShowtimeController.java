@@ -32,8 +32,10 @@ public class ShowtimeController {
         Page<ShowtimeResponse> showtimePage =
                 showtimeService.getShowtimes(page, size);
 
-        model.addAttribute("showtimePage", showtimePage);
-        model.addAttribute("showtime", showtimePage.getContent());
+        model.addAttribute("showtimes", showtimePage.getContent());
+        model.addAttribute("pageData", showtimePage);
+        model.addAttribute("baseUrl", "/admin/showtimes");
+
         return "/admin/showtimes/index";
     }
 

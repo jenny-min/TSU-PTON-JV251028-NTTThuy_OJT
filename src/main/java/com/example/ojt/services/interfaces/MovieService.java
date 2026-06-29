@@ -21,4 +21,6 @@ public interface MovieService {
     Movie editMovie(Long id, UpdateMovieRequest request);
 
     void deleteMovie(Long id);
+
+    MovieResponse getById(Long movieId);
 }

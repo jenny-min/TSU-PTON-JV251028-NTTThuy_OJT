@@ -31,8 +31,10 @@ public class MovieController {
         Page<MovieResponse> moviePage =
                 movieService.getMovies(page, size);
 
-        model.addAttribute("moviePage", moviePage);
         model.addAttribute("movies", moviePage.getContent());
+        model.addAttribute("pageData", moviePage);
+        model.addAttribute("baseUrl", "/admin/movies");
+
         return "admin/movies/index";
     }
 

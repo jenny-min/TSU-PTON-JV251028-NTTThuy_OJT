@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
                 <form th:action="@{/admin/showtimes/edit/{id}(id=${showtimeId})}"
-                      th:object="${showtime}"
+                      th:object="${showtimes}"
                       method="post">
                     <div class="row">
                         <!-- Movie -->
@@ -33,7 +33,7 @@
                                 </option>
                             </select>
 
-                            <div class="text-danger" th:errors="*{movieId}"></div>
+                            <div class="text-danger" th:errors=""></div>
                         </div>
 
                         <!-- Room -->

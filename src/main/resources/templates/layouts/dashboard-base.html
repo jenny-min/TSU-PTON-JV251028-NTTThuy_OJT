@@ -19,142 +19,199 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="dashboard-body">
+<body class="bg-light">
 
-<div class="d-flex min-vh-100">
+<div class="min-vh-100">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <!--  DROPDOWN MENU  -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <!-- LEFT MENU -->
+                <ul class="navbar-nav me-auto">
+                    <!-- ADMIN -->
+                    <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown">
+                            Quản lý
+                        </a>
 
-        <!-- USER INFO -->
-        <div class="text-center mb-4">
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/admin/dashboard}">
+                                    <i class="fa-solid fa-gauge me-2"></i>
+                                    Quản lý chung
+                                </a>
+                            </li>
 
-            <img th:src="${#authentication.principal.user.avatarUrl != null
-                      ? #authentication.principal.user.avatarUrl
-                      : '/images/default-avatar.png'}"
-                 class="user-avatar">
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/admin/movies}">
+                                    <i class="fa-solid fa-film me-2"></i>
+                                    Quản lý phim
+                                </a>
+                            </li>
 
-            <h5 class="mt-3 fw-bold">
-                <span th:text="${#authentication.principal.user.username}"></span>
-            </h5>
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/admin/showtimes}">
+                                    <i class="fa-solid fa-calendar me-2"></i>
+                                    Quản lý lịch chiếu
+                                </a>
+                            </li>
 
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/staff/staff}">
+                                    <i class="fa-solid fa-user-tie me-2"></i>
+                                    Quản lý nhân viên
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/admin/users}">
+                                    <i class="fa-solid fa-users me-2"></i>
+                                    Quản lý người dùng
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- STAFF -->
+                    <li class="nav-item dropdown" sec:authorize="hasRole('STAFF')">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown">
+                            Nhân viên
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/staff/dashboard}">
+                                    <i class="fa-solid fa-user me-2"></i>
+                                    Trang nhân viên
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/staff/schedules}">
+                                    <i class="fa-solid fa-calendar me-2"></i>
+                                    Lịch chiếu
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/staff/tickets}">
+                                    <i class="fa-solid fa-ticket me-2"></i>
+                                    Vé đặt
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- USER -->
+                    <li class="nav-item dropdown" sec:authorize="hasRole('USER')">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-list"></i>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/user/dashboard}">
+                                    <i class="fa-solid fa-user me-2"></i>
+                                    Trang của tôi
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/user/bookings}">
+                                    <i class="fa-solid fa-ticket me-2"></i>
+                                    Vé của tôi
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- USER INFO -->
+                <div class="dropdown">
+                    <a href="#"
+                       class="d-flex align-items-center text-decoration-none text-white dropdown-toggle"
+                       data-bs-toggle="dropdown">
+
+                        <img th:src="${#authentication.principal.user.avatarUrl != null
+                          ? #authentication.principal.user.avatarUrl
+                          : '/images/default-avatar.png'}"
+                             class="rounded-circle"
+                             width="40"
+                             height="40">
+                        <span class="ms-2"
+                              th:text="${#authentication.principal.user.username}">
+                        </span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/profile}">
+                                <i class="fa-solid fa-user-gear me-2"></i>
+                                Cài đặt tài khoản
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/profile/change-password}">
+                                <i class="fa-solid fa-key me-2"></i>
+                                Đổi mật khẩu
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/home}">
+                                <i class="fa-solid fa-house me-2"></i>
+                                Trang chủ
+                            </a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <input type="hidden"
+                                       th:name="${_csrf.parameterName}"
+                                       th:value="${_csrf.token}">
+
+                                <button type="submit"
+                                        class="dropdown-item text-danger">
+                                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                    Đăng xuất
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <!-- ADMIN -->
-        <div sec:authorize="hasRole('ADMIN')">
-
-            <a th:href="@{/admin/dashboard}" class="sidebar-link">
-                <i class="fa-solid fa-gauge me-2"></i>
-                Quản lý chung
-            </a>
-
-            <a th:href="@{/admin/movies}" class="sidebar-link">
-                <i class="fa-solid fa-film me-2"></i>
-                Quản lý phim
-            </a>
-
-            <a th:href="@{/admin/showtimes}" class="sidebar-link">
-                <i class="fa-regular fa-calendar"></i>
-                Quản lý lịch chiếu
-            </a>
-
-            <a th:href="@{/staff/staff}" class="sidebar-link">
-                <i class="fa-solid fa-user-tie me-2"></i>
-                Quản lý nhân viên
-            </a>
-
-            <a th:href="@{/admin/users}" class="sidebar-link">
-                <i class="fa-solid fa-users me-2"></i>
-                Quản lý người dùng
-            </a>
-
-            <a th:href="@{/profile}" class="sidebar-link">
-                <i class="fa-solid fa-user-gear me-2"></i>
-                Cài đặt tài khoản
-            </a>
-
-        </div>
-
-        <!-- STAFF -->
-        <div sec:authorize="hasRole('STAFF')">
-
-            <a th:href="@{/staff/dashboard}" class="sidebar-link">
-                <i class="fa-solid fa-user me-2"></i>
-                Trang nhân viên
-            </a>
-
-            <a th:href="@{/staff/schedules}" class="sidebar-link">
-                <i class="fa-solid fa-calendar me-2"></i>
-                Lịch chiếu
-            </a>
-
-            <a th:href="@{/staff/tickets}" class="sidebar-link">
-                <i class="fa-solid fa-ticket me-2"></i>
-                Vé đặt
-            </a>
-
-            <a th:href="@{/profile}" class="sidebar-link">
-                <i class="fa-solid fa-user-gear me-2"></i>
-                Cài đặt tài khoản
-            </a>
-
-        </div>
-
-        <!-- USER -->
-        <div sec:authorize="hasRole('USER')">
-
-            <a th:href="@{/user/profile}" class="sidebar-link">
-                <i class="fa-solid fa-user me-2"></i>
-                Trang của tôi
-            </a>
-
-            <a th:href="@{/user/tickets}" class="sidebar-link">
-                <i class="fa-solid fa-ticket me-2"></i>
-                Vé của tôi
-            </a>
-
-            <a th:href="@{/profile}" class="sidebar-link">
-                <i class="fa-solid fa-user-gear me-2"></i>
-                Cài đặt tài khoản
-            </a>
-
-        </div>
-
-        <hr>
-
-        <a th:href="@{/profile/change-password}"
-           class="sidebar-link">
-            <i class="fa-solid fa-key me-2"></i>
-            Đổi mật khẩu
-        </a>
-
-        <form th:action="@{/logout}" method="post" class="mt-3">
-
-            <input type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}">
-
-            <button type="submit"
-                    class="btn btn-outline-danger w-100">
-                Đăng xuất
-            </button>
-
-        </form>
-
-        <hr>
-
-        <a th:href="@{/home}"
-           class="sidebar-link text-danger">
-            ← Trang chủ
-        </a>
-
-    </aside>
+    </nav>
 
     <!-- CONTENT -->
     <main class="flex-grow-1 bg-light">
-
         <div layout:fragment="content"></div>
-
     </main>
 
 </div>

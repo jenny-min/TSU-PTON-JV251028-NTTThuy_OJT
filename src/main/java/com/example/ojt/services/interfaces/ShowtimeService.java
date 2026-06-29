@@ -5,6 +5,8 @@ import com.example.ojt.dtos.showtime.ShowtimeResponse;
 import com.example.ojt.dtos.showtime.UpdateShowtimeRequest;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface ShowtimeService{
     Page<ShowtimeResponse> getShowtimes(int page, int size);
 
@@ -17,4 +19,6 @@ public interface ShowtimeService{
     ShowtimeResponse updateShowtime(Long id, UpdateShowtimeRequest request);
 
     void deleteShowtime(Long id);
+
+    List<ShowtimeResponse> getByMovieId(Long movieId);
 }

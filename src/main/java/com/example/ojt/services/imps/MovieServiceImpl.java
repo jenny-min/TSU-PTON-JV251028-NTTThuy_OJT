@@ -136,18 +136,23 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void deleteMovie(Long id) {
-        System.out.println("SERVICE DELETE: " + id);
-
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy phim"));
-
-        System.out.println("Showtimes = " + movie.getShowtimes().size());
 
         movie.getGenres().clear();
 
         movieRepository.delete(movie);
 
         System.out.println("DELETE DONE");
+    }
+
+    @Override
+    public MovieResponse getById(Long movieId) {
+        Movie movie = movieRepository.findById(movieId)
+                .orElseThrow(() ->
+                        new RuntimeException("Không tìm thấy phim"));
+
+        return toResponse(movie);
     }
 
     private MovieResponse toResponse(Movie movie) {
