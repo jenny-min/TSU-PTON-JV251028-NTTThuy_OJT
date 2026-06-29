@@ -1,17 +1,26 @@
 package com.example.ojt.services.interfaces;
 
+import com.example.ojt.dtos.movie.CreateMovieRequest;
+import com.example.ojt.dtos.movie.MovieResponse;
+import com.example.ojt.dtos.movie.UpdateMovieRequest;
 import com.example.ojt.entities.Movie;
 import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface MovieService {
-    Page<Movie> getMovies(int page, int size);
+    List<Movie> getAllMovies();
 
-    Movie getMovieById(Long id);
+    Page<MovieResponse> getMovies(int page, int size);
 
-    Movie addMovie(Movie movie, List<Long> genreIds);
+    MovieResponse getMovieById(Long id);
 
-    Movie editMovie(Long id, Movie movie, List<Long> genreIds);
+    Movie addMovie(CreateMovieRequest request);
+
+    UpdateMovieRequest getMovieForEdit(Long id);
+
+    Movie editMovie(Long id, UpdateMovieRequest request);
 
     void deleteMovie(Long id);
+
+    MovieResponse getById(Long movieId);
 }

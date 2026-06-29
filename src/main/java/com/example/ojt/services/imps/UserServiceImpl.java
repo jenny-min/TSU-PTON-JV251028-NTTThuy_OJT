@@ -1,5 +1,8 @@
 package com.example.ojt.services.imps;
 
+import com.example.ojt.dtos.profile.ChangePasswordRequest;
+import com.example.ojt.dtos.profile.ProfileResponse;
+import com.example.ojt.dtos.profile.UpdateProfileRequest;
 import com.example.ojt.entities.User;
 import com.example.ojt.repositories.UserRepository;
 import com.example.ojt.services.interfaces.UserService;
@@ -23,98 +26,76 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void updateProfile(User userForm, MultipartFile file) throws IOException {
-        User userDb = ur.findById(userForm.getId())
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Không tìm thấy người dùng"));
-
-        userDb.setFullName(userForm.getFullName());
-        userDb.setPhone(userForm.getPhone());
-        userDb.setAddress(userForm.getAddress());
-        userDb.setGender(userForm.getGender());
-        userDb.setBirthday(userForm.getBirthday());
-
+    public void updateProfile(
+            Long userId,
+            UpdateProfileRequest request,
+            MultipartFile file ) throws IOException {
+        User userDb = ur.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+        userDb.setFullName(request.getFullName());
+        userDb.setPhone(request.getPhone());
+        userDb.setAddress(request.getAddress());
+        userDb.setGender(request.getGender());
+        userDb.setBirthday(request.getBirthday());
         if (!file.isEmpty()) {
-
-            List<String> allowedTypes = List.of(
-                    "image/jpeg",
-                    "image/png",
-                    "image/gif",
-                    "image/webp"
-            );
-
+            List<String> allowedTypes =
+                    List.of( "image/jpeg", "image/png", "image/gif", "image/webp" );
             if (!allowedTypes.contains(file.getContentType())) {
-                throw new RuntimeException(
-                        "File không phải ảnh");
+                throw new RuntimeException("File không phải ảnh");
             }
-
             if (file.getSize() > 5 * 1024 * 1024) {
-                throw new RuntimeException(
-                        "Ảnh vượt quá 5MB");
+                throw new RuntimeException("Ảnh vượt quá 5MB");
             }
-
             if (userDb.getAvatarUrl() != null
                     && userDb.getAvatarUrl()
                     .startsWith("/uploads/avatars/")) {
-
-                String oldFile =
-                        userDb.getAvatarUrl()
-                                .replace(
-                                        "/uploads/avatars/",
-                                        "");
-
-                Files.deleteIfExists(
-                        Paths.get("uploads/avatars")
-                                .resolve(oldFile));
-            }
-
-            String fileName =
-                    UUID.randomUUID()
-                            + "_"
-                            + file.getOriginalFilename();
-
-            Path uploadPath =
-                    Paths.get("uploads/avatars");
-
+                String oldFile = userDb.getAvatarUrl()
+                        .replace("/uploads/avatars/", "");
+                Files.deleteIfExists( Paths.get("uploads/avatars")
+                        .resolve(oldFile) ); } String fileName =
+                    UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path uploadPath = Paths.get("uploads/avatars");
             Files.createDirectories(uploadPath);
-
-            file.transferTo(
-                    uploadPath.resolve(fileName));
-
-            userDb.setAvatarUrl(
-                    "/uploads/avatars/" + fileName);
+            file.transferTo( uploadPath.resolve(fileName) );
+            userDb.setAvatarUrl( "/uploads/avatars/" + fileName );
         }
-
         ur.save(userDb);
     }
 
     @Override
     public void changePassword(
-            String username, String currentPassword,
-            String newPassword, String confirmPassword) {
+            String username,
+            ChangePasswordRequest request ) {
         User user = ur.findByUsername(username)
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy user"));
-
-        if (!passwordEncoder.matches(
-                currentPassword,
-                user.getPassword())) {
-
-            throw new RuntimeException(
-                    "Mật khẩu hiện tại không đúng");
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
+        if (!passwordEncoder.matches( request.getCurrentPassword(), user.getPassword())) {
+            throw new RuntimeException( "Mật khẩu hiện tại không đúng");
         }
-
-        if (!newPassword.equals(confirmPassword)) {
-
-            throw new RuntimeException(
-                    "Xác nhận mật khẩu không khớp");
+        if (!request.getNewPassword() .equals(request.getConfirmPassword())) {
+            throw new RuntimeException( "Xác nhận mật khẩu không khớp");
         }
-
-        user.setPassword(
-                passwordEncoder.encode(newPassword));
-
+        user.setPassword( passwordEncoder.encode( request.getNewPassword() ) );
         ur.save(user);
+    }
+
+    @Override
+    public ProfileResponse getProfile(String username) {
+        User user = ur.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user"));
+        return ProfileResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .fullName(user.getFullName())
+                .phone(user.getPhone())
+                .gender(user.getGender())
+                .birthday(user.getBirthday())
+                .address(user.getAddress())
+                .avatarUrl(user.getAvatarUrl())
+                .role(user.getRole())
+                .enabled(user.getEnabled())
+                .createdAt(user.getCreatedAt())
+                .build();
     }
 
     @Override
@@ -128,35 +109,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
-        return ur.save(user);
-    }
-
-    @Override
     public User findById(Long id) {
         return ur.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy người dùng"));
-    }
-
-    @Override
-    public void updateProfile(User userForm) {
-
-        User userDb = ur.findById(userForm.getId())
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy người dùng"));
-
-        userDb.setFullName(userForm.getFullName());
-        userDb.setPhone(userForm.getPhone());
-        userDb.setAddress(userForm.getAddress());
-        userDb.setGender(userForm.getGender());
-        userDb.setBirthday(userForm.getBirthday());
-
-        if (userForm.getAvatarUrl() != null
-                && !userForm.getAvatarUrl().isBlank()) {
-            userDb.setAvatarUrl(userForm.getAvatarUrl());
-        }
-
-        ur.save(userDb);
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
     }
 }

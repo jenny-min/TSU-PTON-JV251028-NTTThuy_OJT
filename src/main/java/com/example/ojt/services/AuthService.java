@@ -1,6 +1,6 @@
 package com.example.ojt.services;
 
-import com.example.ojt.dtos.requests.RegisterRequest;
+import com.example.ojt.dtos.auth.RegisterRequest;
 import com.example.ojt.entities.User;
 import com.example.ojt.repositories.UserRepository;
 import com.example.ojt.roles.Role;
@@ -29,24 +29,15 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setFullName(request.getFullName());
         user.setPhone(request.getPhone());
+        user.setGender(request.getGender());
+        user.setBirthday(request.getBirthday());
+        user.setAddress(request.getAddress());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.USER);
         user.setEnabled(true);
         user.setCreatedAt(LocalDateTime.now());
 
         ur.save(user);
-
-        return true;
-    }
-
-    public boolean login(String username, String password) {
-
-        User user = ur.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Sai mật khẩu hoặc tên đăng nhập"));
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            return false;
-        }
 
         return true;
     }

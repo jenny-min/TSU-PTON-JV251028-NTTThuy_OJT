@@ -11,102 +11,102 @@
 
 <!-- CONTENT -->
 <div layout:fragment="content">
-    <div class="overview-header">
-        <div class="overview-title">
-            <h2>Danh sách phim</h2>
-            <p>Quản lý thông tin phim trong hệ thống</p>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="overview-title">
+                <h2>Danh sách phim</h2>
+                <p>Quản lý thông tin phim trong hệ thống</p>
+            </div>
+
+            <a th:href="@{/admin/movies/create}" class="btn-add-primary">
+                <span>+</span>
+                <span>Thêm phim</span>
+            </a>
         </div>
 
-        <a th:href="@{/admin/movies/create}" class="btn-add-movie">
-            <span>+</span>
-            <span>Thêm phim</span>
-        </a>
-    </div>
+        <div class="movie-table-wrapper">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Poster</th>
+                    <th>Tên phim</th>
+                    <th>Thời lượng</th>
+                    <th>Ngày phát hành</th>
+                    <th>Ngôn ngữ</th>
+                    <th>Độ tuổi</th>
+                    <th>Trạng thái</th>
+                    <th>Thể loại</th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
 
-    <div class="movie-table-wrapper">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Poster</th>
-                <th>Tên phim</th>
-                <th>Thời lượng</th>
-                <th>Ngày phát hành</th>
-                <th>Ngôn ngữ</th>
-                <th>Độ tuổi</th>
-                <th>Trạng thái</th>
-                <th>Thể loại</th>
-                <th>Thao tác</th>
-            </tr>
-            </thead>
+                <tbody>
+                <tr th:each="movie : ${movies}">
+                    <td th:text="${movie.movieId}"></td>
 
-            <tbody>
-            <tr th:each="movie : ${movies}">
-                <td th:text="${movie.movieId}"></td>
+                    <td>
+                        <img th:if="${movie.posterUrl != null}"
+                             th:src="${movie.posterUrl}"
+                             width="80"
+                             alt="Poster">
+                    </td>
 
-                <td>
-                    <img th:if="${movie.posterUrl != null}"
-                         th:src="${movie.posterUrl}"
-                         width="80"
-                         alt="Poster">
-                </td>
+                    <td th:text="${movie.title}"></td>
 
-                <td th:text="${movie.title}"></td>
+                    <td>
+                        <span th:text="${movie.duration}"></span> phút
+                    </td>
 
-                <td>
-                    <span th:text="${movie.duration}"></span> phút
-                </td>
+                    <td th:text="${movie.releaseDate}"></td>
 
-                <td th:text="${movie.releaseDate}"></td>
+                    <td th:text="${movie.language}"></td>
 
-                <td th:text="${movie.language}"></td>
+                    <td th:text="${movie.ageRating}"></td>
 
-                <td th:text="${movie.ageRating}"></td>
+                    <td>
+                        <span class="status-active"
+                              th:if="${movie.status.name() == 'NOW_SHOWING'}">
+                            Đang chiếu
+                        </span>
 
-                <td>
-                    <span class="status-active"
-                          th:if="${movie.status.name() == 'NOW_SHOWING'}">
-                        Đang chiếu
-                    </span>
+                        <span class="status-coming"
+                              th:if="${movie.status.name() == 'COMING_SOON'}">
+                            Sắp chiếu
+                        </span>
 
-                    <span class="status-coming"
-                          th:if="${movie.status.name() == 'COMING_SOON'}">
-                        Sắp chiếu
-                    </span>
+                        <span class="status-ended"
+                              th:if="${movie.status.name() == 'ENDED'}">
+                            Ngừng chiếu
+                        </span>
+                    </td>
 
-                    <span class="status-ended"
-                          th:if="${movie.status.name() == 'ENDED'}">
-                        Ngừng chiếu
-                    </span>
-                </td>
+                    <td>
+                       <span class="genre-tag"
+                             th:each="genre : ${movie.genres}"
+                             th:text="${genre}">
+                        </span>
+                    </td>
 
-                <td>
-                    <span class="genre-tag"
-                          th:each="genre : ${movie.genres}"
-                          th:text="${genre.genreName}">
-                    </span>
-                </td>
+                    <td>
+                        <a th:href="@{/admin/movies/edit/{id}(id=${movie.movieId})}"
+                                class="btn btn-warning btn-sm">
+                            Sửa
+                        </a>
 
-                <td>
-                    <a th:href="@{/admin/movies/edit/{id}(id=${movie.movieId})}"
-                            class="btn btn-warning btn-sm">
-                        Sửa
-                    </a>
-
-                    <form th:action="@{/admin/movies/delete/{id}(id=${movie.movieId})}"
-                            method="post"
-                            style="display:inline;">
-                        <button type="submit"
-                                class="btn btn-danger btn-sm"
-                                onclick="return confirm('Bạn có chắc muốn xóa phim này?')">
-                            Xóa
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                        <form th:action="@{/admin/movies/delete/{id}(id=${movie.movieId})}"
+                                method="post"
+                                style="display:inline;">
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Bạn có chắc muốn xóa phim này?')">
+                                Xóa
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     <!--  PAGINATION -->
     <div th:replace="~{layouts/pagination :: pagination}"></div>
 </div>

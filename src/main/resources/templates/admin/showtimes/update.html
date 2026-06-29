@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<!-- CONTENT -->
+<div layout:fragment="content">
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-header">
+                <h3>Cập nhật suất chiếu</h3>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/admin/showtimes/edit/{id}(id=${showtimeId})}"
+                      th:object="${showtimes}"
+                      method="post">
+                    <div class="row">
+                        <!-- Movie -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phim</label>
+
+                            <select class="form-select"
+                                    id="movie"
+                                    th:field="*{movieId}">
+
+                                <option value="">-- Chọn phim --</option>
+
+                                <option th:each="movie : ${movies}"
+                                        th:value="${movie.movieId}"
+                                        th:text="${movie.title}"
+                                        th:attr="data-duration=${movie.duration}">
+                                </option>
+                            </select>
+
+                            <div class="text-danger" th:errors=""></div>
+                        </div>
+
+                        <!-- Room -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phòng chiếu</label>
+                            <select class="form-select"
+                                    th:field="*{roomId}">
+                                <option value="">-- Chọn phòng --</option>
+                                <option th:each="room : ${rooms}"
+                                        th:value="${room.roomId}"
+                                        th:text="${room.name}">
+                                </option>
+                            </select>
+
+                            <div class="text-danger" th:errors="*{roomId}"></div>
+                        </div>
+
+                        <!-- Start Time -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Giờ bắt đầu
+                            </label>
+
+                            <input type="datetime-local"
+                                   class="form-control"
+                                   id="startTime"
+                                   th:field="*{startTime}">
+
+                            <div class="text-danger" th:errors="*{startTime}"></div>
+                        </div>
+
+                        <!-- End Time -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Giờ kết thúc
+                            </label>
+
+                            <input type="text" id="endTime" class="form-control" readonly>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Giá vé
+                            </label>
+
+                            <input type="number"
+                                   class="form-control"
+                                   th:field="*{ticketPrice}">
+
+                            <div class="text-danger" th:errors="*{ticketPrice}"></div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <button class="btn btn-warning">
+                        Cập nhật
+                    </button>
+
+                    <a th:href="@{/admin/showtimes}"
+                       class="btn btn-secondary">
+                        Quay lại
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/showtime.js}"></script>
+</html>

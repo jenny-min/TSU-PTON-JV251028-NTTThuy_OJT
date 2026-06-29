@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container-fluid py-4">
+
+        <h2 class="page-title" th:text="${movie.title}">
+            Chọn suất chiếu
+        </h2>
+
+        <div class="row g-3">
+
+            <div class="col-md-4"
+                 th:each="showtime : ${showtimes}">
+
+                <div class="card showtime-card p-3">
+
+                    <h5 class="showtime-movie"
+                        th:text="${movie.title}">
+                    </h5>
+
+                    <p class="showtime-info">
+                        <i class="fa fa-clock"></i>
+
+                        <span th:text="${#temporals.format(showtime.startTime,'dd/MM HH:mm')}"></span>
+                    </p>
+
+                    <p class="showtime-info">
+                        <i class="fa fa-door-open"></i>
+
+                        <span th:text="${showtime.room.roomName}"></span>
+                    </p>
+
+                    <p class="showtime-price">
+                        <strong th:text="${showtime.ticketPrice + ' ¥'}"></strong>
+                    </p>
+
+                    <a th:href="@{/bookings/showtime/{id}(id=${showtime.showtimeId})}"
+                       class="btn btn-danger w-100">
+                        Chọn suất này
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</html>

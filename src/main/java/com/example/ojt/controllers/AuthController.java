@@ -1,6 +1,7 @@
 package com.example.ojt.controllers;
 
-import com.example.ojt.dtos.requests.RegisterRequest;
+import com.example.ojt.dtos.auth.LoginRequest;
+import com.example.ojt.dtos.auth.RegisterRequest;
 import com.example.ojt.repositories.UserRepository;
 import com.example.ojt.roles.Gender;
 import com.example.ojt.services.AuthService;
@@ -19,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping()
 @RequiredArgsConstructor
 public class AuthController {
-    private final UserRepository ur;
-    private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
 
     //Login
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(Model model) {
+        model.addAttribute("loginRequest", new LoginRequest());
         return "/auth/login";
     }
 
@@ -43,24 +43,19 @@ public class AuthController {
                            Model model) {
         model.addAttribute("genders", Gender.values());
 
-        // VALIDATION ERROR (FIELD LEVEL)
+        //Validation
         if (result.hasErrors()) {
             return "auth/register";
         }
 
-        // PASSWORD CHECK
-        if (!request.getPassword().equals(request.getConfirmPassword())) {
-            model.addAttribute("error", "Mật khẩu không trùng khớp");
+        try {
+            authService.register(request);
+            return "redirect:/login";
+
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+
             return "auth/register";
         }
-
-        boolean success = authService.register(request);
-
-        if (!success) {
-            model.addAttribute("error", "Username hoặc Email đã tồn tại");
-            return "auth/register";
-        }
-
-        return "redirect:/login";
     }
 }

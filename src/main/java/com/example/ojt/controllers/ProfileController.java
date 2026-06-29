@@ -1,9 +1,13 @@
 package com.example.ojt.controllers;
 
+import com.example.ojt.dtos.profile.ChangePasswordRequest;
+import com.example.ojt.dtos.profile.ProfileResponse;
+import com.example.ojt.dtos.profile.UpdateProfileRequest;
 import com.example.ojt.entities.User;
 import com.example.ojt.roles.Gender;
 import com.example.ojt.services.CustomUserDetails;
 import com.example.ojt.services.interfaces.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,54 +27,77 @@ import java.io.IOException;
 @RequestMapping
 @RequiredArgsConstructor
 public class ProfileController {
+
     private final UserService us;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/profile")
-    public String profile(Authentication authentication, Model model) {
-        User user = us.findByUsername(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy"));
+    public String profile(
+            Authentication authentication,
+            Model model
+    ) {
 
-        model.addAttribute("user", user);
+        ProfileResponse profile =
+                us.getProfile(authentication.getName());
+
+        UpdateProfileRequest profileForm =
+                UpdateProfileRequest.builder()
+                        .fullName(profile.getFullName())
+                        .phone(profile.getPhone())
+                        .gender(profile.getGender())
+                        .birthday(profile.getBirthday())
+                        .address(profile.getAddress())
+                        .avatarUrl(profile.getAvatarUrl())
+                        .build();
+
+        model.addAttribute("profile", profile);
+        model.addAttribute("profileForm", profileForm);
         model.addAttribute("genders", Gender.values());
+
         return "profile/index";
     }
 
     @GetMapping("/profile/change-password")
-    public String changePasswordPage(Authentication authentication, Model model) {
+    public String changePasswordPage(Model model) {
 
-        User user = us.findByUsername(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy"));
+        model.addAttribute(
+                "changePasswordRequest",
+                new ChangePasswordRequest());
 
-        model.addAttribute("user", user);
         return "profile/change-password";
     }
 
     @PostMapping("/profile/change-password")
     public String changePassword(
-            @RequestParam String currentPassword,
-            @RequestParam String newPassword,
-            @RequestParam String confirmPassword,
+            @Valid
+            @ModelAttribute("changePasswordRequest")
+            ChangePasswordRequest request,
+            BindingResult result,
             Authentication authentication,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes
+    ) {
+
+        if (result.hasErrors()) {
+            return "profile/change-password";
+        }
 
         try {
+
             us.changePassword(
                     authentication.getName(),
-                    currentPassword,
-                    newPassword,
-                    confirmPassword
+                    request
             );
 
             redirectAttributes.addFlashAttribute(
                     "success",
-                    "Đổi mật khẩu thành công");
+                    "Đổi mật khẩu thành công"
+            );
 
         } catch (RuntimeException e) {
 
             redirectAttributes.addFlashAttribute(
                     "error",
-                    e.getMessage());
+                    e.getMessage()
+            );
         }
 
         return "redirect:/profile";
@@ -79,18 +107,30 @@ public class ProfileController {
     public String updateProfile(
             @AuthenticationPrincipal
             CustomUserDetails principal,
-            @ModelAttribute User user,
+
+            @Valid
+            @ModelAttribute("profile")
+            UpdateProfileRequest request,
+
+            BindingResult result,
+
             @RequestParam("avatarFile")
             MultipartFile file
     ) throws IOException {
 
-        user.setId(
-                principal.getUser().getId());
+        if (result.hasErrors()) {
+            return "profile/index";
+        }
 
-        us.updateProfile(user, file);
+        us.updateProfile(
+                principal.getUser().getId(),
+                request,
+                file
+        );
 
         User updatedUser =
-                us.findById(user.getId());
+                us.findById(
+                        principal.getUser().getId());
 
         CustomUserDetails newPrincipal =
                 new CustomUserDetails(updatedUser);
@@ -106,6 +146,6 @@ public class ProfileController {
                 .getContext()
                 .setAuthentication(auth);
 
-        return "redirect:/dashboard";
+        return "redirect:/profile";
     }
 }

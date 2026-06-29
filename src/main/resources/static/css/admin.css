@@ -20,7 +20,7 @@
 }
 
 /* ===== BUTTON ===== */
-.btn-add-movie {
+.btn-add-primary {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -148,11 +148,10 @@
 .overview-movie {
     background: #f8fafc;
     min-height: 100vh;
-    padding: 30px;
 }
 
 /* ===== HEADER ===== */
-.overview-header {
+.btn-add-primary {
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -173,7 +172,7 @@
 }
 
 /* ===== BUTTON ADD ===== */
-.btn-add-movie {
+.btn-add-primary {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -301,4 +300,26 @@
     text-align: center;
     padding: 40px;
     color: #94a3b8;
+}
+
+/*Showtimw*/
+.card{
+    border-radius:12px;
+}
+
+.table td{
+    vertical-align:middle;
+}
+
+.table th{
+    white-space:nowrap;
+}
+
+.btn{
+    border-radius:8px;
+}
+
+.form-control,
+.form-select{
+    border-radius:8px;
 }

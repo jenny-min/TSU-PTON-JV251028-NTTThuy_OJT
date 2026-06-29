@@ -4,7 +4,139 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/dashboard-base}">
 
-<div layout:fragment="content">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</th:block>
 
+<div layout:fragment="content">
+    <div class="container py-4">
+        <h2 class="page-title">Trang của tôi</h2>
+        <!-- PROFILE -->
+        <div class="profile-card">
+            <img th:src="${user.avatarUrl != null
+            ? user.avatarUrl
+            : '/images/default-avatar.png'}"
+                 class="profile-avatar">
+
+            <h3 class="profile-name" th:text="${user.username}">
+            </h3>
+
+            <p class="profile-email" th:text="${user.email}">
+            </p>
+
+            <a th:href="@{/templates/profile}" class="btn btn-danger">
+                <i class="fa-solid fa-user-pen me-2"></i>
+                Chỉnh sửa hồ sơ
+            </a>
+
+            <hr class="profile-divider">
+
+            <div class="row g-3 mt-2">
+                <div class="col-md-4">
+                    <div class="mini-card">
+                        <i class="fa-solid fa-ticket"></i>
+                        <h4 th:text="${totalTickets}"></h4>
+                        <small>Vé đã đặt</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mini-card">
+                        <i class="fa-solid fa-film"></i>
+                        <h4 th:text="${upcomingTickets}"></h4>
+                        <small>Vé sắp chiếu</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mini-card">
+                        <i class="fa-solid fa-check"></i>
+                        <h4 th:text="${watchedTickets}"></h4>
+                        <small>Đã xem</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PERSONAL -->
+        <div class="card mt-5">
+
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fa-solid fa-user me-2"></i>
+                    Thông tin cá nhân
+                </h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fa-solid fa-user"></i>
+                                Họ và tên:
+                            </span>
+                            <span class="info-value" th:text="${user.fullName}"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fa-solid fa-envelope"></i>
+                                Email:
+                            </span>
+                            <span class="info-value" th:text="${user.email}"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fa-solid fa-phone"></i>
+                                Số điện thoại:
+                            </span>
+
+                            <span class="info-value" th:text="${user.phone}"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fa-solid fa-cake-candles"></i>
+                                Ngày sinh:
+                            </span>
+
+                            <span class="info-value" th:text="${user.birthday != null
+                            ? #temporals.format(user.birthday,'dd/MM/yyyy')
+                            : 'Chưa cập nhật'}"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fa-solid fa-venus-mars"></i>
+                                Giới tính:
+                            </span>
+                            <span class="info-value" th:text="${user.gender ?: 'Chưa cập nhật'}"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="info-item">
+                            <span class="info-label">
+                                <i class="fa-solid fa-location-dot"></i>
+                                Địa chỉ:
+                            </span>
+
+                            <span class="info-value" th:text="${user.address ?: 'Chưa cập nhật'}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </html>

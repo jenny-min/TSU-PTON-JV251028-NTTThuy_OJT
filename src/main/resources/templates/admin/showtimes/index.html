@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/pagination.css}">
+</th:block>
+
+<!-- CONTENT -->
+<div layout:fragment="content">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="overview-title">
+                <h2>Quản lý suất chiếu</h2>
+            </div>
+
+            <a th:href="@{/admin/showtimes/create}"
+               class="btn-add-primary">
+                <i class="bi bi-plus-circle"></i>
+                Tạo suất chiếu
+            </a>
+        </div>
+
+        <!-- Filter -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <form method="get" th:action="@{/admin/showtimes}">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">
+                                Phim
+                            </label>
+                            <select class="form-select">
+                                <option>Tất cả</option>
+                            </select>
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                Phòng
+                            </label>
+                            <select class="form-select">
+                                <option>Tất cả</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                Ngày
+                            </label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-primary w-100">
+                                Tìm kiếm
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Phim</th>
+                            <th>Phòng</th>
+                            <th>Bắt đầu</th>
+                            <th>Kết thúc</th>
+                            <th>Giá vé</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="showtime : ${showtimes}">
+                            <td th:text="${showtime.showtimeId}"></td>
+                            <td th:text="${showtime.movieTitle}"></td>
+                            <td th:text="${showtime.roomName}"></td>
+                            <td th:text="${#temporals.format(showtime.startTime,'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${#temporals.format(showtime.endTime,'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${#numbers.formatDecimal(showtime.ticketPrice,0,'COMMA',0,'POINT')} + ' VNĐ'"></td>
+                            <td>
+                                <span class="badge bg-success"
+                                      th:text="${showtime.status}">
+                                </span>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm"
+                                   th:href="@{/admin/showtimes/edit/{id}(id=${showtime.showtimeId})}">
+                                    Sửa
+                                </a>
+
+                                <form method="post"
+                                      th:action="@{/admin/showtimes/delete/{id}(id=${showtime.showtimeId})}"
+                                      style="display:inline;">
+                                    <button
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Xóa suất chiếu này?')">
+
+                                        Xóa
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
