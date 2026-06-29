@@ -33,18 +33,16 @@ public class ShowtimeController {
                 showtimeService.getShowtimes(page, size);
 
         model.addAttribute("showtimePage", showtimePage);
-        model.addAttribute("showtimes", showtimePage.getContent());
+        model.addAttribute("showtime", showtimePage.getContent());
         return "/admin/showtimes/index";
     }
 
     //Hiển thị form tạo
     @GetMapping("/create")
     public String createForm(Model model) {
-        System.out.println("createForm");
+
         model.addAttribute("showtime", new CreateShowtimeRequest());
-        System.out.println("Movie");
         model.addAttribute("movies", movieService.getAllMovies());
-        System.out.println("Room");
         model.addAttribute("rooms", roomService.getAllRooms());
 
         return "admin/showtimes/create";

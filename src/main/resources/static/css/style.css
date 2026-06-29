@@ -37,6 +37,7 @@ body{
     color: white;
 }
 
+/****************************************/
 /*NAVBAR*/
 .cinema-navbar {
     background: #0f0f0f;
@@ -82,60 +83,92 @@ body{
     transform: scale(.96);
 }
 
-/*SIDEBAR*/
-.dashboard-body {
-    background-color: #f8f9fa;
+/****************************************/
+/* DROPDOWN NEMU*/
+.navbar {
+    height: 70px;
+    padding: 0 20px;
 }
 
-.sidebar {
-    width: 280px;
-    background-color: #111827;
-    color: white;
-    padding: 1.5rem;
-    box-shadow: 4px 0 10px rgba(0,0,0,.15);
+.navbar-brand {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e50914 !important;
+}
+
+.navbar-nav .nav-link {
+    color: #fff !important;
+    font-weight: 500;
+    padding: 10px 16px;
+    transition: .2s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #dc3545 !important;
+}
+
+.navbar .dropdown-menu {
+    min-width: 240px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.15);
+    padding: 8px 0;
+}
+
+.dropdown-item {
+    padding: 10px 18px;
+    transition: .2s;
+}
+
+.dropdown-item:hover {
+    background: #f8f9fa;
+    color: #0d6efd;
+}
+
+.dropdown-item i {
+    width: 22px;
+}
+
+.dropdown-toggle::after {
+    margin-left: .5rem;
 }
 
 .user-avatar {
-    width: 90px;
-    height: 90px;
+    width: 42px;
+    height: 42px;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid #dc3545;
+    border: 2px solid #fff;
 }
 
-.sidebar-link {
-    display: block;
-    padding: 12px 16px;
-    margin-bottom: 6px;
-
-    color: #dee2e6;
-    text-decoration: none;
-
-    border-radius: 10px;
-
-    transition: all .3s ease;
+.user-name {
+    margin-left: 10px;
+    color: white;
+    font-weight: 600;
 }
 
-.sidebar-link:hover {
-    background-color: #1f2937;
-    color: #ffffff;
-
-    transform: translateX(4px);
+main {
+    padding: 24px;
+    min-height: calc(100vh - 70px);
+    background: #f5f5f5;
 }
 
-.sidebar hr {
-    border-color: #495057;
-    margin: 1rem 0;
-}
+@media (max-width: 992px) {
 
-.btn {
-    transition: all .3s ease;
-}
+    .navbar-nav {
+        margin-top: 10px;
+    }
 
-.btn:hover {
-    transform: translateY(-2px);
-}
+    .dropdown-menu {
+        box-shadow: none;
+    }
 
+    .user-name {
+        display: none;
+    }
+
+}
+/****************************************/
 /*LOGIN PAGE*/
 .login-card {
     background: #1a1a1a;
@@ -162,6 +195,7 @@ body{
     color: #ddd;
 }
 
+/****************************************/
 /*REGISTER PAGE*/
 .register-card {
     background: #1a1a1a;
@@ -189,6 +223,7 @@ body{
     color: #ddd;
 }
 
+/****************************************/
 /*Hero Section*/
 .hero-section {
     padding: 80px 0;
@@ -223,6 +258,7 @@ body{
     transform: scale(.97);
 }
 
+/****************************************/
 /*QUICK BOOKING*/
 .quick-booking {
     margin-top: -50px; /* đè lên banner */
@@ -284,6 +320,7 @@ body{
     }
 }
 
+/****************************************/
 /*OVERVIEW-MOVIE*/
 .overview-movie {
     padding-left: 0;
@@ -310,31 +347,35 @@ body{
 }
 
 .movie-card {
-    background: #1f1f1f;
-    border-radius: 18px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
     overflow: hidden;
-    transition: all .3s ease;
+    transition: 0.2s ease;
 }
 
 .movie-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0,0,0,.4);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 .movie-card .card-body {
     background: rgba(31, 31, 31, 0.95);
     border: 1px solid rgba(255,255,255,0.08);
+    color: white;
 }
 
 .poster-wrapper {
-    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
 }
 
 .movie-poster {
     width: 100%;
-    height: 420px;
+    height: 100%;
     object-fit: cover;
-    display: block;
 }
 
 .movie-age {
@@ -352,16 +393,31 @@ body{
     font-weight: 600;
 }
 
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+.card-body .mt-auto {
+    margin-top: auto;
+}
+
 .movie-content {
     padding: 16px;
 }
 
 .movie-title {
-    color: #fff;
     font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 10px;
+    color: #fff;
+    min-height: 42px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
+    margin-bottom: 10px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -414,11 +470,7 @@ body{
     }
 }
 
-
-
-
-
-
+/****************************************/
 /*PROFILE*/
  .profile-wrapper {
      min-height: 100vh;
@@ -488,6 +540,7 @@ body{
     transform: translateY(-2px);
 }
 
+/****************************************/
 /*CHANGE PASSWORD*/
 .password-wrapper {
     min-height: 80vh;
@@ -555,6 +608,7 @@ body{
     letter-spacing: 1px;
 }
 
+/****************************************/
 /*FOOTER*/
 .cinema-footer {
     background: #0f0f0f;

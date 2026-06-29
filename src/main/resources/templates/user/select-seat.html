@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container-fluid py-4">
+        <h2 class="page-title">
+            Chọn ghế
+        </h2>
+        <div class="row g-4">
+            <!-- LEFT -->
+            <div class="col-lg-8">
+                <!-- Movie -->
+                <div class="booking-card">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img th:src="${movie.posterUrl}" class="movie-poster">
+                        </div>
+                        <div class="col-md-9">
+                            <h3 th:text="${movie.title}"></h3>
+                            <div class="movie-meta">
+                            <span>
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <span th:text="${#temporals.format(showtime.startTime,'HH:mm')}"></span>
+                            </span>
+
+                                <span>
+                                <i class="fa-solid fa-clock"></i>
+                                <span th:text="${showtime.startTime}"></span>
+                                </span>
+
+                                <span>
+                                <i class="fa-solid fa-door-open"></i>
+                                <span th:text="${room.roomName}"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen -->
+                <div class="screen-wrapper">
+                    <div class="screen">
+                        SCREEN
+                    </div>
+                </div>
+
+                <!-- Seat -->
+                <div class="seat-map">
+                    <div class="seat-row" th:each="row : ${seatRows}">
+                        <div class="row-label" th:text="${row.key}"></div>
+
+                        <button
+                                th:each="seat : ${row.value}"
+                                type="button"
+                                class="seat"
+
+                                th:classappend="${seat.status.name() == 'BOOKED'} ? ' booked'
+                                  : (${seat.type.name() == 'VIP'} ? ' vip' : ' available')"
+
+                                th:data-id="${seat.id}"
+                                th:data-name="${seat.seatName}"
+                                th:data-price="${seat.price}"
+
+                                th:text="${seat.seatNumber}"
+
+                                th:disabled="${seat.status.name() == 'BOOKED'}">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="seat-legend">
+                    <div>
+                        <span class="legend-seat available"></span>
+                        Ghế trống
+                    </div>
+
+                    <div>
+                        <span class="legend-seat selected"></span>
+                        Đã chọn
+                    </div>
+
+                    <div>
+                        <span class="legend-seat booked"></span>
+                        Đã đặt
+                    </div>
+
+                    <div>
+                        <span class="legend-seat vip"></span>
+                        VIP
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-lg-4">
+                <div class="summary-card">
+                    <h4>Tóm tắt đơn hàng</h4>
+                    <hr>
+
+                    <div class="summary-item">
+                        <span>Phim</span>
+                        <strong th:text="${movie.title}"></strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span>Suất chiếu</span>
+                        <strong>
+                            <span th:text="${#temporals.format(showtime.startTime,'dd/MM')}"></span>
+                            -
+                            <span th:text="${showtime.startTime}"></span>
+                        </strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span>Ghế</span>
+                        <strong id="selectedSeats">
+                            Chưa chọn
+                        </strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span>Số lượng</span>
+                        <strong id="seatCount">
+                            0
+                        </strong>
+                    </div>
+
+                    <hr>
+
+                    <div class="summary-total">
+                        <span>Tổng tiền</span>
+                        <h3 id="totalPrice">
+                            ¥0
+                        </h3>
+                    </div>
+
+                    <form th:action="@{/bookings}" method="post">
+
+                        <input type="hidden" name="showtimeId"
+                               th:value="${showtime.showtimeId}">
+
+                        <input type="hidden" name="seats" id="selectedSeatsInput">
+
+                        <button class="btn btn-warning w-100 mt-3">
+                            Thanh toán
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

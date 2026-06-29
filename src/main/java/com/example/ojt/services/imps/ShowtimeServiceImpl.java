@@ -178,4 +178,15 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                 .bookings(showtime.getBookings())
                 .build();
     }
+
+    @Override
+    public List<ShowtimeResponse> getByMovieId(Long movieId) {
+
+        List<Showtime> showtimes =
+                showtimeRepository.findByMovieMovieId(movieId);
+
+        return showtimes.stream()
+                .map(this::toResponse)
+                .toList();
+    }
 }
