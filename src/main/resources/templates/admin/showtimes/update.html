@@ -33,21 +33,20 @@
                                 </option>
                             </select>
 
-                            <div class="text-danger" th:errors=""></div>
+                            <div class="text-danger" th:errors="*{movieId}"></div>
                         </div>
 
                         <!-- Room -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Phòng chiếu</label>
-                            <select class="form-select"
-                                    th:field="*{roomId}">
-                                <option value="">-- Chọn phòng --</option>
+
+                            <select th:field="*{roomId}">
+                                <option value="">Chọn phòng</option>
                                 <option th:each="room : ${rooms}"
                                         th:value="${room.roomId}"
-                                        th:text="${room.name}">
+                                        th:text="${room.roomName}">
                                 </option>
                             </select>
-
                             <div class="text-danger" th:errors="*{roomId}"></div>
                         </div>
 
@@ -57,10 +56,11 @@
                                 Giờ bắt đầu
                             </label>
 
-                            <input type="datetime-local"
-                                   class="form-control"
+                            <input class="form-control"
                                    id="startTime"
-                                   th:field="*{startTime}">
+                                   th:field="*{startTime}"
+                                   type="datetime-local"
+                                   onchange="updateEndTime()">
 
                             <div class="text-danger" th:errors="*{startTime}"></div>
                         </div>
@@ -71,7 +71,10 @@
                                 Giờ kết thúc
                             </label>
 
-                            <input type="text" id="endTime" class="form-control" readonly>
+                            <input class="form-control"
+                                   id="endTime"
+                                   type="datetime-local"
+                                   readonly>
                         </div>
 
                         <!-- Price -->
@@ -102,7 +105,7 @@
             </div>
         </div>
     </div>
-    <script th:src="@{/js/showtime.js}"></script>
+    <script th:src="@{/js/updateEndTime.js}"></script>
 
 </div>
 </html>

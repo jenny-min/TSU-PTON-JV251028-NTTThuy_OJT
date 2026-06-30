@@ -1,6 +1,7 @@
 package com.example.ojt.entities;
 
 import com.example.ojt.roles.ShowtimeStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +28,7 @@ public class Showtime {
 
     @NotNull(message = "Phòng chiếu không được để trống")
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "room_id")
     private Room room;
 
     @NotNull(message = "Thời gian bắt đầu không được để trống")
@@ -46,5 +47,6 @@ public class Showtime {
     private ShowtimeStatus status;
 
     @OneToMany(mappedBy = "showtime")
+    @JsonIgnore //không trả booking trong response
     private List<Booking> bookings;
 }

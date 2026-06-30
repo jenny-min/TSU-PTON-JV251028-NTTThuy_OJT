@@ -16,9 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ShowtimeResponse {
+    private Long movieId;
+    private String movieTitle;
+    private Long roomId;
+    private String roomName;
     private Long showtimeId;
-    private Movie movie;
-    private Room room;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private BigDecimal ticketPrice;

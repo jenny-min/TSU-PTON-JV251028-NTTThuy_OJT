@@ -21,4 +21,6 @@ public interface ShowtimeService{
     void deleteShowtime(Long id);
 
     List<ShowtimeResponse> getByMovieId(Long movieId);
+
+    void publish(Long id);
 }

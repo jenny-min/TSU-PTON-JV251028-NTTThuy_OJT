@@ -49,22 +49,13 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     //Tạo suất chiếu
     @Override
     public ShowtimeResponse createShowtime(CreateShowtimeRequest request) {
-        //Tìm phim và phòng
-        Movie movie = movieRepository.findById(request.getMovieId())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy phim"));
 
-        Room room = roomRepository.findById(request.getRoomId())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng"));
+        Movie movie = getMovie(request.getMovieId());
+        Room room = getRoom(request.getRoomId());
 
-        LocalDateTime endTime = request.getStartTime()
-                .plusMinutes(movie.getDuration() + cleaningTime);
+        LocalDateTime endTime = calcEndTime(request.getStartTime(), movie);
 
-        validateRoomConflict(
-                room.getRoomId(),
-                request.getStartTime(),
-                endTime,
-                null
-        );
+        validateConflict(room.getRoomId(), request.getStartTime(), endTime, null);
 
         Showtime showtime = new Showtime();
         showtime.setMovie(movie);
@@ -72,8 +63,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         showtime.setStartTime(request.getStartTime());
         showtime.setEndTime(endTime);
         showtime.setTicketPrice(request.getTicketPrice());
-        showtime.setStatus(ShowtimeStatus.UPCOMING);
-
+        showtime.setStatus(ShowtimeStatus.DRAFT);
 
         return toResponse(showtimeRepository.save(showtime));
     }
@@ -84,8 +74,11 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     public UpdateShowtimeRequest getShowtimeForUpdate(Long id) {
 
         Showtime showtime = showtimeRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy suất chiếu"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy suất chiếu"));
+
+        if (showtime.getStatus() != ShowtimeStatus.DRAFT) {
+            throw new IllegalStateException("Chỉ draft mới được chỉnh sửa");
+        }
 
         UpdateShowtimeRequest request = new UpdateShowtimeRequest();
 
@@ -99,27 +92,19 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
     @Override
     public ShowtimeResponse updateShowtime(Long id, UpdateShowtimeRequest request) {
-        Showtime showtime = showtimeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy suất chiếu"));
 
-        Movie movie = movieRepository.findById(request.getMovieId())
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy phim"));
+        Showtime showtime = getShowtime(id);
 
-        Room room = roomRepository.findById(request.getRoomId())
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy phòng"));
+        if (showtime.getStatus() == ShowtimeStatus.PUBLISHED) {
+            throw new IllegalStateException("Showtime đã publish, không thể chỉnh sửa");
+        }
 
-        LocalDateTime endTime =
-                request.getStartTime()
-                        .plusMinutes(movie.getDuration() + cleaningTime);
+        Movie movie = getMovie(request.getMovieId());
+        Room room = getRoom(request.getRoomId());
 
-        validateRoomConflict(
-                room.getRoomId(),
-                request.getStartTime(),
-                endTime,
-                id
-        );
+        LocalDateTime endTime = calcEndTime(request.getStartTime(), movie);
+
+        validateConflict(room.getRoomId(), request.getStartTime(), endTime, id);
 
         showtime.setMovie(movie);
         showtime.setRoom(room);
@@ -127,15 +112,31 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         showtime.setEndTime(endTime);
         showtime.setTicketPrice(request.getTicketPrice());
 
-        return toResponse(
-                showtimeRepository.save(showtime)
-        );
+        return toResponse(showtimeRepository.save(showtime));
     }
 
     //Xóa suất chiếu
     @Override
     public void deleteShowtime(Long id) {
-        showtimeRepository.deleteById(id);
+        Showtime showtime = getShowtime(id);
+
+        if (showtime.getStatus() == ShowtimeStatus.PUBLISHED) {
+            throw new IllegalStateException("Không thể xóa showtime đã publish");
+        }
+
+        showtimeRepository.delete(showtime);
+    }
+
+    @Override
+    public void publish(Long id) {
+        Showtime showtime = getShowtime(id);
+
+        if (showtime.getStatus() != ShowtimeStatus.DRAFT) {
+            throw new IllegalStateException("Chỉ draft mới được publish");
+        }
+
+        showtime.setStatus(ShowtimeStatus.PUBLISHED);
+        showtimeRepository.save(showtime);
     }
 
     //Kiểm tra phòng còn trống hay không, chống xung đột
@@ -166,16 +167,18 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         }
     }
 
+    //Mapper
     private ShowtimeResponse toResponse(Showtime showtime) {
         return ShowtimeResponse.builder()
                 .showtimeId(showtime.getShowtimeId())
-                .movie(showtime.getMovie())
-                .room(showtime.getRoom())
+                .movieId(showtime.getMovie().getMovieId())
+                .movieTitle(showtime.getMovie().getTitle())
+                .roomId(showtime.getRoom().getRoomId())
+                .roomName(showtime.getRoom().getRoomName())
                 .startTime(showtime.getStartTime())
                 .endTime(showtime.getEndTime())
                 .ticketPrice(showtime.getTicketPrice())
                 .status(showtime.getStatus())
-//                .bookings(showtime.getBookings())
                 .build();
     }
 
@@ -188,5 +191,32 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         return showtimes.stream()
                 .map(this::toResponse)
                 .toList();
+    }
+
+    private Showtime getShowtime(Long id) {
+        return showtimeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy showtime"));
+    }
+
+    private Movie getMovie(Long id) {
+        return movieRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy phim"));
+    }
+
+    private Room getRoom(Long id) {
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng"));
+    }
+
+    private LocalDateTime calcEndTime(LocalDateTime start, Movie movie) {
+        return start.plusMinutes(movie.getDuration() + cleaningTime);
+    }
+
+    private void validateConflict(Long roomId, LocalDateTime start, LocalDateTime end, Long id) {
+        long count = showtimeRepository.countConflicts(roomId, id, start, end);
+
+        if (count > 0) {
+            throw new RuntimeException("Phòng bị trùng lịch");
+        }
     }
 }

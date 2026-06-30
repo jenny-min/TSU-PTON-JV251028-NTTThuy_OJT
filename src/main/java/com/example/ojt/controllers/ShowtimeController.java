@@ -29,6 +29,8 @@ public class ShowtimeController {
             @RequestParam(defaultValue = "5") int size,
             Model model) {
 
+        System.out.println("Loading ShowtimePage" + model.toString());
+
         Page<ShowtimeResponse> showtimePage =
                 showtimeService.getShowtimes(page, size);
 
@@ -73,44 +75,29 @@ public class ShowtimeController {
 
     //Form cập nhật
     @GetMapping("/edit/{id}")
-    public String editForm(
-            @PathVariable Long id,
-            Model model) {
+    public String editForm(@PathVariable Long id, Model model) {
 
-        model.addAttribute(
-                "showtimes",
-                showtimeService.getShowtimeForUpdate(id));
+        UpdateShowtimeRequest request = showtimeService.getShowtimeForUpdate(id);
 
-        model.addAttribute(
-                "showtimeId",
-                id);
-
-        model.addAttribute(
-                "movies",
-                movieService.getAllMovies());
-
-        model.addAttribute(
-                "rooms",
-                roomService.getAllRooms());
+        model.addAttribute("showtimes", request);
+        model.addAttribute("movies", movieService.getAllMovies());
+        model.addAttribute("rooms", roomService.getAllRooms());
+        model.addAttribute("showtimeId", id);
 
         return "admin/showtimes/update";
     }
 
-    //Lưu cập nhật
     @PostMapping("/edit/{id}")
     public String update(
             @PathVariable Long id,
-            @Valid
-            @ModelAttribute("showtimes") UpdateShowtimeRequest request,
+            @Valid @ModelAttribute("showtimes") UpdateShowtimeRequest request,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
-
             model.addAttribute("showtimeId", id);
             model.addAttribute("movies", movieService.getAllMovies());
             model.addAttribute("rooms", roomService.getAllRooms());
-
             return "admin/showtimes/update";
         }
 
@@ -123,6 +110,12 @@ public class ShowtimeController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         showtimeService.deleteShowtime(id);
+        return "redirect:/admin/showtimes";
+    }
+
+    @PostMapping("/{id}/publish")
+    public String publish(@PathVariable Long id) {
+        showtimeService.publish(id);
         return "redirect:/admin/showtimes";
     }
 }

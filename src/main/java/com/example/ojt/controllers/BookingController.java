@@ -4,6 +4,7 @@ import com.example.ojt.dtos.booking.BookingResponse;
 import com.example.ojt.dtos.movie.MovieResponse;
 import com.example.ojt.dtos.showtime.ShowtimeResponse;
 import com.example.ojt.entities.Movie;
+import com.example.ojt.entities.Room;
 import com.example.ojt.services.interfaces.BookingService;
 import com.example.ojt.services.interfaces.MovieService;
 import com.example.ojt.services.interfaces.RoomService;
@@ -56,14 +57,18 @@ public class BookingController {
 
         ShowtimeResponse showtime = showtimeService.getShowtimeById(showtimeId);
 
+        Room room = roomService.getRoomById(showtime.getRoomId());
+
+
         model.addAttribute("showtime", showtime);
-        model.addAttribute("movie", showtime.getMovie());
-        model.addAttribute("room", showtime.getRoom());
+        model.addAttribute("movie", showtime.getMovieId());
+        model.addAttribute("room", room);
 
         List<List<String>> seatRows = new ArrayList<>();
 
-        int rows = showtime.getRoom().getSeatsX();
-        int cols = showtime.getRoom().getSeatsY();
+
+        int rows = room.getSeatsX();
+        int cols = room.getSeatsY();
 
         for (int i = 0; i < rows; i++) {
             List<String> row = new ArrayList<>();

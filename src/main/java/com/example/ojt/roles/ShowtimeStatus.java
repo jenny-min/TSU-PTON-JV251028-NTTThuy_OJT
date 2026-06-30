@@ -1,8 +1,7 @@
 package com.example.ojt.roles;
 
 public enum ShowtimeStatus {
-    OPEN,
-    UPCOMING,
-    CLOSED,
+    DRAFT,      // nháp → được sửa
+    PUBLISHED,  // đã publish → khóa sửa
     CANCELLED
 }

@@ -86,21 +86,18 @@
                     <tbody>
                         <tr th:each="showtime : ${showtimes}">
                             <td th:text="${showtime.showtimeId}"></td>
-                            <td th:text="${showtime.movie.title}"></td>
-                            <td th:text="${showtime.room.roomName}"></td>
-<!--                            <td th:text="${showtime.movieTitle}"></td>-->
-<!--                            <td th:text="${showtime.roomName}"></td>-->
+                            <td th:text="${showtime.movieTitle}"></td>
+                            <td th:text="${showtime.roomName}"></td>
                             <td th:text="${#temporals.format(showtime.startTime,'dd/MM/yyyy HH:mm')}"></td>
                             <td th:text="${#temporals.format(showtime.endTime,'dd/MM/yyyy HH:mm')}"></td>
                             <td th:text="${#numbers.formatDecimal(showtime.ticketPrice,0,'COMMA',0,'POINT')} + ' VNĐ'"></td>
                             <td>
                                 <span class="badge"
-                                      th:classappend="
-                                        ${showtime.status.name() == 'OPEN'} ? ' bg-success' :
-                                        (${showtime.status.name() == 'UPCOMING'} ? ' bg-primary' :
-                                        (${showtime.status.name() == 'CLOSED'} ? ' bg-secondary' :
-                                        ' bg-danger'))"
-                                      th:text="${showtime.status}">
+                                        th:text="*{showtime.getStatus()}"
+                                        th:classappend="
+                                        ${showtime.status.name() == 'DRAFT'} ? ' bg-success' :
+                                        (${showtime.status.name() == 'PUBLISH'} ? ' bg-primary' :
+                                        ' bg-danger')">
                                 </span>
                             </td>
                             <td>

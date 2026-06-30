@@ -26,17 +26,12 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
     );
 
     @Query("""
-        SELECT COUNT(s)
-        FROM Showtime s
-        WHERE s.room.roomId = :roomId
-        AND s.showtimeId <> :showtimeId
-        AND :startTime < s.endTime
-        AND :endTime > s.startTime
-    """)
-    long countConflictingShowtimesForUpdate(
-            Long roomId,
-            Long showtimeId,
-            LocalDateTime startTime,
-            LocalDateTime endTime
-    );
+    SELECT COUNT(s)
+    FROM Showtime s
+    WHERE s.room.roomId = :roomId
+    AND (:showtimeId IS NULL OR s.showtimeId <> :showtimeId)
+    AND :startTime < s.endTime
+    AND :endTime > s.startTime
+""")
+    long countConflicts(Long roomId, Long showtimeId, LocalDateTime startTime, LocalDateTime endTime);
 }
