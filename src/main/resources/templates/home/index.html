@@ -82,7 +82,7 @@
 
                         <!-- Đã đăng nhập -->
                         <a sec:authorize="hasRole('USER')"
-                           th:href="@{/movies/{id}/showtimes(id=${movie.movieId})}"
+                           th:href="@{/user/movies/{id}/showtimes(id=${movie.movieId})}"
                            class="btn btn-danger flex-fill">
                             Đặt vé
                         </a>

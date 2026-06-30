@@ -175,7 +175,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                 .endTime(showtime.getEndTime())
                 .ticketPrice(showtime.getTicketPrice())
                 .status(showtime.getStatus())
-                .bookings(showtime.getBookings())
+//                .bookings(showtime.getBookings())
                 .build();
     }
 

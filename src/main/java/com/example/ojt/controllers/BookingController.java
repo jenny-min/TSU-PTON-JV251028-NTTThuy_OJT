@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -58,8 +60,24 @@ public class BookingController {
         model.addAttribute("movie", showtime.getMovie());
         model.addAttribute("room", showtime.getRoom());
 
-        model.addAttribute("seatRows",
-                roomService.getSeatMapByRoom(showtime.getRoom().getRoomId()));
+        List<List<String>> seatRows = new ArrayList<>();
+
+        int rows = showtime.getRoom().getSeatsX();
+        int cols = showtime.getRoom().getSeatsY();
+
+        for (int i = 0; i < rows; i++) {
+            List<String> row = new ArrayList<>();
+
+            char rowName = (char) ('A' + i);
+
+            for (int j = 1; j <= cols; j++) {
+                row.add(rowName + String.valueOf(j));
+            }
+
+            seatRows.add(row);
+        }
+
+        model.addAttribute("seatRows", seatRows);
 
         return "user/select-seat";
     }

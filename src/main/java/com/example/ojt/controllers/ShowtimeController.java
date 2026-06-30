@@ -33,15 +33,19 @@ public class ShowtimeController {
                 showtimeService.getShowtimes(page, size);
 
         model.addAttribute("showtimePage", showtimePage);
-        model.addAttribute("showtime", showtimePage.getContent());
-        return "/admin/showtimes/index";
+        model.addAttribute("showtimes", showtimePage.getContent());
+
+        model.addAttribute("pageData", showtimePage);
+        model.addAttribute("baseUrl", "/admin/showtimes");
+
+        return "admin/showtimes/index";
     }
 
     //Hiển thị form tạo
     @GetMapping("/create")
     public String createForm(Model model) {
 
-        model.addAttribute("showtime", new CreateShowtimeRequest());
+        model.addAttribute("showtimes", new CreateShowtimeRequest());
         model.addAttribute("movies", movieService.getAllMovies());
         model.addAttribute("rooms", roomService.getAllRooms());
 
@@ -52,7 +56,7 @@ public class ShowtimeController {
     @PostMapping("/create")
     public String create(
             @Valid
-            @ModelAttribute("showtime") CreateShowtimeRequest request,
+            @ModelAttribute("showtimes") CreateShowtimeRequest request,
             BindingResult result,
             Model model) {
 
@@ -74,7 +78,7 @@ public class ShowtimeController {
             Model model) {
 
         model.addAttribute(
-                "showtime",
+                "showtimes",
                 showtimeService.getShowtimeForUpdate(id));
 
         model.addAttribute(
@@ -97,7 +101,7 @@ public class ShowtimeController {
     public String update(
             @PathVariable Long id,
             @Valid
-            @ModelAttribute("showtime") UpdateShowtimeRequest request,
+            @ModelAttribute("showtimes") UpdateShowtimeRequest request,
             BindingResult result,
             Model model) {
 

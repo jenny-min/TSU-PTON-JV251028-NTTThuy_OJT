@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
     @Override
     public List<Room> getAllRooms() {

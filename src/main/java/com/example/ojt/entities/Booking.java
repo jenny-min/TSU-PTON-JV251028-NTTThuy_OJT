@@ -10,6 +10,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "bookings")
@@ -53,4 +54,7 @@ public class Booking {
     @NotBlank(message = "Ghế đặt không được để trống")
     @Column(length = 255)
     private String bookingSeat;
+
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 }

@@ -1,32 +1,32 @@
 <div th:fragment="pagination">
-    <nav th:if="${moviePage.totalPages > 1}">
+    <nav th:if="${pageData != null and pageData.totalPages > 1}">
         <ul class="pagination justify-content-center mt-4">
 
             <!-- Previous -->
             <li class="page-item"
-                th:classappend="${moviePage.first} ? 'disabled'">
+                th:classappend="${pageData.first} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{/admin/movies(page=${moviePage.number - 1})}">
+                   th:href="${baseUrl + '?page=' + (pageData.number - 1)}">
                     Trước
                 </a>
             </li>
 
             <!-- Page Numbers -->
             <li class="page-item"
-                th:each="i : ${#numbers.sequence(0, moviePage.totalPages - 1)}"
-                th:classappend="${i == moviePage.number} ? 'active'">
+                th:each="i : ${#numbers.sequence(0, pageData.totalPages - 1)}"
+                th:classappend="${i == pageData.number} ? 'active'">
 
                 <a class="page-link"
-                   th:href="@{/admin/movies(page=${i})}"
-                   th:text="${i + 1}">
+                   th:href="${baseUrl + '?page=' + i}"
+                   th:text="${i + 1}">>
                 </a>
             </li>
 
             <!-- Next -->
             <li class="page-item"
-                th:classappend="${moviePage.last} ? 'disabled'">
+                th:classappend="${pageData.last} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{/admin/movies(page=${moviePage.number + 1})}">
+                   th:href="${baseUrl + '?page=' + (pageData.number + 1)}">
                     Sau
                 </a>
             </li>
