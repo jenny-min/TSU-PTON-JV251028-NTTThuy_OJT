@@ -328,4 +328,4 @@ dtos
     ├── BookingResponse ok
     └── TicketResponse ok
 
-    th:src="${movie.posterUrl}"
+2026/06/30 đã ok core-5

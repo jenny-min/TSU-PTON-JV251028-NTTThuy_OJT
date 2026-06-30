@@ -23,7 +23,7 @@
                 <div class="card showtime-card p-3">
 
                     <h5 class="showtime-movie"
-                        th:text="${movie.title}">
+                        th:text="${showtime.movieTitle}">
                     </h5>
 
                     <p class="showtime-info">
@@ -35,7 +35,7 @@
                     <p class="showtime-info">
                         <i class="fa fa-door-open"></i>
 
-                        <span th:text="${showtime.room.roomName}"></span>
+                        <span th:text="${showtime.roomName}"></span>
                     </p>
 
                     <p class="showtime-price">

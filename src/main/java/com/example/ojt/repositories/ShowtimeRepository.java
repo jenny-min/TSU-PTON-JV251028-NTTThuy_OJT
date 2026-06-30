@@ -13,19 +13,6 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
     List<Showtime> findByMovieMovieId(Long movieId);
 
     @Query("""
-        SELECT COUNT(s)
-        FROM Showtime s
-        WHERE s.room.roomId = :roomId
-        AND :startTime < s.endTime
-        AND :endTime > s.startTime
-    """)
-    long countConflictingShowtimes(
-            Long roomId,
-            LocalDateTime startTime,
-            LocalDateTime endTime
-    );
-
-    @Query("""
     SELECT COUNT(s)
     FROM Showtime s
     WHERE s.room.roomId = :roomId
