@@ -1,4 +1,4 @@
-<div th:fragment="pagination">
+<div th:fragment="pagination(pageData, baseUrl)">
     <nav th:if="${pageData != null and pageData.totalPages > 1}">
         <ul class="pagination justify-content-center mt-4">
 

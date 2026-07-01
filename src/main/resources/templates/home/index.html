@@ -93,6 +93,6 @@
     </section>
 
     <!--  PAGINATION -->
-    <div th:replace="~{layouts/pagination :: pagination}"></div>
+    <div th:replace="~{layouts/pagination :: pagination(${pageData}, ${baseUrl})}"></div>
 </div>
 </html>

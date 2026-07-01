@@ -106,118 +106,6 @@ Movie
   Room      1 - N Showtime
   Showtime  1 - N Booking
 
-
-CORE-01: Đăng ký, đăng nhập. Mật khẩu lưu trong database bắt buộc phải được băm (hash) bảo mật.
-
-GIAO DIỆN:
-templates
-│
-├── auth
-│   ├── login.html
-│   └── register.html
-│
-├── profile
-│   ├── profile.html
-│   ├── edit-profile.html
-│   └── change-password.html
-│
-├── home
-│   └── index.html
-│
-└── layouts
-    ├── header.html
-    ├── footer.html
-    └── navbar.html
-
-CORE-2: Kiểm soát truy cập.
-Khách hàng không được vào trang của Nhân viên rạp;
-Nhân viên rạp không được vào trang cấu hình của Admin.
-USER:
-  /home
-  /profile
-
-STAFF:
-  /staff/movies
-  /staff/bookings
-
-ADMIN:
-  /admin/users
-  /admin/config
-
-CORE 3: Quản lý Hồ sơ cá nhân (Profile) cho từng loại người dùng
-
-USER
-Xem hồ sơ cá nhân
-Cập nhật thông tin cá nhân
-
-/user/dashboard
-
-- Xem phim
-- Đặt vé
-- Chọn ghế
-- Hủy vé
-- Lịch sử mua vé
-
-STAFF
-Xem hồ sơ nhân viên
-Cập nhật thông tin được phép sửa
-
-/staff/dashboard
-
-- Kiểm tra vé
-- Xuất vé tại quầy
-
-
-ADMIN
-Xem hồ sơ Admin
-Cập nhật thông tin cá nhân
-
-/admin/dashboard
-
-- Quản lý phim
-- Quản lý lịch chiếu
-- Báo cáo doanh thu
-- Quản lý người dùng
-
-controller/
- └── ProfileController
-
-service/
- └── UserService
-
-dto/
- ├── UpdateProfileRequest
- └── ChangePasswordRequest
-
- templates/
- ├── layouts/
- │   ├── admin-layout.html
- │   ├── staff-layout.html
- │   └── user-layout.html
- |
- ├── profile/
- │   └── index.html
- |   └── change-password.html (nâng cao)
- │
- ├── admin/
- │   └── dashboard.html
- │
- ├── staff/
- │   └── dashboard.html
- │
- └── user/
-     └── dashboard.html
-
-GIAO DIỆN
-home
-header
-Navbar
-Hero Banner
-Phim đang chiếu
-Phim sắp chiếu
-Footer
-
-
 tone màu:
 Background: bg-slate-900
 Card:       bg-slate-800
@@ -228,32 +116,6 @@ Text:       text-white
 ////////DATA
 User:
 nva nva111
-
-2026/06/21
-CORE-04: Admin thực hiện quản lý (Thêm/Xem/Sửa/Xóa) cho danh mục Phim.
-Các danh mục "Thể loại phim", "Phòng chiếu" sẽ được hardcode (seed data) trực tiếp trong Database
-để làm dữ liệu nền tảng cho hệ thống.
-
-templates
-└── admin
-    └── movie
-        ├── index.html
-        ├── create.html
-        └── edit.html
-
-        Roadmap CORE-04
-        ✅ Tạo entity Genre ok
-        ✅ Tạo entity Room ok
-        ✅ Seed dữ liệu ok
-        ✅ Tạo entity Movie ok
-        ✅ Repository ok
-        ✅ Service
-        ✅ CRUD Controller
-        ✅ Giao diện CRUD
-        ✅ Validation
-        ⏭ Upload poster (nếu yêu cầu)
-        ⏭ Phân quyền chỉ Admin được truy cập
-
 
 Thêm link css khi dùng thymeleaf
  <!--  fragment riêng cho CSS  -->
@@ -270,69 +132,16 @@ tìm hiểu thêm về thymeleaf:
 - th:replace
 - th:block layout:fragment
 - layout:decorate
-- Viết hàm js phân trang và tìm kiếm (thêm) - LINK VÀO HTML
-- Viết hàm js gọi về các trang(nếu có thời gian) - LINK VÀO HTML
-
-
-chưa render ra trang chủ (+ phân trang, thêm tìm kiếm theo tên, thể loại phim)
-
-2026/06/24
-CORE-5: bài toán kiểm tra khoảng thời gian
-Showtime
-- id
-- movie
-- room
-- startTime
-- endTime
-
-endTime = startTime
-          + duration
-          + cleaningTime;
-
-Existing:
-start1 ----- end1
-
-New:
-start2 ----- end2
-
-start1 < end2
-&&
-start2 < end1 =>Conflict
-
-Cần xử lý query join bảng
-tạo showtime cần tránh xung đột giờ chiếu
-
-dtos
-├── auth
-│   ├── RegisterRequest ok
-│   ├── LoginRequest ok
-│   └── ChangePasswordRequest ok
-│
-├── profile
-│   ├── UpdateProfileRequest ok
-|   ├── ChangePasswordRequest ok
-│   └── ProfileResponse ok
-│
-├── movie
-│   ├── CreateMovieRequest ok
-│   ├── UpdateMovieRequest ok
-│   └── MovieResponse ok
-│
-├── showtime
-│   ├── CreateShowtimeRequest ok
-|   ├── UpdateShowtimeRequest ok
-│   └── ShowtimeResponse ok
-│
-└── booking
-    ├── BookingRequest ok
-    ├── BookingResponse ok
-    └── TicketResponse ok
 
 2026/06/30 đã ok core-5
 đã chọn được suất chiếu
 đang chua render được page select-seat vì loi thymeleaf line23-34 trong user/select-seat
 
+CORE-6: còn thiếu
+Check Seat -> Lock ->  SeatSave  -> BookingSave ->  Ticket -> Commit -> Rollback nếu lỗi
+
 2026/07/02
+Đã ok phân trang, dùng chung biến pageData, baseUrl
 Đã tạo cơ bản core-7
 - Số hiển thị trang user/dashboard -> đen + render dữ liệu vé đã đặt, vé sắp chiếu, đã xem
 (hiện tại đang 0 vì chưa đặt xong vé)
