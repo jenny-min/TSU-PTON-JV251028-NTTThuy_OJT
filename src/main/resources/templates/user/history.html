@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/history.css}">
+</th:block>
+<div layout:fragment="content">
+    <div class="container">
+        <h2>LỊCH SỬ ĐẶT VÉ</h2>
+        <div class="card"
+             th:each="history : ${histories}">
+            <div class="header">
+                <span class="movie"
+                      th:text="${history.movieTitle}">
+                </span>
+                <span class="status"
+                      th:text="${history.bookingStatus}">
+                </span>
+            </div>
+
+            <div class="content">
+                <p>
+                    <strong>Suất chiếu:</strong>
+                    <span th:text="${#temporals.format(history.showtime,'dd/MM/yyyy HH:mm')}"></span>
+                </p>
+
+                <p>
+                    <strong>Phòng:</strong>
+                    <span th:text="${history.roomName}"></span>
+                </p>
+
+                <p>
+                    <strong>Ghế:</strong>
+                    <span th:text="${#strings.listJoin(history.seats, ', ')}"></span>
+                </p>
+
+                <p>
+                    <strong>Thanh toán:</strong>
+                    <span th:text="${history.paymentMethod}"></span>
+                </p>
+
+                <p>
+                    <strong>Tổng tiền:</strong>
+                    <span th:text="${#numbers.formatDecimal(history.totalAmount,0,'COMMA',0,'POINT')}"></span>
+                    VNĐ
+                </p>
+
+                <p>
+                    <strong>Ngày đặt:</strong>
+                    <span th:text="${#temporals.format(history.bookingDate,'dd/MM/yyyy HH:mm')}"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

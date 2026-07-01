@@ -7,7 +7,7 @@
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/user.css}">
 </th:block>
-
+<body></body>
 <div layout:fragment="content">
     <div class="container-fluid py-4">
 
@@ -42,15 +42,12 @@
                         <strong th:text="${showtime.ticketPrice + ' ¥'}"></strong>
                     </p>
 
-                    <a th:href="@{/bookings/showtime/{id}(id=${showtime.showtimeId})}"
+                    <a th:href="@{/user/bookings/showtime/{id}(id=${showtime.showtimeId})}"
                        class="btn btn-danger w-100">
                         Chọn suất này
                     </a>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>

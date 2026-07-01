@@ -1,5 +1,6 @@
 package com.example.ojt.services.imps;
 
+import com.example.ojt.dtos.booking.BookingHistoryResponse;
 import com.example.ojt.dtos.booking.BookingResponse;
 import com.example.ojt.dtos.booking.CreateBookingRequest;
 import com.example.ojt.entities.Booking;
@@ -103,5 +104,30 @@ public class BookingServiceImpl implements BookingService {
         res.setBookingStatus(booking.getBookingStatus());
 
         return res;
+    }
+
+    @Override
+    public List<BookingHistoryResponse> getBookingHistory(Long userId) {
+        List<Booking> bookings =
+                bookingRepository.findHistoryByUser(userId);
+
+        return bookings.stream().map(booking -> {
+
+            BookingHistoryResponse dto = new BookingHistoryResponse();
+
+            dto.setBookingId(booking.getBookingId());
+            dto.setMovieTitle(booking.getShowtime().getMovie().getTitle());
+            dto.setRoomName(booking.getShowtime().getRoom().getRoomName());
+            dto.setShowtime(booking.getShowtime().getStartTime());
+            dto.setBookingDate(booking.getBookingDate());
+            dto.setTotalAmount(booking.getTotalAmount());
+            dto.setPaymentMethod(booking.getPaymentMethod());
+            dto.setBookingStatus(booking.getBookingStatus());
+            dto.setSeats(booking.getTickets().stream().map(Ticket::getSeatCode).toList()
+            );
+
+            return dto;
+
+        }).toList();
     }
 }

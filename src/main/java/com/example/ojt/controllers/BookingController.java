@@ -3,12 +3,9 @@ package com.example.ojt.controllers;
 import com.example.ojt.dtos.booking.BookingResponse;
 import com.example.ojt.dtos.movie.MovieResponse;
 import com.example.ojt.dtos.showtime.ShowtimeResponse;
-import com.example.ojt.entities.Movie;
 import com.example.ojt.entities.Room;
-import com.example.ojt.services.interfaces.BookingService;
-import com.example.ojt.services.interfaces.MovieService;
-import com.example.ojt.services.interfaces.RoomService;
-import com.example.ojt.services.interfaces.ShowtimeService;
+import com.example.ojt.entities.User;
+import com.example.ojt.services.interfaces.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +28,7 @@ public class BookingController {
     private final MovieService movieService;
     private final RoomService roomService;
     private final BookingService bookingService;
+    private  final UserService userService;
 
     @GetMapping("/movies/{movieId}/showtimes")
     public String showShowtimes(@PathVariable Long movieId,
@@ -96,5 +94,21 @@ public class BookingController {
         model.addAttribute("bookings", bookings);
 
         return "user/my-bookings";
+    }
+
+    //Xem booking
+    @GetMapping("/history")
+    public String bookingHistory(Model model,
+                                 Principal principal) {
+
+        System.out.println("History");
+
+        Optional<User> user = userService.findByEmail(principal.getName());
+
+        model.addAttribute(
+                "histories",
+                bookingService.getBookingHistory(user.get().getId()));
+
+        return "user/history";
     }
 }

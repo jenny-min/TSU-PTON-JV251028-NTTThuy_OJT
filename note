@@ -329,3 +329,12 @@ dtos
     └── TicketResponse ok
 
 2026/06/30 đã ok core-5
+đã chọn được suất chiếu
+đang chua render được page select-seat vì loi thymeleaf line23-34 trong user/select-seat
+
+2026/07/02
+Đã tạo cơ bản core-7
+- Số hiển thị trang user/dashboard -> đen + render dữ liệu vé đã đặt, vé sắp chiếu, đã xem
+(hiện tại đang 0 vì chưa đặt xong vé)
+- Page user/history đang không render được dữ liệu (có thể vì chưa đặt vé)
+=> hoàn chỉnh khâu đặt vé và suất booking
