@@ -171,5 +171,7 @@ public class MovieServiceImpl implements MovieService {
                 .genres( movie.getGenres()
                         .stream()
                         .map(Genre::getGenreName)
-                        .collect(Collectors.toSet()) ) .build(); }
+                        .collect(Collectors.toSet()) )
+                .build();
+    }
 }

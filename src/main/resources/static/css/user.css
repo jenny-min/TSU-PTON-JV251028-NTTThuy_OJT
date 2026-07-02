@@ -112,6 +112,7 @@ body {
 ========================= */
 .booking-card {
     background: #fff;
+    color: #0d0d0d;
     border-radius: 16px;
     padding: 25px;
     box-shadow: 0 5px 15px rgba(0,0,0,.08);
@@ -191,18 +192,19 @@ body {
 
 .selected {
     background: #ffc107;
-    color: #000;
 }
 
 .booked {
     background: #dc3545;
-    color: #fff;
     cursor: not-allowed;
 }
 
 .vip {
     background: #8e44ad;
-    color: #fff;
+}
+
+.seat.selected{
+    background:#28a745;
 }
 
 /* =========================
@@ -272,6 +274,66 @@ body {
 .btn-warning:hover {
     background: #c40812;
     color: #fff;
+}
+
+/*Booking confirm*/
+.booking-table{
+    margin-top:10px;
+}
+
+.booking-table th{
+    width:140px;
+    color:#666;
+    font-weight:600;
+}
+
+.booking-table td{
+    font-weight:500;
+}
+
+.price{
+    color:#dc3545;
+    font-size:24px;
+    font-weight:700;
+}
+
+.booking-summary{
+    border-radius:16px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    position:sticky;
+    top:30px;
+}
+
+.booking-summary h4{
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.btn-confirm{
+    background:#198754 !important;
+    color:#fff;
+    border:none;
+    height:48px;
+    font-weight:600;
+}
+
+.btn-confirm:hover{
+    background:#157347;
+    color:#fff;
+}
+
+.btn-back{
+    border:1px solid #198754;
+    color:#198754!important;
+    background:#fff;
+    height:48px;
+    font-weight:600;
+}
+
+.btn-back:hover{
+    background:#198754;
+    color:#fff;
 }
 
 /* =========================

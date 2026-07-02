@@ -1,12 +1,7 @@
 package com.example.ojt.services.imps;
 
-import com.example.ojt.dtos.booking.BookingHistoryResponse;
-import com.example.ojt.dtos.booking.BookingResponse;
-import com.example.ojt.dtos.booking.CreateBookingRequest;
-import com.example.ojt.entities.Booking;
-import com.example.ojt.entities.Showtime;
-import com.example.ojt.entities.Ticket;
-import com.example.ojt.entities.User;
+import com.example.ojt.dtos.booking.*;
+import com.example.ojt.entities.*;
 import com.example.ojt.repositories.BookingRepository;
 import com.example.ojt.repositories.ShowtimeRepository;
 import com.example.ojt.repositories.TicketRepository;
@@ -129,5 +124,44 @@ public class BookingServiceImpl implements BookingService {
             return dto;
 
         }).toList();
+    }
+
+    @Override
+    public ConfirmBookingResponse getConfirmBooking(ConfirmBookingRequest request) {
+
+        Showtime showtime = showtimeRepository.findById(request.getShowtimeId())
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy dữ liệu"));
+
+        Movie movie = showtime.getMovie();
+        Room room = showtime.getRoom();
+
+        String bookingSeat = request.getBookingSeat();
+
+        System.out.println("SEATS RAW = " + bookingSeat);
+
+        if (bookingSeat == null || bookingSeat.isBlank()) {
+            throw new RuntimeException("Ghế không được để trống");
+        }
+
+        List<String> seatCodes = Arrays.stream(bookingSeat.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+
+        int seatCount = seatCodes.size();
+
+        BigDecimal totalPrice =
+                showtime.getTicketPrice()
+                        .multiply(BigDecimal.valueOf(seatCount));
+
+        ConfirmBookingResponse response = new ConfirmBookingResponse();
+        response.setMovie(movie);
+        response.setShowtime(showtime);
+        response.setRoom(room);
+        response.setSeatCodes(seatCodes);
+        response.setSeatCount((long) seatCount);
+        response.setTotalPrice(totalPrice);
+
+        return response;
     }
 }

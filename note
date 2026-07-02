@@ -133,17 +133,16 @@ tìm hiểu thêm về thymeleaf:
 - th:block layout:fragment
 - layout:decorate
 
-2026/06/30 đã ok core-5
-đã chọn được suất chiếu
-đang chua render được page select-seat vì loi thymeleaf line23-34 trong user/select-seat
-
-CORE-6: còn thiếu
-Check Seat -> Lock ->  SeatSave  -> BookingSave ->  Ticket -> Commit -> Rollback nếu lỗi
-
-2026/07/02
-Đã ok phân trang, dùng chung biến pageData, baseUrl
 Đã tạo cơ bản core-7
 - Số hiển thị trang user/dashboard -> đen + render dữ liệu vé đã đặt, vé sắp chiếu, đã xem
 (hiện tại đang 0 vì chưa đặt xong vé)
 - Page user/history đang không render được dữ liệu (có thể vì chưa đặt vé)
 => hoàn chỉnh khâu đặt vé và suất booking
+
+Chưa chỉnh giá vé thường và vé VIP cũng như couple
+Đăng nhập user nên trả về trang giao diện home
+
+🔒 Lock ghế tạm thời (hold 5–10 phút) để tránh 2 người đặt cùng lúc
+⚡ Realtime update ghế đã đặt (WebSocket)
+⏳ Lưu Booking
+⏳ Mở lại sơ đồ → ghế đã đặt chuyển sang màu đỏ (BOOKED)

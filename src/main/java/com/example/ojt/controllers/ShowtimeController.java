@@ -29,8 +29,6 @@ public class ShowtimeController {
             @RequestParam(defaultValue = "5") int size,
             Model model) {
 
-        System.out.println("Loading ShowtimePage" + model.toString());
-
         Page<ShowtimeResponse> showtimePage =
                 showtimeService.getShowtimes(page, size);
 

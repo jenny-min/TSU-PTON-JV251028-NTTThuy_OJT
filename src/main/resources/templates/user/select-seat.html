@@ -9,7 +9,7 @@
 </th:block>
 
 <div layout:fragment="content">
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 text-dark">
         <h2 class="page-title">
             Chọn ghế
         </h2>
@@ -54,23 +54,24 @@
                 <!-- Seat -->
                 <div class="seat-map">
                     <div class="seat-row" th:each="row : ${seatRows}">
-                        <div class="row-label" th:text="${row.key}"></div>
+
+                        <div class="row-label"
+                             th:text="${#strings.substring(row.get(0),0,1)}">
+                        </div>
 
                         <button
-                                th:each="seat : ${row.value}"
-                                type="button"
+                                th:each="seat : ${row}"
                                 class="seat"
 
-                                th:classappend="${seat.status.name() == 'BOOKED'} ? ' booked'
-                                  : (${seat.type.name() == 'VIP'} ? ' vip' : ' available')"
+                                th:classappend="${bookedSeats.contains(seat)} ? ' booked'
+                                : (${vipSeats.contains(seat)} ? ' vip'
+                                : (${coupleSeats.contains(seat)} ? ' couple'
+                                : ' available'))"
 
-                                th:data-id="${seat.id}"
-                                th:data-name="${seat.seatName}"
-                                th:data-price="${seat.price}"
-
-                                th:text="${seat.seatNumber}"
-
-                                th:disabled="${seat.status.name() == 'BOOKED'}">
+                                th:text="${seat}"
+                                th:data-name="${seat}"
+                                th:data-price="${ticketPrice}"
+                                th:disabled="${bookedSeats.contains(seat)}">
                         </button>
                     </div>
                 </div>
@@ -121,9 +122,7 @@
 
                     <div class="summary-item">
                         <span>Ghế</span>
-                        <strong id="selectedSeats">
-                            Chưa chọn
-                        </strong>
+                        <strong id="selectedSeats">Chưa chọn</strong>
                     </div>
 
                     <div class="summary-item">
@@ -138,19 +137,20 @@
                     <div class="summary-total">
                         <span>Tổng tiền</span>
                         <h3 id="totalPrice">
-                            ¥0
+                            0 VND
                         </h3>
                     </div>
+                    <form th:action="@{/user/bookings/confirm}" id="confirmForm" method="post">
 
-                    <form th:action="@{/bookings}" method="post">
-
-                        <input type="hidden" name="showtimeId"
+                        <input type="hidden"
+                               name="showtimeId"
                                th:value="${showtime.showtimeId}">
 
-                        <input type="hidden" name="seats" id="selectedSeatsInput">
+                        <input type="hidden" name="bookingSeat" id="selectedSeatsInput">
 
-                        <button class="btn btn-warning w-100 mt-3">
-                            Thanh toán
+                        <button type="submit"
+                                class="btn btn-warning w-100 mt-3">
+                            Đặt vé
                         </button>
 
                     </form>
@@ -158,5 +158,6 @@
             </div>
         </div>
     </div>
+    <script th:src="@{/js/select-seat.js}"></script>
 </div>
 </html>

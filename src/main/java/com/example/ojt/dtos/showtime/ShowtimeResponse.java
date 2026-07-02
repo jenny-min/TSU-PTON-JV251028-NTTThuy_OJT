@@ -1,5 +1,6 @@
 package com.example.ojt.dtos.showtime;
 
+import com.example.ojt.dtos.movie.MovieResponse;
 import com.example.ojt.entities.Booking;
 import com.example.ojt.entities.Movie;
 import com.example.ojt.entities.Room;
@@ -26,4 +27,5 @@ public class ShowtimeResponse {
     private BigDecimal ticketPrice;
     private ShowtimeStatus status;
     private List<Booking> bookings;
+    private MovieResponse movie;
 }

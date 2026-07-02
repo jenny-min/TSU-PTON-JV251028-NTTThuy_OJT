@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container py-5 text-dark">
+        <h2 class="page-title">
+            Xác nhận đặt vé
+        </h2>
+
+        <div class="row g-4">
+            <!-- Left -->
+            <div class="col-lg-8">
+                <div class="booking-card">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img th:src="${confirm.movie.posterUrl}" class="movie-poster">
+                        </div>
+
+                        <div class="col-md-8">
+                            <h3 th:text="${confirm.movie.title}"></h3>
+                            <table class="table booking-table">
+                                <tr>
+                                    <th>Suất chiếu</th>
+                                    <td th:text="${#temporals.format(confirm.showtime.startTime,'HH:mm - dd/MM/yyyy')}"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Phòng</th>
+                                    <td th:text="${confirm.room.roomName}"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Ghế</th>
+                                    <td th:text="${confirm.seatCodes != null ? #strings.listJoin(confirm.seatCodes, ', ') : ''}">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Số lượng</th>
+                                    <td th:text="${confirm.seatCount}"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Tổng tiền</th>
+                                    <td class="price"
+                                        th:text="${#numbers.formatDecimal(confirm.totalPrice,0,'COMMA',0,'POINT')} + ' VND'">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right -->
+            <div class="col-lg-4">
+                <div class="booking-summary">
+                    <h4>Xác nhận</h4>
+                    <p>
+                        Vui lòng kiểm tra lại thông tin trước khi tiếp tục thanh toán.
+                    </p>
+
+                    <form th:action="@{/bookings/payment}" method="post">
+
+                        <input type="hidden" name="showtimeId"
+                               th:value="${confirm.showtime.showtimeId}">
+
+                        <input type="hidden" name="selectedSeats"
+                               th:value="${confirm.seatCodes}">
+
+                        <input class="mb-3" type="checkbox" name="agree" required>
+                        <label>Tôi xác nhận thông tin chính xác</label>
+
+                        <button type="submit" class="btn btn-confirm w-100 mb-3">
+                            Thanh toán
+                        </button>
+                    </form>
+
+                    <form th:action="@{/bookings/showtime/{id}(id=${confirm.showtime.showtimeId})}"
+                            method="get">
+                        <button class="btn btn-back w-100">
+                            ← Quay lại chọn ghế
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
