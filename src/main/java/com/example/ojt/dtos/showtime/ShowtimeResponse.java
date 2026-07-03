@@ -2,9 +2,7 @@ package com.example.ojt.dtos.showtime;
 
 import com.example.ojt.dtos.movie.MovieResponse;
 import com.example.ojt.entities.Booking;
-import com.example.ojt.entities.Movie;
-import com.example.ojt.entities.Room;
-import com.example.ojt.roles.ShowtimeStatus;
+import com.example.ojt.enums.ShowtimeStatus;
 import lombok.*;
 
 import java.math.BigDecimal;

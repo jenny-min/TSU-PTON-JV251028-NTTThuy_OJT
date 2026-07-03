@@ -1,5 +1,6 @@
 package com.example.ojt.dtos.booking;
 
+import com.example.ojt.enums.BookingStatus;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -20,4 +21,7 @@ public class TicketResponse {
     private BigDecimal totalAmount;
     private String paymentMethod;
     private LocalDateTime bookingDate;
+    private BookingStatus bookingStatus;
+    private BigDecimal ticketPrice;
+    private Long seatCount;
 }

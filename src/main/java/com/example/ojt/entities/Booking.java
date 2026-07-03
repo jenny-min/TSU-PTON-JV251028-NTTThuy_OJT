@@ -1,6 +1,6 @@
 package com.example.ojt.entities;
 
-import com.example.ojt.roles.BookingStatus;
+import com.example.ojt.enums.BookingStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

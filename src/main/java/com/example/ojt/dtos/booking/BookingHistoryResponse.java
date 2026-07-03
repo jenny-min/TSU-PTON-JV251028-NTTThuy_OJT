@@ -1,6 +1,6 @@
 package com.example.ojt.dtos.booking;
 
-import com.example.ojt.roles.BookingStatus;
+import com.example.ojt.enums.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

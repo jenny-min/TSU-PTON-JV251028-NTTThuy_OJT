@@ -9,7 +9,7 @@ import com.example.ojt.entities.Showtime;
 import com.example.ojt.repositories.MovieRepository;
 import com.example.ojt.repositories.RoomRepository;
 import com.example.ojt.repositories.ShowtimeRepository;
-import com.example.ojt.roles.ShowtimeStatus;
+import com.example.ojt.enums.ShowtimeStatus;
 import com.example.ojt.services.interfaces.ShowtimeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

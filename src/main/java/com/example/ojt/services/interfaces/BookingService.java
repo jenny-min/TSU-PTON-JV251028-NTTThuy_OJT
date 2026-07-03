@@ -12,7 +12,11 @@ public interface BookingService {
 
     BookingResponse mapToResponse(Booking booking);
 
-    List<BookingHistoryResponse> getBookingHistory(Long userId);
+    List<TicketResponse> getBookingHistory(Long userId);
 
     ConfirmBookingResponse getConfirmBooking(ConfirmBookingRequest request);
+
+    ConfirmBookingResponse buildConfirm(BookingRequest request);
+
+    TicketResponse checkout(BookingRequest request, String email);
 }

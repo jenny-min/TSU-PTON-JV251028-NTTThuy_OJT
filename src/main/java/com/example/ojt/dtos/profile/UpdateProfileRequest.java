@@ -1,6 +1,6 @@
 package com.example.ojt.dtos.profile;
 
-import com.example.ojt.roles.Gender;
+import com.example.ojt.enums.Gender;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 

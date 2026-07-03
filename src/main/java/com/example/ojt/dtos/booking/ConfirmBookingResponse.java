@@ -14,6 +14,7 @@ public class ConfirmBookingResponse {
     private Showtime showtime;
     private Room room;
     private List<String> seatCodes;
+    private String bookingSeat;
     private Long seatCount;
     private BigDecimal totalPrice;
 }

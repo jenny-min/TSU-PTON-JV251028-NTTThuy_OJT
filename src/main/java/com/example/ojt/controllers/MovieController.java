@@ -3,7 +3,7 @@ package com.example.ojt.controllers;
 import com.example.ojt.dtos.movie.CreateMovieRequest;
 import com.example.ojt.dtos.movie.MovieResponse;
 import com.example.ojt.dtos.movie.UpdateMovieRequest;
-import com.example.ojt.roles.MovieStatus;
+import com.example.ojt.enums.MovieStatus;
 import com.example.ojt.services.interfaces.GenreService;
 import com.example.ojt.services.interfaces.MovieService;
 import jakarta.validation.Valid;

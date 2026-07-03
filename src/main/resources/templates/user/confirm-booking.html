@@ -50,7 +50,7 @@
                                 <tr>
                                     <th>Tổng tiền</th>
                                     <td class="price"
-                                        th:text="${#numbers.formatDecimal(confirm.totalPrice,0,'COMMA',0,'POINT')} + ' VND'">
+                                        th:text="${#numbers.formatDecimal(confirm.totalPrice,0,'COMMA',0,'POINT')} + ' VNĐ'">
                                     </td>
                                 </tr>
                             </table>
@@ -67,13 +67,14 @@
                         Vui lòng kiểm tra lại thông tin trước khi tiếp tục thanh toán.
                     </p>
 
-                    <form th:action="@{/bookings/payment}" method="post">
+                    <form th:action="@{/user/bookings/payment}" method="post">
 
                         <input type="hidden" name="showtimeId"
                                th:value="${confirm.showtime.showtimeId}">
 
-                        <input type="hidden" name="selectedSeats"
-                               th:value="${confirm.seatCodes}">
+                        <input type="hidden"
+                               name="bookingSeat"
+                               th:value="${confirm.bookingSeat}">
 
                         <input class="mb-3" type="checkbox" name="agree" required>
                         <label>Tôi xác nhận thông tin chính xác</label>

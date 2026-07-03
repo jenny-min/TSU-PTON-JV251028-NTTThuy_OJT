@@ -1,4 +1,4 @@
-package com.example.ojt.roles;
+package com.example.ojt.enums;
 
 public enum ShowtimeStatus {
     DRAFT,      // nháp → được sửa

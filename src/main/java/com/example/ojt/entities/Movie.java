@@ -1,6 +1,6 @@
 package com.example.ojt.entities;
 
-import com.example.ojt.roles.MovieStatus;
+import com.example.ojt.enums.MovieStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;

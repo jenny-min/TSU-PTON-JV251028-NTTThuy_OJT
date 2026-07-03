@@ -1,7 +1,7 @@
 package com.example.ojt.entities;
 
-import com.example.ojt.roles.Gender;
-import com.example.ojt.roles.Role;
+import com.example.ojt.enums.Gender;
+import com.example.ojt.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;

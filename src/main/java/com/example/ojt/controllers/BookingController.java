@@ -1,21 +1,15 @@
 package com.example.ojt.controllers;
 
-import com.example.ojt.dtos.booking.BookingRequest;
-import com.example.ojt.dtos.booking.BookingResponse;
-import com.example.ojt.dtos.booking.ConfirmBookingRequest;
-import com.example.ojt.dtos.booking.ConfirmBookingResponse;
+import com.example.ojt.dtos.booking.*;
 import com.example.ojt.dtos.movie.MovieResponse;
 import com.example.ojt.dtos.showtime.ShowtimeResponse;
 import com.example.ojt.entities.Room;
 import com.example.ojt.entities.User;
 import com.example.ojt.services.interfaces.*;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -144,14 +138,42 @@ public class BookingController {
         return "user/confirm-booking";
     }
 
-    //Thanh toán
+    //chuyển sang trang Thanh toán
     @PostMapping("/bookings/payment")
     public String payment(@ModelAttribute BookingRequest request,
                           Model model) {
 
+        ConfirmBookingResponse confirm =
+                bookingService.buildConfirm(request);
+
+        model.addAttribute("confirm", confirm);
+
         model.addAttribute("request", request);
 
         return "user/payment";
+    }
+
+    //Thanh toán
+    @PostMapping("/bookings/checkout")
+    public String checkout(@ModelAttribute BookingRequest request,
+                           Principal principal,
+                           RedirectAttributes redirectAttributes) {
+
+        try {
+            TicketResponse ticket =
+                    bookingService.checkout(request, principal.getName());
+
+            redirectAttributes.addFlashAttribute("ticket", ticket);
+            redirectAttributes.addFlashAttribute("success", "Đặt vé thành công.");
+
+            return "redirect:/user/history";
+
+        } catch (RuntimeException ex) {
+
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+
+            return "redirect:/user/history";
+        }
     }
 
     //Xem lịch sử booking
@@ -159,13 +181,19 @@ public class BookingController {
     public String bookingHistory(Model model,
                                  Principal principal) {
 
-        System.out.println("History");
+        User user = userService.findByUsername(principal.getName())
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
-        Optional<User> user = userService.findByEmail(principal.getName());
+        List<TicketResponse> histories =
+                bookingService.getBookingHistory(user.getId());
+
+        System.out.println(histories.size());
+
+        model.addAttribute("histories", histories);
 
         model.addAttribute(
                 "histories",
-                bookingService.getBookingHistory(user.get().getId()));
+                bookingService.getBookingHistory(user.getId()));
 
         return "user/history";
     }

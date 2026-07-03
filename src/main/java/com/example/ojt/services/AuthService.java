@@ -3,7 +3,7 @@ package com.example.ojt.services;
 import com.example.ojt.dtos.auth.RegisterRequest;
 import com.example.ojt.entities.User;
 import com.example.ojt.repositories.UserRepository;
-import com.example.ojt.roles.Role;
+import com.example.ojt.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

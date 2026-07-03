@@ -1,4 +1,4 @@
-package com.example.ojt.roles;
+package com.example.ojt.enums;
 
 public enum Role {
     ADMIN,

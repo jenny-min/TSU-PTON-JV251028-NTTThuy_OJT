@@ -1,6 +1,6 @@
 package com.example.ojt.entities;
 
-import com.example.ojt.roles.ShowtimeStatus;
+import com.example.ojt.enums.ShowtimeStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;

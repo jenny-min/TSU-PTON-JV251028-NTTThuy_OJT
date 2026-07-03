@@ -2,12 +2,10 @@ package com.example.ojt.controllers;
 
 import com.example.ojt.dtos.auth.LoginRequest;
 import com.example.ojt.dtos.auth.RegisterRequest;
-import com.example.ojt.repositories.UserRepository;
-import com.example.ojt.roles.Gender;
+import com.example.ojt.enums.Gender;
 import com.example.ojt.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

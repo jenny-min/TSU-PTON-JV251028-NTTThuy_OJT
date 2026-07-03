@@ -4,7 +4,7 @@ import com.example.ojt.dtos.profile.ChangePasswordRequest;
 import com.example.ojt.dtos.profile.ProfileResponse;
 import com.example.ojt.dtos.profile.UpdateProfileRequest;
 import com.example.ojt.entities.User;
-import com.example.ojt.roles.Gender;
+import com.example.ojt.enums.Gender;
 import com.example.ojt.services.CustomUserDetails;
 import com.example.ojt.services.interfaces.UserService;
 import jakarta.validation.Valid;
@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

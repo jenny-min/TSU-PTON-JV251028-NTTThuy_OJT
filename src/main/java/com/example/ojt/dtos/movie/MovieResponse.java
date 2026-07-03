@@ -1,6 +1,6 @@
 package com.example.ojt.dtos.movie;
 
-import com.example.ojt.roles.MovieStatus;
+import com.example.ojt.enums.MovieStatus;
 import lombok.*;
 
 import java.time.LocalDate;

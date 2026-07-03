@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/payment.css}">
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container py-5 text-dark payment-container">
+        <h2>Thanh toán</h2>
+
+        <div class="payment-wrapper">
+            <!-- LEFT -->
+            <div class="payment-info">
+                <div class="card">
+                    <h3>Thông tin đặt vé</h3>
+
+                    <div class="row-item">
+                        <span>Phim</span>
+                        <strong th:text="${confirm.movie.title}"></strong>
+                    </div>
+
+                    <div class="row-item">
+                        <span>Suất chiếu</span>
+                        <strong th:text="${#temporals.format(confirm.showtime.startTime,'HH:mm - dd/MM/yyyy')}">
+                        </strong>
+                    </div>
+
+                    <div class="row-item">
+                        <span>Phòng</span>
+                        <strong th:text="${confirm.room.roomName}"></strong>
+                    </div>
+
+                    <div class="row-item">
+                        <span>Ghế</span>
+                        <strong th:text="${confirm.seatCodes != null ? #strings.listJoin(confirm.seatCodes, ', ') : ''}"></strong>
+                    </div>
+
+                    <hr>
+
+                    <div class="total">
+                        <span>Tổng tiền</span>
+                        <strong th:text="${#numbers.formatDecimal(confirm.totalPrice,0,'COMMA',0,'POINT')} + ' VNĐ'">
+                        </strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="payment-method">
+                <div class="card">
+                    <h3>Phương thức thanh toán</h3>
+                    <form th:action="@{/user/bookings/checkout}" method="post">
+
+                        <input type="hidden"
+                               name="showtimeId"
+                               th:value="${request.showtimeId}">
+
+                        <input type="hidden"
+                               name="bookingSeat"
+                               th:value="${request.bookingSeat}">
+
+                        <label class="method">
+                            <input type="radio"
+                                   name="paymentMethod"
+                                   value="CASH"
+                                   checked>
+                            <span>Thanh toán tại quầy</span>
+                        </label>
+
+                        <label class="method">
+                            <input type="radio"
+                                   name="paymentMethod"
+                                   value="VNPAY">
+                            <span>VNPay</span>
+                        </label>
+
+                        <label class="method">
+                            <input type="radio"
+                                   name="paymentMethod"
+                                   value="MOMO">
+                            <span>MoMo</span>
+                        </label>
+
+                        <button class="pay-btn">
+                            Xác nhận thanh toán
+                        </button>
+                    </form>
+
+                    <a th:href="@{/user/booking/confirm}" class="back-btn">
+                        ← Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

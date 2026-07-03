@@ -6,7 +6,7 @@ import com.example.ojt.entities.User;
 import com.example.ojt.repositories.GenreRepository;
 import com.example.ojt.repositories.RoomRepository;
 import com.example.ojt.repositories.UserRepository;
-import com.example.ojt.roles.Role;
+import com.example.ojt.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
