@@ -12,6 +12,12 @@ public class GlobalExceptionHandler {
         return "error/404";
     }
 
+    @ExceptionHandler(SeatAlreadyBookedException.class)
+    public String handleSeatAlreadyBooked(SeatAlreadyBookedException ex, Model model) {
+        model.addAttribute("message", ex.getMessage());
+        return "error/500";
+    }
+
     @ExceptionHandler(Exception.class)
     public String handleGeneralError(Exception ex, Model model) {
         model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau!");

@@ -16,8 +16,13 @@
         </h2>
 
         <div class="row g-3">
+            <div th:if="${#lists.isEmpty(showtimes)}" class="col-12 text-center py-5">
+                <p class="text-muted fs-5">Hiện tại chưa có suất chiếu nào cho bộ phim này. Vui lòng quay lại sau!</p>
+                <a th:href="@{/home}" class="btn btn-secondary mt-2">Quay lại trang chủ</a>
+            </div>
 
             <div class="col-md-4"
+                 th:unless="${#lists.isEmpty(showtimes)}"
                  th:each="showtime : ${showtimes}">
 
                 <div class="card showtime-card p-3">

@@ -132,7 +132,8 @@
                                            type="checkbox"
                                            name="genreIds"
                                            th:value="${genre.genreId}"
-                                           th:checked="${movie.genres.contains(genre)}">
+                                           th:checked="${movie.genreIds != null && movie.genreIds.contains(genre.genreId)}"
+                                           th:id="'genre-' + ${genre.genreId}">
 
                                     <label class="form-check-label"
                                            th:for="'genre-' + ${genre.genreId}"
@@ -143,8 +144,8 @@
                         </div>
 
                         <div class="text-danger"
-                             th:if="${#fields.hasErrors('genres')}"
-                             th:errors="*{genres}">
+                             th:if="${#fields.hasErrors('genreIds')}"
+                             th:errors="*{genreIds}">
                         </div>
                     </div>
 
