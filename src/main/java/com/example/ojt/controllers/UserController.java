@@ -15,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final BookingService bookingService;
-    private final RoomService roomService;
-    private final MovieService movieService;
-    private final ShowtimeService showtimeService;
 
     @GetMapping("/dashboard")
     public String myPage(Authentication authentication, Model model) {

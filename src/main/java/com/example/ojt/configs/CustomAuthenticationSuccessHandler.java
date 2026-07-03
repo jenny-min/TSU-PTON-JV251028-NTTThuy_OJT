@@ -33,7 +33,7 @@ public class CustomAuthenticationSuccessHandler
         } else if (authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_USER"))){
 
-            redirectUrl = "/user/dashboard";
+            redirectUrl = "/home";
 
         } else {
             redirectUrl = "/home";

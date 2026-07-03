@@ -142,7 +142,4 @@ tìm hiểu thêm về thymeleaf:
 Chưa chỉnh giá vé thường và vé VIP cũng như couple
 Đăng nhập user nên trả về trang giao diện home
 
-🔒 Lock ghế tạm thời (hold 5–10 phút) để tránh 2 người đặt cùng lúc
-⚡ Realtime update ghế đã đặt (WebSocket)
-⏳ Lưu Booking
 ⏳ Mở lại sơ đồ → ghế đã đặt chuyển sang màu đỏ (BOOKED)
