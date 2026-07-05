@@ -1,6 +1,7 @@
 package com.example.ojt.repositories;
 
 import com.example.ojt.entities.Showtime;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

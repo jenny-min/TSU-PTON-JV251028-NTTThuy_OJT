@@ -43,29 +43,34 @@ public class ShowtimeController {
     //Hiển thị form tạo
     @GetMapping("/create")
     public String createForm(Model model) {
-        model.addAttribute("showtimes", new CreateShowtimeRequest());
+        model.addAttribute("showtime", new CreateShowtimeRequest());
         model.addAttribute("movies", movieService.getAllMovies());
         model.addAttribute("rooms", roomService.getAllRooms());
-
         return "admin/showtimes/create";
     }
 
-    //Lưu suất chiếu mới
+    //Lưu
     @PostMapping("/create")
     public String create(
-            @Valid
-            @ModelAttribute("showtimes") CreateShowtimeRequest request,
+            @Valid @ModelAttribute("showtime") CreateShowtimeRequest request,
             BindingResult result,
             Model model) {
 
+        System.out.println("ERRORS = " + result.getAllErrors());
+        System.out.println("CREATING SHOWTIME: " + request);
         if (result.hasErrors()) {
             model.addAttribute("movies", movieService.getAllMovies());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "admin/showtimes/create";
         }
 
-        showtimeService.createShowtime(request);
+        System.out.println("START TIME RAW = " + request.getStartTime());
+        System.out.println("MOVIE ID = " + request.getMovieId());
+        System.out.println("ROOM ID = " + request.getRoomId());
+        System.out.println("PRICE = " + request.getTicketPrice());
 
+        showtimeService.createShowtime(request);
+        System.out.println("Saved");
         return "redirect:/admin/showtimes";
     }
 

@@ -58,7 +58,7 @@
 
         // tổng tiền
         totalPriceEl.innerText =
-        new Intl.NumberFormat('vi-VN').format(totalPrice) + " ₫";
+        new Intl.NumberFormat('vi-VN').format(totalPrice) + " VND";
         }
     });
 

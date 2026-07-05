@@ -3,6 +3,7 @@ package com.example.ojt.dtos.showtime;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class CreateShowtimeRequest {
     @NotNull(message = "Phòng chiếu không được để trống")
     private Long roomId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @NotNull(message = "Thời gian bắt đầu không được để trống")
     private LocalDateTime startTime;
 

@@ -17,12 +17,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ShowtimeServiceImpl implements ShowtimeService {
     private final ShowtimeRepository showtimeRepository;
     private final MovieRepository movieRepository;
@@ -35,8 +37,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     public Page<ShowtimeResponse> getShowtimes(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        return showtimeRepository.findAll(pageable)
-                .map(this::toResponse);
+        return showtimeRepository.findAll(pageable).map(this::toResponse);
     }
 
     @Override

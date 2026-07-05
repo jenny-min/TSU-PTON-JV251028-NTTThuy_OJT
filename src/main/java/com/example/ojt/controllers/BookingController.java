@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -66,6 +67,14 @@ public class BookingController {
         MovieResponse movie = movieService.getMovieById(showtime.getMovieId());
 
         Room room = roomService.getRoomById(showtime.getRoomId());
+
+        BigDecimal vipPrice = showtime.getTicketPrice().multiply(BigDecimal.valueOf(1.5));
+        BigDecimal couplePrice = showtime.getTicketPrice().multiply(BigDecimal.valueOf(2));
+        BigDecimal normalPrice = showtime.getTicketPrice();
+
+        model.addAttribute("vipPrice", vipPrice);
+        model.addAttribute("couplePrice", couplePrice);
+        model.addAttribute("normalPrice", normalPrice);
 
         model.addAttribute("showtime", showtime);
         model.addAttribute("movie", movie);

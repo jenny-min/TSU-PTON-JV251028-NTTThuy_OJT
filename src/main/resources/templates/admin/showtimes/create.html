@@ -15,7 +15,7 @@
             <div class="card-body">
                 <form th:action="@{/admin/showtimes/create}"
                       method="post"
-                      th:object="${showtimes}">
+                      th:object="${showtime}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">
@@ -79,6 +79,16 @@
                             <input type="number" class="form-control" th:field="*{ticketPrice}">
                         </div>
                     </div>
+
+                    <div th:if="${#fields.hasErrors('*')}">
+                        <p th:each="err : ${#fields.errors('*')}"
+                           th:text="${err}"></p>
+                    </div>
+
+                    <div th:errors="*{movieId}"></div>
+                    <div th:errors="*{roomId}"></div>
+                    <div th:errors="*{startTime}"></div>
+                    <div th:errors="*{ticketPrice}"></div>
 
                     <div class="mt-4">
                         <button type="submit" class="btn btn-primary">
