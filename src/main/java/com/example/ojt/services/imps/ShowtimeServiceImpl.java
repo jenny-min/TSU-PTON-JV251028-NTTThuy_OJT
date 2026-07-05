@@ -190,11 +190,6 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
         boolean soldOut = isSoldOut(showtime);
 
-        System.out.println(
-                "Showtime " + showtime.getShowtimeId()
-                        + " soldOut = " + soldOut
-        );
-
         return ShowtimeResponse.builder()
                 .showtimeId(showtime.getShowtimeId())
                 .movieId(showtime.getMovie().getMovieId())

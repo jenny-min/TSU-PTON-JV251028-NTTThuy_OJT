@@ -197,14 +197,30 @@ public class BookingController {
         List<TicketResponse> histories =
                 bookingService.getBookingHistory(user.getId());
 
-        System.out.println(histories.size());
-
         model.addAttribute("histories", histories);
 
-        model.addAttribute(
-                "histories",
-                bookingService.getBookingHistory(user.getId()));
-
         return "user/history";
+    }
+
+    //hủy vé
+    @PostMapping("/bookings/{id}/cancel")
+    public String cancelBooking(
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes) {
+        try {
+            bookingService.cancelBooking(id);
+
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    "Hủy vé thành công."
+            );
+
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    ex.getMessage()
+            );
+        }
+        return "redirect:/user/history";
     }
 }

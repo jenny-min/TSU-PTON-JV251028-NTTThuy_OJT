@@ -171,6 +171,8 @@ public class BookingServiceImpl implements BookingService {
     public Set<String> getBookedSeats(Long showtimeId) {
         return bookingRepository.findByShowtimeShowtimeId(showtimeId)
                 .stream()
+                .filter(b -> b.getBookingStatus() == BookingStatus.PENDING)
+//                || b.getBookingStatus() == BookingStatus.PAID
                 .map(Booking::getBookingSeat)
                 .filter(Objects::nonNull)
                 .flatMap(seats -> Arrays.stream(seats.split(",")))
@@ -271,36 +273,44 @@ public class BookingServiceImpl implements BookingService {
                 .toList();
     }
 
+    //Hủy vé
+    @Transactional
+    public void cancelBooking(Long bookingId) {
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy vé"));
+
+        if (booking.getBookingStatus() == BookingStatus.CANCELLED) {
+            throw new RuntimeException("Vé đã được hủy.");
+        }
+
+        LocalDateTime startTime =
+                booking.getShowtime().getStartTime();
+
+        if (LocalDateTime.now().isAfter(startTime.minusHours(24))) {
+            throw new RuntimeException("Chỉ được hủy trước giờ chiếu 24 giờ.");
+        }
+
+        booking.setBookingStatus(BookingStatus.CANCELLED);
+
+        bookingRepository.save(booking);
+    }
+
     //Mapper ticketResponse
     private TicketResponse toTicketResponse(Booking booking) {
 
         TicketResponse response = new TicketResponse();
 
         response.setBookingId(booking.getBookingId());
-
-        response.setMovieTitle(
-                booking.getShowtime().getMovie().getTitle());
-
-        response.setRoomName(
-                booking.getShowtime().getRoom().getRoomName());
-
-        response.setStartTime(
-                booking.getShowtime().getStartTime());
-
-        response.setEndTime(
-                booking.getShowtime().getEndTime());
-
-        response.setBookingSeat(
-                booking.getBookingSeat());
-
-        response.setTotalAmount(
-                booking.getTotalAmount());
-
-        response.setPaymentMethod(
-                booking.getPaymentMethod());
-
-        response.setBookingDate(
-                booking.getBookingDate());
+        response.setMovieTitle(booking.getShowtime().getMovie().getTitle());
+        response.setRoomName(booking.getShowtime().getRoom().getRoomName());
+        response.setStartTime(booking.getShowtime().getStartTime());
+        response.setEndTime(booking.getShowtime().getEndTime());
+        response.setBookingSeat(booking.getBookingSeat());
+        response.setBookingStatus(booking.getBookingStatus());
+        response.setTotalAmount(booking.getTotalAmount());
+        response.setPaymentMethod(booking.getPaymentMethod());
+        response.setBookingDate(booking.getBookingDate());
 
         return response;
     }

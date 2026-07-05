@@ -12,8 +12,7 @@
         <h2>LỊCH SỬ ĐẶT VÉ</h2>
         <div th:if="${success}" class="alert alert-success mt-3" role="alert" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-danger mt-3" role="alert" th:text="${error}"></div>
-        <div class="card mt-3"
-             th:each="history : ${histories}">
+        <div class="card mt-3" th:each="history : ${histories}">
             <div class="header">
                 <span class="movie"
                       th:text="${history.movieTitle}">
@@ -21,6 +20,14 @@
                 <span class="status"
                       th:text="${history.bookingStatus}">
                 </span>
+                <form th:if="${history.bookingStatus == T(com.example.ojt.enums.BookingStatus).PENDING}"
+                      th:action="@{/user/bookings/{id}/cancel(id=${history.bookingId})}"
+                      method="post">
+
+                    <button class="btn btn-danger">
+                        Hủy vé
+                    </button>
+                </form>
             </div>
 
             <div class="content">

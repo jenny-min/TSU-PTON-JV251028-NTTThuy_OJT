@@ -21,5 +21,7 @@ public interface BookingService {
 
     Set<String> getBookedSeats(Long showtimeId);
 
+    void cancelBooking(Long bookingId);
+
     TicketResponse checkout(BookingRequest request, String email);
 }
