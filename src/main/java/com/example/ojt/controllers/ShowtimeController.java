@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/showtimes")
@@ -29,12 +30,10 @@ public class ShowtimeController {
             @RequestParam(defaultValue = "5") int size,
             Model model) {
 
-        Page<ShowtimeResponse> showtimePage =
-                showtimeService.getShowtimes(page, size);
+        Page<ShowtimeResponse> showtimePage = showtimeService.getShowtimes(page, size);
 
         model.addAttribute("showtimePage", showtimePage);
         model.addAttribute("showtimes", showtimePage.getContent());
-
         model.addAttribute("pageData", showtimePage);
         model.addAttribute("baseUrl", "/admin/showtimes");
 
@@ -44,7 +43,6 @@ public class ShowtimeController {
     //Hiển thị form tạo
     @GetMapping("/create")
     public String createForm(Model model) {
-
         model.addAttribute("showtimes", new CreateShowtimeRequest());
         model.addAttribute("movies", movieService.getAllMovies());
         model.addAttribute("rooms", roomService.getAllRooms());
@@ -73,16 +71,25 @@ public class ShowtimeController {
 
     //Form cập nhật
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
+    public String editForm(@PathVariable Long id, Model model,
+                           RedirectAttributes redirectAttributes) {
 
-        UpdateShowtimeRequest request = showtimeService.getShowtimeForUpdate(id);
+        try {
+            UpdateShowtimeRequest request = showtimeService.getShowtimeForUpdate(id);
 
-        model.addAttribute("showtimes", request);
-        model.addAttribute("movies", movieService.getAllMovies());
-        model.addAttribute("rooms", roomService.getAllRooms());
-        model.addAttribute("showtimeId", id);
+            model.addAttribute("showtimes", request);
+            model.addAttribute("movies", movieService.getAllMovies());
+            model.addAttribute("rooms", roomService.getAllRooms());
+            model.addAttribute("showtimeId", id);
 
-        return "admin/showtimes/update";
+            return "admin/showtimes/update";
+
+        } catch (IllegalStateException ex) {
+
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+
+            return "redirect:/admin/showtimes";
+        }
     }
 
     @PostMapping("/edit/{id}")
@@ -106,8 +113,20 @@ public class ShowtimeController {
 
     //Xóa
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        showtimeService.deleteShowtime(id);
+    public String delete(@PathVariable Long id,
+                         RedirectAttributes redirectAttributes) {
+        try {
+            showtimeService.deleteShowtime(id);
+
+            redirectAttributes.addFlashAttribute("success",
+                    "Xóa suất chiếu thành công.");
+
+        } catch (IllegalStateException ex) {
+
+            redirectAttributes.addFlashAttribute("error",
+                    ex.getMessage());
+        }
+
         return "redirect:/admin/showtimes";
     }
 

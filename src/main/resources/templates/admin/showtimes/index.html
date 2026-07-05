@@ -66,6 +66,17 @@
             </div>
         </div>
 
+        <!-- Flash Message -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
         <!-- Table -->
         <div class="card shadow-sm">
             <div class="card-body">
@@ -92,12 +103,19 @@
                             <td th:text="${#temporals.format(showtime.endTime,'dd/MM/yyyy HH:mm')}"></td>
                             <td th:text="${#numbers.formatDecimal(showtime.ticketPrice,0,'COMMA',0,'POINT')} + ' VNĐ'"></td>
                             <td>
-                                <span class="badge"
-                                        th:text="*{showtime.getStatus()}"
-                                        th:classappend="
-                                        ${showtime.status.name() == 'DRAFT'} ? ' bg-success' :
-                                        (${showtime.status.name() == 'PUBLISH'} ? ' bg-primary' :
-                                        ' bg-danger')">
+                                <span th:if="${showtime.status.name() == 'DRAFT'}"
+                                      class="badge bg-warning">
+                                    Nháp
+                                </span>
+
+                                <span th:if="${showtime.status.name() == 'PUBLISHED'}"
+                                      class="badge bg-success">
+                                    Đã phát hành
+                                </span>
+
+                                <span th:if="${showtime.status.name() == 'CANCELLED'}"
+                                      class="badge bg-danger">
+                                    Đã hủy
                                 </span>
                             </td>
                             <td>
@@ -105,6 +123,16 @@
                                    th:href="@{/admin/showtimes/edit/{id}(id=${showtime.showtimeId})}">
                                     Sửa
                                 </a>
+
+                                <form th:if="${showtime.status.name() == 'DRAFT'}"
+                                      th:action="@{/admin/showtimes/{id}/publish(id=${showtime.showtimeId})}"
+                                      method="post"
+                                      class="d-inline">
+                                    <button type="submit"
+                                            class="btn btn-success btn-sm">
+                                        Phát hành
+                                    </button>
+                                </form>
 
                                 <form method="post"
                                       th:action="@{/admin/showtimes/delete/{id}(id=${showtime.showtimeId})}"

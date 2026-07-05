@@ -26,4 +26,6 @@ public class ShowtimeResponse {
     private ShowtimeStatus status;
     private List<Booking> bookings;
     private MovieResponse movie;
+    private boolean expired;
+    private boolean soldOut;
 }

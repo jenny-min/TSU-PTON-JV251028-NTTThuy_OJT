@@ -95,10 +95,10 @@ public class BookingController {
                     .collect(Collectors.toSet());
         }
 
-        model.addAttribute("coupleSeats", coupleSeats);
+        model.addAttribute("bookedSeats", bookingService.getBookedSeats(showtimeId));
         model.addAttribute("vipSeats", vipSeats);
         model.addAttribute("seatRows", seatRows);
-        model.addAttribute("bookedSeats", new HashSet<String>());
+        model.addAttribute("coupleSeats", coupleSeats);
         model.addAttribute("ticketPrice", showtime.getTicketPrice());
 
         return "user/select-seat";

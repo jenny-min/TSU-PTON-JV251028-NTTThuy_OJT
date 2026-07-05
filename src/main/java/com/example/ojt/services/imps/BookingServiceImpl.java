@@ -16,9 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -166,6 +165,17 @@ public class BookingServiceImpl implements BookingService {
         response.setSeatCount((long) seatCodes.size());
         response.setTotalPrice(totalPrice);
         return response;
+    }
+
+    @Override
+    public Set<String> getBookedSeats(Long showtimeId) {
+        return bookingRepository.findByShowtimeShowtimeId(showtimeId)
+                .stream()
+                .map(Booking::getBookingSeat)
+                .filter(Objects::nonNull)
+                .flatMap(seats -> Arrays.stream(seats.split(",")))
+                .map(String::trim)
+                .collect(Collectors.toSet());
     }
 
     @Transactional(rollbackFor = Exception.class)

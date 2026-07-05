@@ -6,6 +6,7 @@ import com.example.ojt.dtos.showtime.UpdateShowtimeRequest;
 import com.example.ojt.entities.Movie;
 import com.example.ojt.entities.Room;
 import com.example.ojt.entities.Showtime;
+import com.example.ojt.enums.BookingStatus;
 import com.example.ojt.repositories.MovieRepository;
 import com.example.ojt.repositories.RoomRepository;
 import com.example.ojt.repositories.ShowtimeRepository;
@@ -135,7 +136,12 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             throw new IllegalStateException("Chỉ draft mới được publish");
         }
 
+        if (showtime.getStartTime().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Không thể publish suất chiếu đã bắt đầu.");
+        }
+
         showtime.setStatus(ShowtimeStatus.PUBLISHED);
+
         showtimeRepository.save(showtime);
     }
 
@@ -167,8 +173,23 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         }
     }
 
+    @Override
+    public List<ShowtimeResponse> getByMovieId(Long movieId) {
+        return showtimeRepository.findByMovieMovieId(movieId)
+                .stream()
+                .filter(s -> s.getStatus() == ShowtimeStatus.PUBLISHED)
+                .filter(s -> s.getStartTime().isAfter(LocalDateTime.now()))
+                .map(this::toResponse)
+                .toList();
+    }
+
     //Mapper
     private ShowtimeResponse toResponse(Showtime showtime) {
+
+        boolean expired = showtime.getStartTime().isBefore(LocalDateTime.now());
+
+        boolean soldOut = isSoldOut(showtime);
+
         return ShowtimeResponse.builder()
                 .showtimeId(showtime.getShowtimeId())
                 .movieId(showtime.getMovie().getMovieId())
@@ -179,18 +200,21 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                 .endTime(showtime.getEndTime())
                 .ticketPrice(showtime.getTicketPrice())
                 .status(showtime.getStatus())
+                .expired(expired)
+                .soldOut(soldOut)
                 .build();
     }
 
-    @Override
-    public List<ShowtimeResponse> getByMovieId(Long movieId) {
+    private boolean isSoldOut(Showtime showtime) {
+        int bookedSeats = showtime.getBookings()
+                .stream()
+                .filter(booking ->
+                        booking.getBookingStatus() == BookingStatus.PAID)
+                .mapToInt(booking ->
+                        booking.getBookingSeat().split(",").length)
+                .sum();
 
-        List<Showtime> showtimes =
-                showtimeRepository.findByMovieMovieId(movieId);
-
-        return showtimes.stream()
-                .map(this::toResponse)
-                .toList();
+        return bookedSeats >= showtime.getRoom().getTotalSeats();
     }
 
     private Showtime getShowtime(Long id) {

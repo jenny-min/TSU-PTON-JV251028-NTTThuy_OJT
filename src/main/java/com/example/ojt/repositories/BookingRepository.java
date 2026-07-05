@@ -9,6 +9,8 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByUser_Username(String username);
 
+    List<Booking> findByShowtimeShowtimeId(Long showtimeId);
+
     //Query join booking->showtime->movie->room->ticket
     @Query("""
         SELECT DISTINCT b

@@ -133,13 +133,6 @@ tìm hiểu thêm về thymeleaf:
 - th:block layout:fragment
 - layout:decorate
 
-Đã tạo cơ bản core-7
-- Số hiển thị trang user/dashboard -> đen + render dữ liệu vé đã đặt, vé sắp chiếu, đã xem
-(hiện tại đang 0 vì chưa đặt xong vé)
-- Page user/history đang không render được dữ liệu (có thể vì chưa đặt vé)
-=> hoàn chỉnh khâu đặt vé và suất booking
-
 Chưa chỉnh giá vé thường và vé VIP cũng như couple
-Đăng nhập user nên trả về trang giao diện home
 
 ⏳ Mở lại sơ đồ → ghế đã đặt chuyển sang màu đỏ (BOOKED)

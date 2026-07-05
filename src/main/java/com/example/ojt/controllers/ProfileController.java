@@ -34,9 +34,7 @@ public class ProfileController {
             Authentication authentication,
             Model model
     ) {
-
-        ProfileResponse profile =
-                us.getProfile(authentication.getName());
+        ProfileResponse profile = us.getProfile(authentication.getName());
 
         UpdateProfileRequest profileForm =
                 UpdateProfileRequest.builder()
@@ -58,9 +56,7 @@ public class ProfileController {
     @GetMapping("/profile/change-password")
     public String changePasswordPage(Model model) {
 
-        model.addAttribute(
-                "changePasswordRequest",
-                new ChangePasswordRequest());
+        model.addAttribute("changePasswordRequest", new ChangePasswordRequest());
 
         return "profile/change-password";
     }
@@ -80,23 +76,14 @@ public class ProfileController {
         }
 
         try {
+            us.changePassword(authentication.getName(), request);
 
-            us.changePassword(
-                    authentication.getName(),
-                    request
-            );
-
-            redirectAttributes.addFlashAttribute(
-                    "success",
+            redirectAttributes.addFlashAttribute("success",
                     "Đổi mật khẩu thành công"
             );
 
         } catch (RuntimeException e) {
-
-            redirectAttributes.addFlashAttribute(
-                    "error",
-                    e.getMessage()
-            );
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/profile";
@@ -106,33 +93,20 @@ public class ProfileController {
     public String updateProfile(
             @AuthenticationPrincipal
             CustomUserDetails principal,
-
             @Valid
             @ModelAttribute("profile")
             UpdateProfileRequest request,
-
             BindingResult result,
-
             @RequestParam("avatarFile")
             MultipartFile file
     ) throws IOException {
+        if (result.hasErrors()) {return "profile/index";}
 
-        if (result.hasErrors()) {
-            return "profile/index";
-        }
+        us.updateProfile(principal.getUser().getId(), request, file);
 
-        us.updateProfile(
-                principal.getUser().getId(),
-                request,
-                file
-        );
+        User updatedUser = us.findById(principal.getUser().getId());
 
-        User updatedUser =
-                us.findById(
-                        principal.getUser().getId());
-
-        CustomUserDetails newPrincipal =
-                new CustomUserDetails(updatedUser);
+        CustomUserDetails newPrincipal = new CustomUserDetails(updatedUser);
 
         Authentication auth =
                 new UsernamePasswordAuthenticationToken(
@@ -141,9 +115,7 @@ public class ProfileController {
                         newPrincipal.getAuthorities()
                 );
 
-        SecurityContextHolder
-                .getContext()
-                .setAuthentication(auth);
+        SecurityContextHolder.getContext().setAuthentication(auth);
 
         return "redirect:/profile";
     }

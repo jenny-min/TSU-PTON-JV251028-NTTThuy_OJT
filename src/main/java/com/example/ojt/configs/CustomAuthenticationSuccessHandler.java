@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class CustomAuthenticationSuccessHandler
-        implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(

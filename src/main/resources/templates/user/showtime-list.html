@@ -47,9 +47,15 @@
                         <strong th:text="${showtime.ticketPrice + ' ¥'}"></strong>
                     </p>
 
+                    <div th:if="${showtime.soldOut}" class="mb-2">
+                        <span class="badge bg-danger w-100 py-2">
+                            Hết vé
+                        </span>
+                    </div>
+
                     <a th:href="@{/user/bookings/showtime/{id}(id=${showtime.showtimeId})}"
-                       class="btn btn-danger w-100">
-                        Chọn suất này
+                       class="btn btn-outline-danger w-100">
+                        Xem sơ đồ ghế
                     </a>
                 </div>
             </div>
