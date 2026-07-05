@@ -10,7 +10,9 @@
 <div layout:fragment="content">
     <div class="container py-5 text-dark">
         <h2>LỊCH SỬ ĐẶT VÉ</h2>
-        <div class="card"
+        <div th:if="${success}" class="alert alert-success mt-3" role="alert" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger mt-3" role="alert" th:text="${error}"></div>
+        <div class="card mt-3"
              th:each="history : ${histories}">
             <div class="header">
                 <span class="movie"

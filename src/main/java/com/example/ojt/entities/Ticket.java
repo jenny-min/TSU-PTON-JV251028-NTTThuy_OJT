@@ -6,7 +6,9 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "tickets")
+@Table(name = "tickets", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"showtime_id", "seat_code"})
+})
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +26,7 @@ public class Ticket {
     @JoinColumn(name = "showtime_id")
     private Showtime showtime;
 
-    @Column(nullable = false)
+    @Column(name = "seat_code", nullable = false)
     private String seatCode;
 
     @Column(nullable = false)

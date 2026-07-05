@@ -7,8 +7,10 @@ import com.example.ojt.repositories.ShowtimeRepository;
 import com.example.ojt.repositories.TicketRepository;
 import com.example.ojt.repositories.UserRepository;
 import com.example.ojt.enums.BookingStatus;
+import com.example.ojt.exceptions.SeatAlreadyBookedException;
 import com.example.ojt.services.interfaces.BookingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,9 +39,8 @@ public class BookingServiceImpl implements BookingService {
 
         // Kiểm tra ghế đã được đặt chưa
         for (String seatCode : request.getSeatCodes()) {
-
             if (ticketRepository.existsByShowtimeAndSeatCode(showtime, seatCode)) {
-                throw new RuntimeException("Seat " + seatCode + " has already been booked.");
+                throw new SeatAlreadyBookedException("Ghế " + seatCode + " đã được người khác đặt.");
             }
         }
 
@@ -62,7 +63,6 @@ public class BookingServiceImpl implements BookingService {
         List<Ticket> tickets = new ArrayList<>();
 
         for (String seatCode : request.getSeatCodes()) {
-
             Ticket ticket = Ticket.builder()
                     .booking(booking)
                     .showtime(showtime)
@@ -73,7 +73,12 @@ public class BookingServiceImpl implements BookingService {
             tickets.add(ticket);
         }
 
-        ticketRepository.saveAll(tickets);
+        try {
+            ticketRepository.saveAll(tickets);
+            ticketRepository.flush();
+        } catch (DataIntegrityViolationException ex) {
+            throw new SeatAlreadyBookedException("Một hoặc nhiều ghế bạn chọn đã có người khác đặt trước.");
+        }
 
         return mapToResponse(booking);
     }
@@ -183,9 +188,8 @@ public class BookingServiceImpl implements BookingService {
 
         // 4. Kiểm tra ghế đã được đặt chưa
         for (String seatCode : seatCodes) {
-
             if (ticketRepository.existsByShowtimeAndSeatCode(showtime, seatCode)) {
-                throw new RuntimeException("Ghế " + seatCode + " đã được người khác đặt.");
+                throw new SeatAlreadyBookedException("Ghế " + seatCode + " đã được người khác đặt.");
             }
         }
 
@@ -211,7 +215,6 @@ public class BookingServiceImpl implements BookingService {
         List<Ticket> tickets = new ArrayList<>();
 
         for (String seatCode : seatCodes) {
-
             Ticket ticket = new Ticket();
             ticket.setBooking(booking);
             ticket.setShowtime(showtime);
@@ -221,7 +224,12 @@ public class BookingServiceImpl implements BookingService {
             tickets.add(ticket);
         }
 
-        ticketRepository.saveAll(tickets);
+        try {
+            ticketRepository.saveAll(tickets);
+            ticketRepository.flush();
+        } catch (DataIntegrityViolationException ex) {
+            throw new SeatAlreadyBookedException("Một hoặc nhiều ghế bạn chọn đã có người khác đặt trước.");
+        }
 
         booking.setTickets(tickets);
 
