@@ -49,9 +49,19 @@ public class BookingController {
 
     //Chọn ghế
     @GetMapping("/bookings/showtime/{showtimeId}")
-    public String selectSeat(@PathVariable Long showtimeId, Model model) {
-
+    public String selectSeat(@PathVariable Long showtimeId, Model model,
+                             RedirectAttributes redirectAttributes) {
+        //Hiển thị lỗi nếu đã hết vé
         ShowtimeResponse showtime = showtimeService.getShowtimeById(showtimeId);
+
+        if (showtime.isSoldOut()) {
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    "Suất chiếu này đã hết vé."
+            );
+
+            return "redirect:/user/movies/" + showtime.getMovieId() + "/showtimes";
+        }
 
         MovieResponse movie = movieService.getMovieById(showtime.getMovieId());
 

@@ -190,6 +190,11 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
         boolean soldOut = isSoldOut(showtime);
 
+        System.out.println(
+                "Showtime " + showtime.getShowtimeId()
+                        + " soldOut = " + soldOut
+        );
+
         return ShowtimeResponse.builder()
                 .showtimeId(showtime.getShowtimeId())
                 .movieId(showtime.getMovie().getMovieId())
@@ -208,10 +213,8 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     private boolean isSoldOut(Showtime showtime) {
         int bookedSeats = showtime.getBookings()
                 .stream()
-                .filter(booking ->
-                        booking.getBookingStatus() == BookingStatus.PAID)
-                .mapToInt(booking ->
-                        booking.getBookingSeat().split(",").length)
+                .filter(b -> b.getBookingStatus() == BookingStatus.PENDING)
+                .mapToInt(b -> b.getBookingSeat().split(",").length)
                 .sum();
 
         return bookedSeats >= showtime.getRoom().getTotalSeats();

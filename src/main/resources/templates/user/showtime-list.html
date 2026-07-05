@@ -44,19 +44,26 @@
                     </p>
 
                     <p class="showtime-price">
-                        <strong th:text="${showtime.ticketPrice + ' ¥'}"></strong>
+                        <strong th:text="${showtime.ticketPrice + ' VND'}"></strong>
                     </p>
 
-                    <div th:if="${showtime.soldOut}" class="mb-2">
-                        <span class="badge bg-danger w-100 py-2">
-                            Hết vé
-                        </span>
-                    </div>
+<!--                    <div th:if="${showtime.soldOut}" class="mb-2">-->
+<!--                        <span class="badge bg-danger w-100 py-2">-->
+<!--                            Hết vé-->
+<!--                        </span>-->
+<!--                    </div>-->
 
-                    <a th:href="@{/user/bookings/showtime/{id}(id=${showtime.showtimeId})}"
+                    <a th:unless="${showtime.soldOut}"
+                       th:href="@{/user/bookings/showtime/{id}(id=${showtime.showtimeId})}"
                        class="btn btn-outline-danger w-100">
                         Xem sơ đồ ghế
                     </a>
+
+                    <button th:if="${showtime.soldOut}"
+                            class="btn btn-secondary w-100"
+                            disabled>
+                        Hết vé
+                    </button>
                 </div>
             </div>
         </div>
