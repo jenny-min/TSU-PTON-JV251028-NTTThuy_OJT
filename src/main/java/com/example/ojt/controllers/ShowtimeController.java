@@ -56,21 +56,12 @@ public class ShowtimeController {
             BindingResult result,
             Model model) {
 
-        System.out.println("ERRORS = " + result.getAllErrors());
-        System.out.println("CREATING SHOWTIME: " + request);
         if (result.hasErrors()) {
             model.addAttribute("movies", movieService.getAllMovies());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "admin/showtimes/create";
         }
-
-        System.out.println("START TIME RAW = " + request.getStartTime());
-        System.out.println("MOVIE ID = " + request.getMovieId());
-        System.out.println("ROOM ID = " + request.getRoomId());
-        System.out.println("PRICE = " + request.getTicketPrice());
-
         showtimeService.createShowtime(request);
-        System.out.println("Saved");
         return "redirect:/admin/showtimes";
     }
 

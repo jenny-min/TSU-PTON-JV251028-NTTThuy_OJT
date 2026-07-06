@@ -72,7 +72,7 @@
                                 th:data-name="${seat}"
                                 th:data-price="${
                                     vipSeats.contains(seat) ? vipPrice :
-                                    (coupleSeats.contains(seat) ? couplePrice : basePrice)}"
+                                    (coupleSeats.contains(seat) ? couplePrice : normalPrice)}"
                                 th:disabled="${bookedSeats.contains(seat)}">
                         </button>
                     </div>
