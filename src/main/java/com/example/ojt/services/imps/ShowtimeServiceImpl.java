@@ -207,6 +207,9 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     }
 
     private boolean isSoldOut(Showtime showtime) {
+        if (showtime.getBookings() == null) {
+            return false;
+        }
         int bookedSeats = showtime.getBookings()
                 .stream()
                 .filter(b -> b.getBookingStatus() == BookingStatus.PENDING)
