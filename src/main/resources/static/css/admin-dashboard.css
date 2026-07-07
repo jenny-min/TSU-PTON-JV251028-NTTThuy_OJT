@@ -1,0 +1,26 @@
+.dashboard-body{
+    background-color: #0f172a;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.card-custom {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+}
+.table-custom {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+.table-custom th {
+    background-color: #334155;
+    color: #94a3b8;
+    border-bottom: 2px solid #475569;
+}
+.table-custom td {
+    border-bottom: 1px solid #334155;
+}
+.status-badge {
+    font-size: 0.8rem;
+    padding: 0.35em 0.65em;
+}

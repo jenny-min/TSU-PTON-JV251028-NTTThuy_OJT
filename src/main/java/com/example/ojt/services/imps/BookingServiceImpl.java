@@ -250,7 +250,7 @@ public class BookingServiceImpl implements BookingService {
 
         response.setBookingId(booking.getBookingId());
         response.setMovieTitle(showtime.getMovie().getTitle());
-        response.setRoomName(showtime.getRoom().getRoomName());
+        response.setRoomName(showtime.getRoom().getRoomName()); 
         response.setStartTime(showtime.getStartTime());
         response.setEndTime(showtime.getEndTime());
         response.setBookingSeat(booking.getBookingSeat());

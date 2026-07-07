@@ -2,39 +2,35 @@
 <html lang="vi"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/dashboard-base}">
 
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</th:block>
+
 <div layout:fragment="content">
-
     <div class="profile-wrapper">
-
         <div class="profile-card p-4 p-md-5">
-
             <h2 class="text-center fw-bold mb-4 card-title">
                 Cập nhật tài khoản
             </h2>
-
             <form th:action="@{/profile/update}"
                   th:object="${profileForm}"
                   method="post"
                   enctype="multipart/form-data">
-
                 <input type="hidden"
                        th:name="${_csrf.parameterName}"
                        th:value="${_csrf.token}" />
 
                 <div class="row g-3">
-
                     <!-- Username -->
                     <div class="col-md-6">
                         <label class="form-label">
                             Tên đăng nhập
                         </label>
 
-                        <input th:value="${profile.username}"
-                               class="form-control"
-                               readonly>
+                        <input th:value="${profile.username}" class="form-control" readonly>
                     </div>
 
                     <!-- Email -->
@@ -43,9 +39,7 @@
                             Email
                         </label>
 
-                        <input th:value="${profile.email}"
-                               class="form-control"
-                               readonly>
+                        <input th:value="${profile.email}" class="form-control" readonly>
                     </div>
 
                     <!-- Full Name -->
@@ -54,8 +48,7 @@
                             Họ và tên
                         </label>
 
-                        <input th:field="*{fullName}"
-                               class="form-control">
+                        <input th:field="*{fullName}" class="form-control">
                     </div>
 
                     <!-- Phone -->
@@ -64,8 +57,7 @@
                             Số điện thoại
                         </label>
 
-                        <input th:field="*{phone}"
-                               class="form-control">
+                        <input th:field="*{phone}" class="form-control">
                     </div>
 
                     <!-- Gender -->
@@ -74,8 +66,7 @@
                             Giới tính
                         </label>
 
-                        <select th:field="*{gender}"
-                                class="form-select">
+                        <select th:field="*{gender}" class="form-select">
 
                             <option value="">
                                 -- Chọn giới tính --
@@ -85,7 +76,6 @@
                                     th:value="${g}"
                                     th:text="${g.label}">
                             </option>
-
                         </select>
                     </div>
 
@@ -106,8 +96,7 @@
                             Địa chỉ
                         </label>
 
-                        <input th:field="*{address}"
-                               class="form-control">
+                        <input th:field="*{address}" class="form-control">
                     </div>
 
                     <!-- Avatar -->
@@ -132,26 +121,15 @@
                     <!-- Submit -->
                     <div class="col-12 mt-3">
 
-                        <button type="submit"
-                                class="btn btn-danger btn-lg w-100 btn-update">
-
+                        <button type="submit" class="btn btn-danger btn-lg w-100 btn-update">
                             <i class="bi bi-check-circle me-2"></i>
                             Cập nhật
-
                         </button>
-
                     </div>
-
                 </div>
-
             </form>
-
         </div>
-
     </div>
-
 </div>
-
 <script th:src="@{/js/previewAvatar.js}"></script>
-
 </html>

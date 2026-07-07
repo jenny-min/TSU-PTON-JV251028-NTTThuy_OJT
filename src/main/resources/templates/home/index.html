@@ -5,6 +5,11 @@
       layout:decorate="~{layouts/base}"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pagination.css}">
+</th:block>
+
 <div layout:fragment="content">
     <!--  SECTION HERO  -->
     <section class="cinema-hero text-center text-white">

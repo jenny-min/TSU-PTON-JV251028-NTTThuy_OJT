@@ -1,0 +1,30 @@
+/****************************************/
+/*LOGIN PAGE*/
+.login-card {
+    background: #1a1a1a;
+    width: 100%;
+    max-width: 700px;
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 8px 30px rgba(0,0,0,.4);
+    transition: all .3s ease;
+}
+
+.login-card .card-body {
+    background: #1a1a1a;
+}
+
+.login-card .form-control {
+    background: #2c2c2c;
+    border-color: #444;
+}
+
+.login-card .form-control:focus {
+    background: #2c2c2c;
+}
+
+.login-card .form-label {
+    color: #ddd;
+}

@@ -1,0 +1,27 @@
+/****************************************/
+/*REGISTER PAGE*/
+.register-card {
+    background: #1a1a1a;
+    color: white;
+}
+
+.register-card .card-body {
+    background: #1a1a1a;
+}
+
+.register-card .form-control,
+.register-card .form-select {
+    background: #2c2c2c;
+    border-color: #444;
+    color: white;
+}
+
+.register-card .form-control:focus,
+.register-card .form-select:focus {
+    background: #2c2c2c;
+    color: white;
+}
+
+.register-card .form-label {
+    color: #ddd;
+}

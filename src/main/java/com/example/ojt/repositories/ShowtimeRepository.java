@@ -22,4 +22,7 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
     AND :endTime > s.startTime
 """)
     long countConflicts(Long roomId, Long showtimeId, LocalDateTime startTime, LocalDateTime endTime);
+
+    // Lấy các suất chiếu sắp diễn ra tính từ thời điểm hiện tại
+    List<Showtime> findTop10ByStartTimeAfterOrderByStartTimeAsc(LocalDateTime now);
 }

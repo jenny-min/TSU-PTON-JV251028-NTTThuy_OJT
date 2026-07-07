@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
     Optional<User> findByEmail(String email);
+
+    // Đếm số lượng khách hàng đang hoạt động hoặc bị khóa
+    long countByEnabled(Boolean enabled);
 }
