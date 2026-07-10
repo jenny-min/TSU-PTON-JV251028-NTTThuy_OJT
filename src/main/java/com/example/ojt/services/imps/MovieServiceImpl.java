@@ -5,6 +5,7 @@ import com.example.ojt.dtos.movie.MovieResponse;
 import com.example.ojt.dtos.movie.UpdateMovieRequest;
 import com.example.ojt.entities.Genre;
 import com.example.ojt.entities.Movie;
+import com.example.ojt.enums.MovieStatus;
 import com.example.ojt.repositories.GenreRepository;
 import com.example.ojt.repositories.MovieRepository;
 import com.example.ojt.services.interfaces.MovieService;
@@ -149,7 +150,10 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getActiveMovies() {
-        return movieRepository.findByStatus("ACTIVE");
+        return movieRepository.findActiveMoviesWithAvailableShowtimes(
+                MovieStatus.NOW_SHOWING,
+                LocalDateTime.now()
+        );
     }
 
     @Override

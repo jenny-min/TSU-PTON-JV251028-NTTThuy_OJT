@@ -34,6 +34,7 @@ public class HomeController {
             List<Movie> activeMovies = movieService.getActiveMovies();
             model.addAttribute("activeMovies", activeMovies);
         } catch (Exception e) {
+            e.printStackTrace();
             model.addAttribute("error", "Không thể tải danh sách phim đặt vé nhanh: " + e.getMessage());
         }
 

@@ -16,18 +16,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Gọi API Fetch ngầm tới endpoint lấy suất chiếu sắp diễn ra của phim
             fetch(`/api/public/showtimes?movieId=${movieId}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Lỗi HTTP! Trạng thái: " + response.status);
+                    }
+                    // Đọc dữ liệu dưới dạng Text trước để tránh lỗi parse JSON nếu Backend trả về String
+                    return response.text();
+                })
+                .then(text => {
+                    // Kiểm tra nếu chuỗi rỗng
+                    if (!text || text.trim() === "") return [];
+
+                    // Ép kiểu sang JSON
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        console.error("Dữ liệu không phải JSON chuẩn:", text);
+                        return [];
+                    }
+                })
                 .then(data => {
                     showtimeSelect.innerHTML = '<option value="">-- Chọn suất chiếu thích hợp --</option>';
 
-                    if (data.length === 0) {
+                    if (!data || data.length === 0) {
                         showtimeSelect.innerHTML = '<option value="">Hiện tại phim này hết suất chiếu</option>';
                         showtimeSelect.disabled = true;
                         btnQuickBook.disabled = true;
                         return;
                     }
 
-                    // Đổ dữ liệu JSON nhận được vào thẻ select suất chiếu
+                    // Đổ dữ liệu vào thẻ select
                     data.forEach(st => {
                         const startTime = new Date(st.startTime);
                         const formattedTime = startTime.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'})
@@ -39,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         showtimeSelect.appendChild(option);
                     });
 
-                    // Kích hoạt ô chọn và nút bấm cho phép thao tác công đoạn tiếp theo
                     showtimeSelect.disabled = false;
                     btnQuickBook.disabled = false;
                 })
