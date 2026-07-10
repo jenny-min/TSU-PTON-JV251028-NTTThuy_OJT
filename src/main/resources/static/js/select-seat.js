@@ -80,6 +80,23 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Submitting seats:", seatInput.value);
     });
 
+    // =========================
+    // KHÔI PHỤC GHẾ ĐÃ CHỌN KHI QUAY LẠI (THÊM ĐOẠN NÀY)
+    // =========================
+    // Tìm tất cả các ghế được Thymeleaf gắn class "selected" sẵn từ Session
+    const preSelectedButtons = document.querySelectorAll(".seat.selected");
+
+    preSelectedButtons.forEach(function (button) {
+        const seatName = button.dataset.name;
+        const seatPrice = Number(button.dataset.price);
+
+        // Đẩy lại vào mảng Object giống như hành vi click chuột
+        selectedSeatList.push({
+            name: seatName,
+            price: seatPrice
+        });
+    });
+
     // init UI
     updateSummary();
 });

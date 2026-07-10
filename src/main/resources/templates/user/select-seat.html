@@ -59,20 +59,18 @@
                              th:text="${#strings.substring(row.get(0),0,1)}">
                         </div>
 
-                        <button
-                                th:each="seat : ${row}"
-                                class="seat"
+                        <button th:each="seat : ${row}" class="seat"
 
                                 th:classappend="${bookedSeats.contains(seat)} ? ' booked'
+                                : (${selectingSeats != null && selectingSeats.contains(seat)} ? ' selected'
                                 : (${vipSeats.contains(seat)} ? ' vip'
                                 : (${coupleSeats.contains(seat)} ? ' couple'
-                                : ' available'))"
+                                : ' available')))"
 
                                 th:text="${seat}"
                                 th:data-name="${seat}"
-                                th:data-price="${
-                                    vipSeats.contains(seat) ? vipPrice :
-                                    (coupleSeats.contains(seat) ? couplePrice : normalPrice)}"
+                                th:data-price="${vipSeats.contains(seat) ? vipPrice :
+                                (coupleSeats.contains(seat) ? couplePrice : normalPrice)}"
                                 th:disabled="${bookedSeats.contains(seat)}">
                         </button>
                     </div>

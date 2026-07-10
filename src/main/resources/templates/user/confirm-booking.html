@@ -84,12 +84,12 @@
                         </button>
                     </form>
 
-                    <form th:action="@{/bookings/showtime/{id}(id=${confirm.showtime.showtimeId})}"
-                            method="get">
-                        <button class="btn btn-back w-100">
+                    <div class="mb-3">
+                        <a th:href="@{/user/bookings/showtime/{id}(id=${confirm.showtime.showtimeId})}"
+                           class="btn btn-back w-100 text-center d-block">
                             ← Quay lại chọn ghế
-                        </button>
-                    </form>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

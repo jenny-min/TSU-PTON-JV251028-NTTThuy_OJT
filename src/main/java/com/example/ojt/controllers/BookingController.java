@@ -51,7 +51,8 @@ public class BookingController {
     //Chọn ghế
     @GetMapping("/bookings/showtime/{showtimeId}")
     public String selectSeat(@PathVariable Long showtimeId, Model model,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes,
+                             HttpSession session) {
         //Hiển thị lỗi nếu đã hết vé
         ShowtimeResponse showtime = showtimeService.getShowtimeById(showtimeId);
 
@@ -114,6 +115,21 @@ public class BookingController {
                     .collect(Collectors.toSet());
         }
 
+        // XỬ LÝ GHẾ ĐANG CHỌN TRONG SESSION
+        Set<String> selectingSeats = new HashSet<>();
+        ConfirmBookingRequest currentRequest = (ConfirmBookingRequest) session.getAttribute("BOOKING_REQUEST");
+
+        // Nếu trong session có sẵn request của suất chiếu này (do quay lại)
+        if (currentRequest != null && showtimeId.equals(currentRequest.getShowtimeId())) {
+            String seatString = currentRequest.getBookingSeat(); // Giả sử chuỗi lưu dạng "A1, A2" hoặc "A1"
+            if (seatString != null && !seatString.isBlank()) {
+                selectingSeats = Arrays.stream(seatString.split(","))
+                        .map(String::trim)
+                        .collect(Collectors.toSet());
+            }
+        }
+        // Đẩy danh sách ghế đang chọn ngược lại cho Thymeleaf
+        model.addAttribute("selectingSeats", selectingSeats);
         model.addAttribute("bookedSeats", bookingService.getBookedSeats(showtimeId));
         model.addAttribute("vipSeats", vipSeats);
         model.addAttribute("seatRows", seatRows);
