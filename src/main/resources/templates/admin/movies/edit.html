@@ -16,6 +16,8 @@
                 <form th:action="@{/admin/movies/edit/{id}(id=${movie.movieId})}"
                       th:object="${movie}"
                       method="post">
+                    <!-- ID phim -->
+                    <input type="hidden" th:field="*{movieId}" />
 
                     <!-- Tên phim -->
                     <div class="mb-3">
@@ -130,9 +132,8 @@
                                 <div class="form-check">
                                     <input class="form-check-input"
                                            type="checkbox"
-                                           name="genreIds"
+                                           th:field="*{genreIds}"
                                            th:value="${genre.genreId}"
-                                           th:checked="${movie.genreIds != null && movie.genreIds.contains(genre.genreId)}"
                                            th:id="'genre-' + ${genre.genreId}">
 
                                     <label class="form-check-label"

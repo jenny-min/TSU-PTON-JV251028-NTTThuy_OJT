@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
@@ -79,7 +81,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public UpdateMovieRequest getMovieForEdit(Long id) {
-
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("Không tìm thấy phim"));
@@ -104,7 +105,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie editMovie(
+    public MovieResponse editMovie(
             Long id,
             UpdateMovieRequest request
     ) {
@@ -131,7 +132,9 @@ public class MovieServiceImpl implements MovieService {
 
         movie.setGenres(genres);
 
-        return movieRepository.save(movie);
+        System.out.println("genre size" + genres.size());
+
+        return toResponse(movieRepository.save(movie));
     }
 
     @Override
@@ -142,8 +145,6 @@ public class MovieServiceImpl implements MovieService {
         movie.getGenres().clear();
 
         movieRepository.delete(movie);
-
-        System.out.println("DELETE DONE");
     }
 
     @Override

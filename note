@@ -133,5 +133,14 @@ tìm hiểu thêm về thymeleaf:
 - th:block layout:fragment
 - layout:decorate
 
-Chưa chỉnh giá vé thường và vé VIP cũng như couple
+2026/07/8
 
+*****ĐIỀU CẦN SỬA TRANG admin/dashboard
+- chưa hiển thị so sánh % doanh thu tổng -> js chưa hoàn chỉnh
+- Chưa hiển thị tổng số vé đã bán
+- Chưa cập nhật được trạng thái phim đang chiếu
+- Chưa hiển thị được chart  xu hướng đặt vé và doanh thu
+- Ở giao dịch vé vừa diễn ra, hiển thị phương thức thanh toán CASH->TIỀN MẶT
+
+****ĐIỀU CHỈNH trang admin/movies
+- Căn lề trang, lỗi @media mất dropdown menu ở các trang

@@ -97,7 +97,6 @@ public class MovieController {
             BindingResult result,
             Model model
     ) {
-
         if (result.hasErrors()) {
             model.addAttribute("genres", genreService.findAll());
             model.addAttribute("movieStatuses", MovieStatus.values());

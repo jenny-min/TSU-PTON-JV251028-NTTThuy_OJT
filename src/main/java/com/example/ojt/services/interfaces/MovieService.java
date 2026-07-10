@@ -18,7 +18,7 @@ public interface MovieService {
 
     UpdateMovieRequest getMovieForEdit(Long id);
 
-    Movie editMovie(Long id, UpdateMovieRequest request);
+    MovieResponse editMovie(Long id, UpdateMovieRequest request);
 
     void deleteMovie(Long id);
 
