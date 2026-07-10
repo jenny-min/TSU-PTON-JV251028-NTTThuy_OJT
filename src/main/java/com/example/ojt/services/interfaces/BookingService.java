@@ -15,6 +15,8 @@ public interface BookingService {
 
     List<TicketResponse> getBookingHistory(Long userId);
 
+    List<TicketResponse> getAllBookings();
+
     ConfirmBookingResponse getConfirmBooking(ConfirmBookingRequest request);
 
     ConfirmBookingResponse buildConfirm(BookingRequest request);

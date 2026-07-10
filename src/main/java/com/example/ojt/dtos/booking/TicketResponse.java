@@ -1,5 +1,6 @@
 package com.example.ojt.dtos.booking;
 
+import com.example.ojt.entities.User;
 import com.example.ojt.enums.BookingStatus;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class TicketResponse {
     private Long bookingId;
+    private User user;
     private String movieTitle;
     private String roomName;
     private LocalDateTime startTime;

@@ -1,0 +1,91 @@
+.overview h2 {
+    color: #0d0d0d;
+}
+
+.ticket-card {
+    border: none !important;
+    border-left: 6px solid #6c757d !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hiệu ứng zoom nhẹ khi di chuột qua thẻ vé */
+.ticket-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Tùy biến màu sắc viền */
+.ticket-card.CONFIRMED { border-left-color: #198754 !important; }
+.ticket-card.PENDING { border-left-color: #ffc107 !important; }
+.ticket-card.CANCELLED { border-left-color: #dc3545 !important; }
+
+.card-header {
+    border-bottom: 1px dashed #e2e8f0 !important;
+    background-color: #ffffff !important;
+    padding: 1rem 1.5rem !important;
+}
+
+.movie-title {
+    color: #2c3e50;
+    font-size: 1.2rem;
+    letter-spacing: -0.3px;
+}
+
+.card-body {
+    padding: 1.5rem !important;
+    background-color: #ffffff;
+}
+
+.card-body p {
+    font-size: 0.95rem;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+}
+
+.card-body p i {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+}
+
+.seat-badge {
+    background-color: #2d3748 !important;
+    font-size: 0.9rem !important;
+    padding: 0.4rem 0.8rem !important;
+    letter-spacing: 0.5px;
+    border-radius: 6px !important;
+}
+
+.status-badge {
+    padding: 0.5rem 0.8rem !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 20px !important;
+}
+
+.btn-outline-success {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+.btn-outline-success:hover {
+    background-color: #198754;
+    color: white;
+}
+
+.btn-danger {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.375rem 0.75rem;
+}
+
+.alert {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}

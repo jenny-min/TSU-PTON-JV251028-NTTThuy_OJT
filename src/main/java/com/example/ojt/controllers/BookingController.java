@@ -6,6 +6,7 @@ import com.example.ojt.dtos.showtime.ShowtimeResponse;
 import com.example.ojt.entities.Room;
 import com.example.ojt.entities.User;
 import com.example.ojt.services.interfaces.*;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -188,43 +189,44 @@ public class BookingController {
         return "user/payment";
     }
 
-    //Thanh toán
+    // Hàm Checkout
     @PostMapping("/bookings/checkout")
     public String checkout(@ModelAttribute BookingRequest request,
                            Principal principal,
                            RedirectAttributes redirectAttributes) {
-
         try {
-            TicketResponse ticket =
-                    bookingService.checkout(request, principal.getName());
-
+            TicketResponse ticket = bookingService.checkout(request, principal.getName());
             redirectAttributes.addFlashAttribute("ticket", ticket);
             redirectAttributes.addFlashAttribute("success", "Đặt vé thành công.");
 
-            return "redirect:/user/history";
+            // Chuyển hướng về link tuyệt đối dùng chung (Bắt đầu bằng dấu / công khai)
+            return "redirect:/bookings/history";
 
         } catch (RuntimeException ex) {
-
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
-
-            return "redirect:/user/history";
+            return "redirect:/bookings/history";
         }
     }
 
-    //Xem lịch sử booking
-    @GetMapping("/history")
+    // Hàm xem Lịch sử
+    @GetMapping("/bookings/history")
     public String bookingHistory(Model model,
-                                 Principal principal) {
+                                 Principal principal,
+                                 HttpServletRequest request) {
 
         User user = userService.findByUsername(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
-        List<TicketResponse> histories =
-                bookingService.getBookingHistory(user.getId());
+        List<TicketResponse> histories;
+
+        if (request.isUserInRole("ADMIN") || request.isUserInRole("STAFF")) {
+            histories = bookingService.getAllBookings();
+        } else {
+            histories = bookingService.getBookingHistory(user.getId());
+        }
 
         model.addAttribute("histories", histories);
-
-        return "user/history";
+        return "shared/booking-history";
     }
 
     //hủy vé

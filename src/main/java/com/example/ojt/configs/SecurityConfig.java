@@ -33,6 +33,8 @@ public class SecurityConfig {
                         .requestMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("USER", "STAFF", "ADMIN")
+                        // Cho phép cả 3 Role truy cập vào hệ thống xem lịch sử/hóa đơn chung
+                        .requestMatchers("/bookings/**").hasAnyRole("USER", "STAFF", "ADMIN")
                         .anyRequest().authenticated()
                 )
 

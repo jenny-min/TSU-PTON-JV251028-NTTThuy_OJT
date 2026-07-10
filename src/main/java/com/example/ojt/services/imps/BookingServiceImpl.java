@@ -273,6 +273,50 @@ public class BookingServiceImpl implements BookingService {
                 .toList();
     }
 
+    @Override
+    public List<TicketResponse> getAllBookings() {
+        // 1. Lấy tất cả danh sách đặt vé trong DB, sắp xếp theo ngày đặt mới nhất lên đầu
+        List<Booking> bookings = bookingRepository.findAllByOrderByBookingDateDesc();
+
+        // 2. Chuyển đổi danh sách Entity sang DTO TicketResponse để trả về cho Controller
+        return bookings.stream().map(booking -> {
+            TicketResponse response = new TicketResponse();
+
+            // Map các thông tin cơ bản từ Booking Entity sang TicketResponse DTO
+            response.setBookingId(booking.getBookingId());
+            response.setUser(booking.getUser()); // Gán nguyên Object User theo đúng DTO mới
+            response.setBookingDate(booking.getBookingDate());
+            response.setTotalAmount(booking.getTotalAmount()); // Sử dụng chuẩn trường totalAmount của bạn
+            response.setPaymentMethod(booking.getPaymentMethod());
+            response.setBookingStatus(booking.getBookingStatus());
+            response.setBookingSeat(booking.getBookingSeat());
+
+            // Map thông tin chi tiết từ mối quan hệ phức hợp: Showtime -> Movie / Room
+            if (booking.getShowtime() != null) {
+                response.setStartTime(booking.getShowtime().getStartTime());
+                response.setEndTime(booking.getShowtime().getEndTime());
+                response.setTicketPrice(booking.getShowtime().getTicketPrice()); // Gán giá vé gốc của suất chiếu
+
+                if (booking.getShowtime().getMovie() != null) {
+                    response.setMovieTitle(booking.getShowtime().getMovie().getTitle());
+                }
+                if (booking.getShowtime().getRoom() != null) {
+                    response.setRoomName(booking.getShowtime().getRoom().getRoomName());
+                }
+            }
+
+            // Tự động tính toán số lượng ghế đặt (seatCount) dựa trên chuỗi "A1, A2"
+            if (booking.getBookingSeat() != null && !booking.getBookingSeat().isBlank()) {
+                String[] seats = booking.getBookingSeat().split(",");
+                response.setSeatCount((long) seats.length);
+            } else {
+                response.setSeatCount(0L);
+            }
+
+            return response;
+        }).collect(Collectors.toList());
+    }
+
     //Hủy vé
     @Transactional
     public void cancelBooking(Long bookingId) {

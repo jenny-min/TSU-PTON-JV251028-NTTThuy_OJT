@@ -1,7 +1,6 @@
     document.addEventListener("DOMContentLoaded", function () {
 
         const seats = document.querySelectorAll(".seat");
-
         const selectedSeatsEl = document.getElementById("selectedSeats");
         const seatCountEl = document.getElementById("seatCount");
         const totalPriceEl = document.getElementById("totalPrice");
@@ -10,7 +9,6 @@
         let totalPrice = 0;
 
         seats.forEach(seat => {
-
             // bỏ qua ghế đã đặt
             if (seat.classList.contains("booked")) return;
 
@@ -61,8 +59,3 @@
         new Intl.NumberFormat('vi-VN').format(totalPrice) + " VND";
         }
     });
-
-    function syncSeatsToForm(selectedSeats) {
-        document.getElementById("selectedSeatsInput").value =
-            selectedSeats.map(s => s.name).join(",");
-    }

@@ -7,9 +7,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
     <!--  fragment riêng cho CSS  -->
-    <th:block layout:fragment="css"></th:block>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </th:block>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
@@ -54,17 +55,17 @@
 
                             <li>
                                 <a class="dropdown-item"
-                                   th:href="@{/staff/staff}">
-                                    <i class="fa-solid fa-user-tie me-2"></i>
-                                    Quản lý nhân viên
+                                   th:href="@{/bookings/history}">
+                                    <i class="fa-solid fa-receipt me-2"></i>
+                                    Quản lý hóa đơn
                                 </a>
                             </li>
 
                             <li>
                                 <a class="dropdown-item"
-                                   th:href="@{/admin/users}">
-                                    <i class="fa-solid fa-users me-2"></i>
-                                    Quản lý người dùng
+                                   th:href="@{/staff/staff}">
+                                    <i class="fa-solid fa-user-tie me-2"></i>
+                                    Quản lý nhân viên
                                 </a>
                             </li>
                         </ul>
@@ -82,14 +83,6 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item"
-                                   th:href="@{/staff/dashboard}">
-                                    <i class="fa-solid fa-user me-2"></i>
-                                    Trang nhân viên
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item"
                                    th:href="@{/staff/schedules}">
                                     <i class="fa-solid fa-calendar me-2"></i>
                                     Lịch chiếu
@@ -98,9 +91,9 @@
 
                             <li>
                                 <a class="dropdown-item"
-                                   th:href="@{/staff/tickets}">
+                                   th:href="@{/bookings/history}">
                                     <i class="fa-solid fa-ticket me-2"></i>
-                                    Vé đặt
+                                    Vé đặt (Soát vé)
                                 </a>
                             </li>
                         </ul>
@@ -112,7 +105,7 @@
                            href="#"
                            role="button"
                            data-bs-toggle="dropdown">
-                            <i class="fa-solid fa-list"></i>
+                           Người dùng
                         </a>
 
                         <ul class="dropdown-menu">
@@ -126,7 +119,7 @@
 
                             <li>
                                 <a class="dropdown-item"
-                                   th:href="@{/user/history}">
+                                   th:href="@{/bookings/history}">
                                     <i class="fa-solid fa-ticket me-2"></i>
                                     Vé của tôi
                                 </a>

@@ -39,4 +39,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "GROUP BY DATE(b.booking_date) " +
             "ORDER BY DATE(b.booking_date) DESC LIMIT 7", nativeQuery = true)
     List<Object[]> getRevenueLast7Days();
+
+    List<Booking> findAllByOrderByBookingDateDesc();
 }

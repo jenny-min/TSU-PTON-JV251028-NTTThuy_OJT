@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<th:block layout:fragment="css">
+    <link th:href="@{/css/booking-history.css}" rel="stylesheet" />
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container overview py-5">
+        <h2 class="fw-bold mb-4 d-flex align-items-center">
+            <i class="bi bi-receipt-cutoff text-danger me-3 fs-1"></i>
+            <span sec:authorize="hasAnyRole('ADMIN', 'STAFF')">HỆ THỐNG QUẢN LÝ HÓA ĐƠN ĐẶT VÉ</span>
+            <span sec:authorize="hasRole('USER')">LỊCH SỬ ĐẶT VÉ CỦA BẠN</span>
+        </h2>
+
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${#lists.isEmpty(histories)}" class="text-center py-5 card ticket-card bg-white mt-4">
+            <i class="bi bi-folder-x display-1 text-muted mb-3"></i>
+            <h5 class="text-secondary">Không tìm thấy dữ liệu đặt vé nào!</h5>
+            <p class="text-muted small">Danh sách lịch sử hiện đang trống.</p>
+        </div>
+
+        <div class="card ticket-card mb-4"
+             th:each="history : ${histories}"
+             th:classappend="${history.bookingStatus}">
+
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h4 class="movie-title fw-bold mb-1" th:text="${history.movieTitle}">Tên phim</h4>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <span class="text-muted small">Mã đơn: <strong class="text-dark" th:text="'#' + ${history.bookingId}">#123</strong></span>
+
+                        <span sec:authorize="hasAnyRole('ADMIN', 'STAFF')" class="badge bg-light text-secondary border">
+                                <i class="bi bi-person-fill text-primary me-1"></i>Khách:
+                                <strong class="text-dark" th:text="${history.user != null ? history.user.username : 'Ẩn danh'}"></strong>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                        <span class="badge status-badge"
+                              th:classappend="${history.bookingStatus.name() == 'CONFIRMED'} ? 'bg-success' :
+                              (${history.bookingStatus.name() == 'PENDING'} ? 'bg-warning text-dark' : 'bg-danger')"
+                              th:text="${history.bookingStatus}">Trạng thái
+                        </span>
+
+                    <a th:if="${history.bookingStatus.name() == 'CONFIRMED'}"
+                       th:href="@{/bookings/invoice/{id}(id=${history.bookingId})}"
+                       class="btn btn-sm btn-outline-success d-flex align-items-center gap-1">
+                        <i class="bi bi-printer-fill"></i> Xem hóa đơn
+                    </a>
+
+                    <form th:if="${history.bookingStatus.name() == 'PENDING'}"
+                          th:action="@{/user/bookings/{id}/cancel(id=${history.bookingId})}"
+                          method="post" class="m-0">
+                        <button class="btn btn-sm btn-danger d-flex align-items-center gap-1"
+                                onclick="return confirm('Bạn có chắc chắn muốn hủy đơn đặt vé này?')">
+                            <i class="bi bi-trash3-fill"></i> Hủy vé
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card-body row g-3 m-0">
+                <div class="col-md-6 p-0 pe-md-3">
+                    <p class="mb-3">
+                        <i class="bi bi-calendar-event text-primary me-2"></i><strong>Suất chiếu:</strong>
+                        <span class="fw-semibold ms-1" th:text="${#temporals.format(history.startTime,'dd/MM/yyyy HH:mm')}"></span>
+                        <span class="mx-1 text-muted">-</span>
+                        <span class="fw-semibold text-muted" th:text="${#temporals.format(history.endTime,'HH:mm')}"></span>
+                    </p>
+                    <p class="mb-3">
+                        <i class="bi bi-door-closed text-success me-2"></i><strong>Phòng chiếu:</strong>
+                        <span class="ms-1 fw-medium" th:text="${history.roomName}"></span>
+                    </p>
+                    <p class="mb-0">
+                        <i class="bi bi-grid-3x3-gap text-warning me-2"></i><strong>Danh sách ghế:</strong>
+                        <span class="badge seat-badge ms-1" th:text="${history.bookingSeat}"></span>
+                    </p>
+                </div>
+
+                <div class="col-md-6 p-0 ps-md-3 border-start-md">
+                    <p class="mb-3">
+                        <i class="bi bi-credit-card text-info me-2"></i><strong>Hình thức:</strong>
+                        <span class="ms-1 fw-medium" th:text="${history.paymentMethod}"></span>
+                    </p>
+                    <p class="mb-3">
+                        <i class="bi bi-cash-coin text-danger me-2"></i><strong>Tổng thanh toán:</strong>
+                        <span class="text-danger fw-bold fs-5 ms-1" th:text="${#numbers.formatDecimal(history.totalAmount,0,'COMMA',0,'POINT')}"></span>
+                        <small class="text-danger fw-bold small ms-1">VNĐ</small>
+                    </p>
+                    <p class="mb-0">
+                        <i class="bi bi-clock-history text-secondary me-2"></i><strong>Thời gian đặt:</strong>
+                        <span class="ms-1 text-muted" th:text="${#temporals.format(history.bookingDate,'dd/MM/yyyy HH:mm')}"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
