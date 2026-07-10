@@ -25,4 +25,6 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
 
     // Lấy các suất chiếu sắp diễn ra tính từ thời điểm hiện tại
     List<Showtime> findTop10ByStartTimeAfterOrderByStartTimeAsc(LocalDateTime now);
+
+    List<Showtime> findAllByOrderByStartTimeAsc();
 }

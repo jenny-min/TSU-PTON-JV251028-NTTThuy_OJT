@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/dashboard-base}">
+
+<head>
+    <title>Lịch Chiếu Phim Hệ Thống</title>
+</head>
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/staff.css}">
+</th:block>
+
+<div layout:fragment="content" class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-1 text-dark">
+                <i class="fa-solid fa-calendar-days text-info me-2"></i>LỊCH CHIẾU PHIM HỆ THỐNG
+            </h3>
+            <p class="text-muted small mb-0">Danh sách tất cả các suất chiếu đã được Admin sắp lịch trên hệ thống rạp.</p>
+        </div>
+        <div>
+            <a th:href="@{/staff/dashboard}" class="btn btn-outline-secondary btn-sm">
+                <i class="fa-solid fa-arrow-left me-1"></i> Quay lại Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger shadow-sm border-0 mb-4" role="alert">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i> <span th:text="${error}"></span>
+    </div>
+
+    <div th:if="${#lists.isEmpty(showtimes)}" class="text-center py-5 card border-0 shadow-sm bg-white">
+        <i class="fa-solid fa-calendar-xmark display-3 text-muted mb-3"></i>
+        <h5 class="text-secondary">Hiện tại không có suất chiếu nào được tạo!</h5>
+        <p class="text-muted small">Vui lòng liên hệ Admin để cập nhật lịch chiếu mới.</p>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(showtimes)}" class="card border-0 shadow-sm overflow-hidden bg-white">
+        <div class="table-responsive">
+            <table class="table schedule-table align-middle mb-0 text-dark">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width: 80px;">Mã suất</th>
+                    <th>Tên phim</th>
+                    <th>Phòng chiếu</th>
+                    <th>Thời gian chiếu</th>
+                    <th class="text-end">Giá vé gốc</th>
+                    <th class="text-center">Trạng thái vé</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="schedule-row" th:each="showtime : ${showtimes}">
+
+                    <td class="text-center fw-bold text-secondary" th:text="'#' + ${showtime.showtimeId}">#1</td>
+
+                    <td>
+                        <div class="fw-bold text-dark" th:text="${showtime.movieTitle}">Tên phim</div>
+                        <small class="text-muted">
+                            <i class="fa-regular fa-clock me-1"></i>Mã phim: <span th:text="${showtime.movieId}"></span>
+                        </small>
+                    </td>
+
+                    <td>
+                        <span class="badge bg-secondary px-2 py-1" th:text="${showtime.roomName}">Phòng số 1</span>
+                    </td>
+
+                    <td>
+                        <div>
+                            <i class="fa-regular fa-calendar text-primary me-1"></i>
+                            <strong th:text="${#temporals.format(showtime.startTime, 'dd/MM/yyyy')}">01/01/2026</strong>
+                        </div>
+                        <div class="small text-muted mt-1">
+                            <i class="fa-regular fa-clock text-success me-1"></i>
+                            <span th:text="${#temporals.format(showtime.startTime, 'HH:mm')}">09:00</span>
+                            <span class="mx-1">-</span>
+                            <span th:text="${#temporals.format(showtime.endTime, 'HH:mm')}">11:00</span>
+                        </div>
+                    </td>
+
+                    <td class="text-end fw-bold text-danger">
+                        <span th:text="${#numbers.formatDecimal(showtime.ticketPrice, 0, 'COMMA', 0, 'POINT')}">50,000</span> đ
+                    </td>
+
+                    <td class="text-center">
+                            <span th:if="${showtime.expired}" class="badge bg-light text-secondary border badge-status">
+                                <i class="fa-solid fa-history me-1"></i> Đã chiếu xong
+                            </span>
+
+                        <span th:if="${!showtime.expired && showtime.soldOut}" class="badge bg-danger text-white badge-status">
+                                <i class="fa-solid fa-ban me-1"></i> Hết ghế
+                            </span>
+
+                        <span th:if="${!showtime.expired && !showtime.soldOut}" class="badge bg-success text-white badge-status">
+                                <i class="fa-solid fa-circle-check me-1"></i> Còn vé (Sẵn sàng)
+                            </span>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</html>

@@ -95,6 +95,43 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public TicketResponse getBookingById(Long bookingId) {
+        // Tìm hóa đơn trong DB, nếu không thấy thì quăng lỗi
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy mã hóa đơn #" + bookingId));
+
+        TicketResponse response = new TicketResponse();
+        response.setBookingId(booking.getBookingId());
+        response.setUser(booking.getUser());
+        response.setBookingDate(booking.getBookingDate());
+        response.setTotalAmount(booking.getTotalAmount());
+        response.setPaymentMethod(booking.getPaymentMethod());
+        response.setBookingStatus(booking.getBookingStatus());
+        response.setBookingSeat(booking.getBookingSeat());
+
+        if (booking.getShowtime() != null) {
+            response.setStartTime(booking.getShowtime().getStartTime());
+            response.setEndTime(booking.getShowtime().getEndTime());
+            response.setTicketPrice(booking.getShowtime().getTicketPrice());
+
+            if (booking.getShowtime().getMovie() != null) {
+                response.setMovieTitle(booking.getShowtime().getMovie().getTitle());
+            }
+            if (booking.getShowtime().getRoom() != null) {
+                response.setRoomName(booking.getShowtime().getRoom().getRoomName());
+            }
+        }
+
+        if (booking.getBookingSeat() != null && !booking.getBookingSeat().isBlank()) {
+            response.setSeatCount((long) booking.getBookingSeat().split(",").length);
+        } else {
+            response.setSeatCount(0L);
+        }
+
+        return response;
+    }
+
+    @Override
     public BookingResponse mapToResponse(Booking booking) {
         BookingResponse res = new BookingResponse();
         res.setBookingId(booking.getBookingId());

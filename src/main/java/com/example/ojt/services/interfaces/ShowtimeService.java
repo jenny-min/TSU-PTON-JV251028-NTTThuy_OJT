@@ -10,6 +10,8 @@ import java.util.List;
 public interface ShowtimeService{
     Page<ShowtimeResponse> getShowtimes(int page, int size);
 
+    List<ShowtimeResponse> getAllShowtimes();
+
     ShowtimeResponse getShowtimeById(Long id);
 
     UpdateShowtimeRequest getShowtimeForUpdate(Long id);

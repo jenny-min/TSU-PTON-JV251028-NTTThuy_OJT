@@ -1,10 +1,121 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="vi"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/dashboard-base}">
+      layout:decorate="~{layouts/dashboard-base}"> <head>
+    <title>Staff Dashboard</title>
+</head>
 
-<div layout:fragment="content">
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/staff.css}">
+</th:block>
 
+<div layout:fragment="content" class="container py-4">
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-dark text-white p-4 rounded-3 shadow-sm">
+                <h4 class="fw-bold mb-1">
+                    Xin chào, <span th:text="${staff != null ? staff.username : 'Nhân viên'}">Nhân viên</span>!
+                </h4>
+                <p class="text-light-50 mb-0">Chào mừng bạn trở lại với ca làm việc. Hãy chọn một tác vụ bên dưới để bắt đầu.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card p-3 border-0 bg-white shadow-sm d-flex flex-row align-items-center justify-content-between">
+                <div>
+                    <h6 class="text-muted mb-1">Hóa đơn hệ thống</h6>
+                    <h3 class="fw-bold mb-0 text-primary">Hoạt động</h3>
+                </div>
+                <div class="bg-primary-subtle text-primary p-3 rounded-3">
+                    <i class="fa-solid fa-receipt fs-4"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 border-0 bg-white shadow-sm d-flex flex-row align-items-center justify-content-between">
+                <div>
+                    <h6 class="text-muted mb-1">Quyền hạn</h6>
+                    <h3 class="fw-bold mb-0 text-success">Staff Role</h3>
+                </div>
+                <div class="bg-success-subtle text-success p-3 rounded-3">
+                    <i class="fa-solid fa-user-shield fs-4"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 border-0 bg-white shadow-sm d-flex flex-row align-items-center justify-content-between">
+                <div>
+                    <h6 class="text-muted mb-1">Thời gian hệ thống</h6>
+                    <h3 class="fw-bold mb-0 text-warning fs-5" id="liveClock">00:00:00</h3>
+                </div>
+                <div class="bg-warning-subtle text-warning p-3 rounded-3">
+                    <i class="fa-solid fa-clock fs-4"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="card p-4 border-0 shadow-sm h-100 bg-white">
+                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-qrcode text-danger me-2"></i>Kiểm Tra & Soát Vé Tại Quầy</h5>
+                <p class="text-muted small">Nhập mã hóa đơn do khách hàng cung cấp để kiểm tra trạng thái ghế và tiến hành in vé giấy.</p>
+
+                <form th:action="@{/bookings/history}" method="get" class="mt-2">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Mã đơn đặt vé (Booking ID)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fa-solid fa-hashtag"></i></span>
+                            <input type="text" name="bookingId" class="form-control form-control-lg" placeholder="Ví dụ: 123">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100 py-2 fw-semibold">
+                        <i class="fa-solid fa-magnifying-glass me-2"></i>Kiểm tra vé
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card p-4 border-0 shadow-sm h-100 bg-white">
+                <h5 class="fw-bold mb-4 text-dark"><i class="fa-solid fa-bolt text-warning me-2"></i>Thao tác nhanh</h5>
+
+                <div class="row g-3">
+                    <div class="col-6">
+                        <a th:href="@{/bookings/history}" class="card btn btn-outline-primary p-4 border-2 h-100 text-center d-flex flex-column align-items-center justify-content-center gap-2 text-decoration-none">
+                            <i class="fa-solid fa-ticket-simple fs-2"></i>
+                            <span class="fw-bold">Danh Sách Vé Đặt</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a th:href="@{/profile}" class="card btn btn-outline-secondary p-4 border-2 h-100 text-center d-flex flex-column align-items-center justify-content-center gap-2 text-decoration-none">
+                            <i class="fa-solid fa-user-gear fs-2"></i>
+                            <span class="fw-bold">Hồ Sơ Cá Nhân</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a th:href="@{/staff/schedules}" class="card btn btn-outline-info p-4 border-2 h-100 text-center d-flex flex-column align-items-center justify-content-center gap-2 text-decoration-none">
+                            <i class="fa-solid fa-calendar-days fs-2"></i>
+                            <span class="fw-bold">Xem Lịch Chiếu</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <form th:action="@{/logout}" method="post" class="h-100 m-0">
+                            <button type="submit" class="card btn btn-outline-danger p-4 border-2 w-100 h-100 text-center d-flex flex-column align-items-center justify-content-center gap-2">
+                                <i class="fa-solid fa-right-from-bracket fs-2"></i>
+                                <span class="fw-bold">Đăng Xuất</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/staff-interval.js}"></script>
 </div>
 </html>

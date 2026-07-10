@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +39,17 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         Pageable pageable = PageRequest.of(page, size);
 
         return showtimeRepository.findAll(pageable).map(this::toResponse);
+    }
+
+    @Override
+    public List<ShowtimeResponse> getAllShowtimes() {
+        // 1. Lấy tất cả suất chiếu từ Database, sắp xếp theo thời gian bắt đầu từ gần nhất đến xa nhất
+        List<Showtime> showtimes = showtimeRepository.findAllByOrderByStartTimeAsc();
+
+        // 2. Sử dụng hàm helper toResponse để chuyển đổi mượt mà toàn bộ danh sách sang DTO
+        return showtimes.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override

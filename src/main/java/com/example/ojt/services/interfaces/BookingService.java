@@ -11,6 +11,8 @@ public interface BookingService {
 
     List<BookingResponse> getMyBookings(String username);
 
+    TicketResponse getBookingById(Long bookingId);
+
     BookingResponse mapToResponse(Booking booking);
 
     List<TicketResponse> getBookingHistory(Long userId);
