@@ -76,18 +76,28 @@
 
                         <!-- Độ tuổi -->
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Độ tuổi giới hạn</label>
-                            <select class="form-select"
-                                    th:field="*{ageRating}">
-                                <option value="">-- Chọn độ tuổi --</option>
-                                <option value="P">P</option>
-                                <option value="K">K</option>
-                                <option value="T13">T13</option>
-                                <option value="T16">T16</option>
-                                <option value="T18">T18</option>
-                            </select>
-                            <div class="text-danger"
-                                 th:errors="*{ageRating}"></div>
+                            <label class="form-label fw-bold">Độ tuổi giới hạn</label>
+                            <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-shield-exclamation text-secondary"></i>
+                                    </span>
+
+                                <select class="form-select fw-semibold"
+                                        th:field="*{ageRating}"
+                                        th:classappend="${#fields.hasErrors('ageRating')} ? 'is-invalid' : ''">
+                                    <option value="">-- Chọn độ tuổi giới hạn --</option>
+                                    <option value="P" class="text-success fw-bold">Phổ biến (Mọi lứa tuổi)</option>
+                                    <option value="K" class="text-primary fw-bold">Dưới 13 tuổi cần cha mẹ hướng dẫn</option>
+                                    <option value="T13" class="text-warning fw-bold">Trên 13 tuổi</option>
+                                    <option value="T16" class="text-danger fw-bold">Trên 16 tuổi</option>
+                                    <option value="T18" class="text-danger fw-bold" style="color: #A61A19 !important;">Trên 18 tuổi</option>
+                                </select>
+                            </div>
+
+                            <div class="invalid-feedback d-block"
+                                 th:if="${#fields.hasErrors('ageRating')}"
+                                 th:errors="*{ageRating}">
+                            </div>
                         </div>
                     </div>
 

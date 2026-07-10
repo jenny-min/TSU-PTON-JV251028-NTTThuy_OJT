@@ -1,9 +1,6 @@
 /* ===== HEADER ===== */
-.overview-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+.overview {
+    padding: 16px;
 }
 
 .overview-title h2 {

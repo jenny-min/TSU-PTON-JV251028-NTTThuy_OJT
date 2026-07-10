@@ -11,7 +11,8 @@
 
 <!-- CONTENT -->
 <div layout:fragment="content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="container-fluid">
+        <div class="overview d-flex justify-content-between align-items-center mb-4">
             <div class="overview-title">
                 <h2>Danh sách phim</h2>
                 <p>Quản lý thông tin phim trong hệ thống</p>
@@ -61,7 +62,14 @@
 
                     <td th:text="${movie.language}"></td>
 
-                    <td th:text="${movie.ageRating}"></td>
+                    <td th:switch="${movie.ageRating}">
+                        <span th:case="'P'" class="badge bg-success px-2 py-1">Mọi lứa tuổi</span>
+                        <span th:case="'K'" class="badge bg-primary px-2 py-1">Dưới 13 tuổi có CMHD</span>
+                        <span th:case="'T13'" class="badge bg-warning text-dark px-2 py-1">Trên 13 tuổi</span>
+                        <span th:case="'T16'" class="badge bg-danger px-2 py-1">Trên 16 tuổi</span>
+                        <span th:case="'T18'" class="badge px-2 py-1" style="background-color: #A61A19; color: white;">Trên 18 tuổi</span>
+                        <span th:case="*" th:text="${movie.ageRating}" class="badge bg-secondary"></span>
+                    </td>
 
                     <td>
                         <span class="status-active"
@@ -89,13 +97,13 @@
 
                     <td>
                         <a th:href="@{/admin/movies/edit/{id}(id=${movie.movieId})}"
-                                class="btn btn-warning btn-sm">
+                           class="btn btn-warning btn-sm">
                             Sửa
                         </a>
 
                         <form th:action="@{/admin/movies/delete/{id}(id=${movie.movieId})}"
-                                method="post"
-                                style="display:inline;">
+                              method="post"
+                              style="display:inline;">
                             <button type="submit"
                                     class="btn btn-danger btn-sm"
                                     onclick="return confirm('Bạn có chắc muốn xóa phim này?')">
@@ -107,6 +115,7 @@
                 </tbody>
             </table>
         </div>
+    </div>
     <!--  PAGINATION -->
     <div th:replace="~{layouts/pagination :: pagination(${pageData}, ${baseUrl})}"></div>
 </div>
