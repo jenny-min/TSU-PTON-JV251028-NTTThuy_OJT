@@ -148,6 +148,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public List<Movie> getActiveMovies() {
+        return movieRepository.findByStatus("ACTIVE");
+    }
+
+    @Override
     public MovieResponse getById(Long movieId) {
         Movie movie = movieRepository.findById(movieId)
                 .orElseThrow(() ->

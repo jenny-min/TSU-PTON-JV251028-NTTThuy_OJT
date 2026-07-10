@@ -3,6 +3,7 @@ package com.example.ojt.services.interfaces;
 import com.example.ojt.dtos.showtime.CreateShowtimeRequest;
 import com.example.ojt.dtos.showtime.ShowtimeResponse;
 import com.example.ojt.dtos.showtime.UpdateShowtimeRequest;
+import com.example.ojt.entities.Movie;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface ShowtimeService{
     List<ShowtimeResponse> getByMovieId(Long movieId);
 
     void publish(Long id);
+
+    List<ShowtimeResponse> getUpcomingShowtimesByMovieId(Long movieId);
 }

@@ -158,6 +158,17 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         showtimeRepository.save(showtime);
     }
 
+    @Override
+    public List<ShowtimeResponse> getUpcomingShowtimesByMovieId(Long movieId) {
+        LocalDateTime now = LocalDateTime.now();
+
+        List<Showtime> upcomingShowtimes = showtimeRepository.findUpcomingByMovieId(movieId, now);
+
+        return upcomingShowtimes.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
     //Kiểm tra phòng còn trống hay không, chống xung đột
     private void validateRoomConflict(
             Long roomId,
@@ -205,10 +216,10 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
         return ShowtimeResponse.builder()
                 .showtimeId(showtime.getShowtimeId())
-                .movieId(showtime.getMovie().getMovieId())
-                .movieTitle(showtime.getMovie().getTitle())
-                .roomId(showtime.getRoom().getRoomId())
-                .roomName(showtime.getRoom().getRoomName())
+                .movieId(showtime.getMovie() != null ? showtime.getMovie().getMovieId() : null)
+                .movieTitle(showtime.getMovie() != null ? showtime.getMovie().getTitle() : "N/A")
+                .roomId(showtime.getRoom() != null ? showtime.getRoom().getRoomId() : null)
+                .roomName(showtime.getRoom() != null ? showtime.getRoom().getRoomName() : "N/A")
                 .startTime(showtime.getStartTime())
                 .endTime(showtime.getEndTime())
                 .ticketPrice(showtime.getTicketPrice())

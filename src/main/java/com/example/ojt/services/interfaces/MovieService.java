@@ -22,5 +22,7 @@ public interface MovieService {
 
     void deleteMovie(Long id);
 
+    List<Movie> getActiveMovies();
+
     MovieResponse getById(Long movieId);
 }

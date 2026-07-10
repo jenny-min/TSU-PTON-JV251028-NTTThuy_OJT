@@ -30,32 +30,36 @@
     </section>
 
     <!--  SECTION QUICK-BOOKING  -->
-    <section class="quick-booking container">
-        <div class="card shadow-lg">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md">
-                        <select class="form-select">
-                            <option>Chọn phim</option>
-                        </select>
-                    </div>
+    <section class="quick-booking container my-4">
+        <div class="card shadow-lg border-0" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <form th:action="@{/booking/quick-redirect}" method="get" id="quickBookingForm">
+                    <div class="row g-3">
 
-                    <div class="col-md">
-                        <select class="form-select">
-                            <option>Chọn rạp</option>
-                        </select>
-                    </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold text-secondary">1. Chọn phim</label>
+                            <select class="form-select form-select-lg" name="movieId" id="movieSelect" required>
+                                <option value="">-- Chọn phim đang chiếu --</option>
+                                <option th:each="movie : ${activeMovies}"
+                                        th:value="${movie.movieId}"
+                                        th:text="${movie.title}"></option>
+                            </select>
+                        </div>
 
-                    <div class="col-md">
-                        <input type="date" class="form-control">
-                    </div>
+                        <div class="col-md-5">
+                            <label class="form-label small fw-bold text-secondary">2. Chọn suất chiếu (Phòng - Giờ)</label>
+                            <select class="form-select form-select-lg" name="showtimeId" id="showtimeSelect" disabled required>
+                                <option value="">-- Vui lòng chọn phim trước --</option>
+                            </select>
+                        </div>
 
-                    <div class="col-md">
-                        <button class="btn btn-danger w-100">
-                            Đặt vé
-                        </button>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-2 shadow-sm" id="btnQuickBook" disabled>
+                                <i class="fa-solid fa-ticket me-2"></i>ĐẶT VÉ NGAY
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </section>
@@ -99,5 +103,6 @@
 
     <!--  PAGINATION -->
     <div th:replace="~{layouts/pagination :: pagination(${pageData}, ${baseUrl})}"></div>
+    <script th:src="@{/js/quick-booking.js}"></script>
 </div>
 </html>

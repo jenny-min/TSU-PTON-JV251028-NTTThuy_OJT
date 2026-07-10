@@ -127,7 +127,7 @@ public class ShowtimeController {
     }
 
     @PostMapping("/{id}/publish")
-    public String publish(@PathVariable Long id) {
+    public String publish(@PathVariable("id") Long id) {
         showtimeService.publish(id);
         return "redirect:/admin/showtimes";
     }
