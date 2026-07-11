@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base.html}"> <!-- Đổi sang layout chung của khách hàng nếu có -->
+
+<head>
+    <title>Lịch Chiếu Phim & Đặt Vé</title>
+</head>
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/booking-schedule.css}">
+</th:block>
+
+<div layout:fragment="content" class="container py-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-uppercase text-dark brand-title">
+            <i class="fa-solid fa-film text-danger me-2"></i>Lịch Chiếu Phim Toàn Hệ Thống
+        </h2>
+        <p class="text-muted">Xem lịch chiếu 7 ngày tới và đặt vé nhanh chóng</p>
+        <div class="title-line"></div>
+    </div>
+
+    <!-- THANH CHỌN 7 NGÀY TRONG TUẦN -->
+    <div class="date-nav-wrapper mb-5 shadow-sm rounded-4 p-2 bg-white">
+        <div class="d-flex justify-content-between text-center text-dark overflow-x-auto text-nowrap scrollbar-hidden">
+            <div th:each="date, iterStat : ${weekDates}"
+                 class="date-nav-item flex-fill py-2 px-3 rounded-3 cursor-pointer"
+                 th:classappend="${iterStat.index == 0} ? 'active' : ''"
+                 th:data-target-date="${#temporals.format(date, 'yyyy-MM-dd')}">
+
+                <!-- Hiển thị "H.Nay" cho ngày đầu tiên, các ngày sau hiện Thứ -->
+                <small class="d-block text-uppercase fw-semibold mb-1 small-day-text"
+                       th:text="${iterStat.index == 0 ? 'H.Nay' : #temporals.format(date, 'E')}">Thứ 2</small>
+                <span class="fs-5 fw-bold d-block main-date-text" th:text="${#temporals.format(date, 'dd/MM')}">11/07</span>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger shadow-sm border-0 mb-4 rounded-4" role="alert">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i> <span th:text="${error}"></span>
+    </div>
+
+    <!-- KHU VỰC DANH SÁCH SUẤT CHIẾU -->
+    <div th:if="${!#lists.isEmpty(showtimes)}" class="row g-4" id="showtime-container">
+
+        <!-- Lặp qua từng suất chiếu -->
+        <div class="col-12 col-md-6 col-lg-4 showtime-item-card"
+             th:each="showtime : ${showtimes}"
+             th:data-date="${#temporals.format(showtime.startTime, 'yyyy-MM-dd')}">
+
+            <div class="card h-100 border-0 shadow-sm showtime-card" th:classappend="${showtime.expired || showtime.soldOut} ? 'disabled-card' : ''">
+                <div class="card-body p-4 d-flex flex-column">
+
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark movie-name mb-0" th:text="${showtime.movieTitle}">Tên phim</h5>
+                        <span class="badge bg-dark-subtle text-dark-emphasis px-2.5 py-1.5 rounded-3 font-monospace" th:text="${showtime.roomName}">Phòng 1</span>
+                    </div>
+
+                    <div class="time-box p-3 rounded-3 mb-3 bg-light">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fa-regular fa-calendar-days text-danger me-2 fs-6"></i>
+                            <span class="fw-semibold text-secondary small" th:text="${#temporals.format(showtime.startTime, 'dd/MM/yyyy')}">01/01/2026</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fa-regular fa-clock text-success me-2 fs-5"></i>
+                            <span class="fs-4 fw-bold text-dark" th:text="${#temporals.format(showtime.startTime, 'HH:mm')}">09:00</span>
+                            <span class="mx-2 text-muted">-</span>
+                            <span class="fs-6 text-muted" th:text="${#temporals.format(showtime.endTime, 'HH:mm')}">11:00</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                        <div>
+                            <span class="text-muted small d-block">Giá vé</span>
+                            <span class="fw-extrabold text-danger fs-5">
+                                <span th:text="${#numbers.formatDecimal(showtime.ticketPrice, 0, 'COMMA', 0, 'POINT')}">50,000</span>đ
+                            </span>
+                        </div>
+
+                        <div>
+                            <span th:if="${showtime.expired}" class="btn btn-secondary btn-sm disabled rounded-pill px-3">Đã chiếu</span>
+                            <span th:if="${!showtime.expired && showtime.soldOut}" class="btn btn-outline-danger btn-sm disabled rounded-pill px-3">Hết ghế</span>
+                            <a th:if="${!showtime.expired && !showtime.soldOut}"
+                               th:href="@{/booking/seats(showtimeId=${showtime.showtimeId})}"
+                               class="btn btn-danger btn-booking rounded-pill px-4 fw-bold shadow-sm">
+                                ĐẶT VÉ
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông báo động bằng JS khi ngày được chọn không có suất chiếu nào -->
+        <div id="no-movie-alert" class="col-12 text-center py-5 d-none">
+            <i class="fa-solid fa-face-frown display-4 text-muted mb-3"></i>
+            <h5 class="text-secondary fw-bold">Ngày này hiện chưa xếp lịch chiếu!</h5>
+            <p class="text-muted small">Bạn hãy thử chọn các ngày khác trong tuần nhé.</p>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/filter-showtime.js}"></script>
+</html>
