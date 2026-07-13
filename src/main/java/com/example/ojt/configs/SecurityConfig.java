@@ -1,5 +1,6 @@
 package com.example.ojt.configs;
 
+import com.example.ojt.services.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomAuthenticationSuccessHandler successHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
@@ -45,6 +47,14 @@ public class SecurityConfig {
                         .successHandler(successHandler)
                         .failureUrl("/login?error")
                         .permitAll()
+                )
+
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .userInfoEndpoint(userInfo ->
+                                userInfo.userService(customOAuth2UserService)
+                        )
+                        .successHandler(successHandler)
                 )
 
                 .logout(logout -> logout

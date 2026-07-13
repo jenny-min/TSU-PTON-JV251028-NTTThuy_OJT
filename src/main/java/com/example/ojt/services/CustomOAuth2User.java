@@ -1,16 +1,25 @@
 package com.example.ojt.services;
 
 import com.example.ojt.entities.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
-public class CustomUserDetails implements UserDetails {
+@Getter
+public class CustomOAuth2User implements OAuth2User {
+    private final OAuth2User oauth2User;
     private final User user;
 
-    public CustomUserDetails(User user) {
+    public CustomOAuth2User(
+            OAuth2User oauth2User,
+            User user) {
+
+        this.oauth2User = oauth2User;
         this.user = user;
     }
 
@@ -18,40 +27,28 @@ public class CustomUserDetails implements UserDetails {
         return user;
     }
 
-    //lấy avatar
     public String getAvatarUrl() {
         return user.getAvatarUrl() != null
                 ? user.getAvatarUrl()
                 : "/images/default-avatar.png";
     }
 
+    @Override
+    public Map<String, Object> getAttributes() {
+        return oauth2User.getAttributes();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(
-                new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
+                new SimpleGrantedAuthority(
+                        "ROLE_" + user.getRole().name()
+                )
         );
     }
 
     @Override
-    public String getPassword() {
-        return user.getPassword();
-    }
-
-    @Override
-    public String getUsername() {
+    public String getName() {
         return user.getUsername();
     }
-
-    @Override
-    public boolean isAccountNonExpired() { return true; }
-
-    @Override
-    public boolean isAccountNonLocked() { return true; }
-
-    @Override
-    public boolean isCredentialsNonExpired() { return true; }
-
-    @Override
-    public boolean isEnabled() { return true; }
 }

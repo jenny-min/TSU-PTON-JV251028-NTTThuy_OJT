@@ -64,8 +64,13 @@
                                     Đăng nhập
                                 </button>
                             </div>
-
                         </form>
+
+                        <a href="/oauth2/authorization/google"
+                           class="btn btn-outline-dark w-100 mt-3">
+                            <i class="fa-brands fa-google"></i>
+                            Đăng nhập với Google
+                        </a>
 
                         <div th:if="${param.error}" class="alert alert-danger mt-3 mb-0">
                             Sai tài khoản hoặc mật khẩu!

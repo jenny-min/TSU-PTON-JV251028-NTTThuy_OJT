@@ -65,9 +65,13 @@
                         <strong sec:authentication="name"></strong>
                     </span>
 
-                    <img th:src="${#authentication.principal.user.avatarUrl != null
-                      ? #authentication.principal.user.avatarUrl
-                      : '/images/default-avatar.png'}"
+<!--                    <img th:src="${#authentication.principal.user.avatarUrl != null-->
+<!--                      ? #authentication.principal.user.avatarUrl-->
+<!--                      : '/images/default-avatar.png'}"-->
+<!--                         alt="Avatar"-->
+<!--                         class="user-avatar">-->
+
+                    <img th:src="${#authentication.principal.avatarUrl}"
                          alt="Avatar"
                          class="user-avatar">
                 </a>
