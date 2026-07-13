@@ -74,7 +74,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
         List<String> labels = new ArrayList<>();
         List<BigDecimal> values = new ArrayList<>();
 
-        // Vì SQL đảo ngược từ ngày mới nhất về trước, ta đảo ngược ngược lại để hiển thị biểu đồ từ trái sang phải hợp lý hơn
+        // Vì SQL đảo ngược từ ngày mới nhất về trước,đảo ngược ngược lại để hiển thị biểu đồ từ trái sang phải hợp lý hơn
         Collections.reverse(rawData);
 
         for (Object[] row : rawData) {

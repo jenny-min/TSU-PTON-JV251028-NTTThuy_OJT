@@ -122,7 +122,7 @@ public class BookingController {
 
         // Nếu trong session có sẵn request của suất chiếu này (do quay lại)
         if (currentRequest != null && showtimeId.equals(currentRequest.getShowtimeId())) {
-            String seatString = currentRequest.getBookingSeat(); // Giả sử chuỗi lưu dạng "A1, A2" hoặc "A1"
+            String seatString = currentRequest.getBookingSeat();
             if (seatString != null && !seatString.isBlank()) {
                 selectingSeats = Arrays.stream(seatString.split(","))
                         .map(String::trim)
@@ -199,7 +199,7 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("ticket", ticket);
             redirectAttributes.addFlashAttribute("success", "Đặt vé thành công.");
 
-            // Chuyển hướng về link tuyệt đối dùng chung (Bắt đầu bằng dấu / công khai)
+            // Chuyển hướng về link dùng chung
             return "redirect:/bookings/history";
 
         } catch (RuntimeException ex) {

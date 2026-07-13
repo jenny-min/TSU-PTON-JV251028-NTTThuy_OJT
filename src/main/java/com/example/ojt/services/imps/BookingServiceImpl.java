@@ -323,7 +323,7 @@ public class BookingServiceImpl implements BookingService {
             response.setBookingId(booking.getBookingId());
             response.setUser(booking.getUser()); // Gán nguyên Object User theo đúng DTO mới
             response.setBookingDate(booking.getBookingDate());
-            response.setTotalAmount(booking.getTotalAmount()); // Sử dụng chuẩn trường totalAmount của bạn
+            response.setTotalAmount(booking.getTotalAmount());
             response.setPaymentMethod(booking.getPaymentMethod());
             response.setBookingStatus(booking.getBookingStatus());
             response.setBookingSeat(booking.getBookingSeat());

@@ -62,23 +62,23 @@ public class StaffController {
         List<TicketResponse> histories = new ArrayList<>();
 
         try {
-            // TÌM KIẾM NHANH THEO MÃ VÉ (Nếu nhân viên hoặc Admin truyền param ?bookingId=...)
+            // TÌM KIẾM NHANH THEO MÃ VÉ
             if (bookingId != null) {
                 TicketResponse ticket = bookingService.getBookingById(bookingId);
 
-                // Bảo mật: Nếu là USER thường đi tìm kiếm, chỉ cho phép xem vé của CHÍNH HỌ
+                // Nếu là USER thường đi tìm kiếm, chỉ cho phép xem vé của CHÍNH HỌ
                 if (request.isUserInRole("USER") && !ticket.getUser().getId().equals(user.getId())) {
                     model.addAttribute("error", "Bạn không có quyền xem hóa đơn của người khác.");
                 } else {
-                    histories.add(ticket); // Đưa duy nhất hóa đơn tìm được vào danh sách hiển thị
+                    histories.add(ticket);
                 }
             }
-            // LUỒNG XEM TẤT CẢ MẶC ĐỊNH (Khi không truyền tham số tìm kiếm)
+            // LUỒNG XEM TẤT CẢ MẶC ĐỊNH
             else {
                 if (request.isUserInRole("ADMIN") || request.isUserInRole("STAFF")) {
-                    histories = bookingService.getAllBookings(); // Staff/Admin xem hết
+                    histories = bookingService.getAllBookings();
                 } else {
-                    histories = bookingService.getBookingHistory(user.getId()); // User xem của mình
+                    histories = bookingService.getBookingHistory(user.getId());
                 }
             }
         } catch (RuntimeException ex) {

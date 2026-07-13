@@ -42,16 +42,14 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         // Gọi repository chứa câu lệnh Query phân trang kết hợp filter
         Page<Showtime> showtimePage = showtimeRepository.filterShowtimes(movieId, roomId, date, pageable);
 
-        // Dịch mượt mà từ Page<Showtime> sang Page<ShowtimeResponse> nhờ hàm helper có sẵn của bạn
         return showtimePage.map(this::toResponse);
     }
 
     @Override
     public List<ShowtimeResponse> getAllShowtimes() {
-        // 1. Lấy tất cả suất chiếu từ Database, sắp xếp theo thời gian bắt đầu từ gần nhất đến xa nhất
+        //Lấy tất cả suất chiếu từ Database, sắp xếp theo thời gian bắt đầu từ gần nhất đến xa nhất
         List<Showtime> showtimes = showtimeRepository.findAllByOrderByStartTimeAsc();
 
-        // 2. Sử dụng hàm helper toResponse để chuyển đổi mượt mà toàn bộ danh sách sang DTO
         return showtimes.stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
