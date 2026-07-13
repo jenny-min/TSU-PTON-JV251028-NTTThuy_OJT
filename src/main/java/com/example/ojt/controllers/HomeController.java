@@ -49,6 +49,9 @@ public class HomeController {
 
     @GetMapping("/booking/quick-redirect")
     public String quickRedirect(@RequestParam("showtimeId") Long showtimeId) {
-        return "redirect:/booking/seat-selection?showtimeId=" + showtimeId;
+        if (showtimeId == null) {
+            return "redirect:/home";
+        }
+        return "redirect:/user/bookings/showtime/" + showtimeId;
     }
 }
