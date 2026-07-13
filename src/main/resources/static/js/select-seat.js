@@ -11,9 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let selectedSeatList = [];
 
-    // =========================
     // UPDATE UI SUMMARY
-    // =========================
     function updateSummary() {
 
         let total = 0;
@@ -33,9 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
             total.toLocaleString("vi-VN") + " VND";
     }
 
-    // =========================
     // SEAT CLICK HANDLER
-    // =========================
     seats.forEach(function (seat) {
 
         seat.addEventListener("click", function () {
@@ -80,10 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Submitting seats:", seatInput.value);
     });
 
-    // =========================
-    // KHÔI PHỤC GHẾ ĐÃ CHỌN KHI QUAY LẠI (THÊM ĐOẠN NÀY)
-    // =========================
-    // Tìm tất cả các ghế được Thymeleaf gắn class "selected" sẵn từ Session
+    // KHÔI PHỤC GHẾ ĐÃ CHỌN KHI QUAY LẠI
     const preSelectedButtons = document.querySelectorAll(".seat.selected");
 
     preSelectedButtons.forEach(function (button) {
@@ -97,6 +90,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // init UI
     updateSummary();
 });

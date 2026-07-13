@@ -248,6 +248,6 @@ public class BookingController {
                     ex.getMessage()
             );
         }
-        return "redirect:/user/history";
+        return "redirect:/bookings/history";
     }
 }

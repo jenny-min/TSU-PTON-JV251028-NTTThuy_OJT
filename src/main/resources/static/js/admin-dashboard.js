@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 2. Parse chuỗi text thành đối tượng JSON
         const chartData = JSON.parse(chartDataElement.textContent);
 
-        // 3. Khởi tạo biểu đồ Chart.js
+        // 3. Khởi tạo biểu đồ Chart.js - chưa hiển thị
         new Chart(
             document.getElementById("revenueChart"),
             {

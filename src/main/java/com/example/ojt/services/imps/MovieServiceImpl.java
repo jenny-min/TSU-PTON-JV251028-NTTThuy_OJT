@@ -133,8 +133,6 @@ public class MovieServiceImpl implements MovieService {
 
         movie.setGenres(genres);
 
-        System.out.println("genre size" + genres.size());
-
         return toResponse(movieRepository.save(movie));
     }
 

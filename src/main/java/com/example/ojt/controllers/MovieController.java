@@ -111,8 +111,6 @@ public class MovieController {
     //Xóa
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        System.out.println("DELETE MOVIE: " + id);
-
         movieService.deleteMovie(id);
 
         return "redirect:/admin/movies";

@@ -53,9 +53,11 @@
                         </div>
 
                         <div class="col-md-3 d-flex align-items-end">
-                            <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold py-2 shadow-sm" id="btnQuickBook" disabled>
+                            <a sec:authorize="isAnonymous()"
+                               th:href="@{/login}"
+                               class="btn btn-danger btn-lg w-100 fw-bold py-2 shadow-sm">
                                 <i class="fa-solid fa-ticket me-2"></i>ĐẶT VÉ NGAY
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </form>
