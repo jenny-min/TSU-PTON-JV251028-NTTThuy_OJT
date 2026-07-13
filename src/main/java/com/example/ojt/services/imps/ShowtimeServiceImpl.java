@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,10 +36,14 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     private final int cleaningTime = 15;
 
     @Override
-    public Page<ShowtimeResponse> getShowtimes(int page, int size) {
+    public Page<ShowtimeResponse> getShowtimes(Long movieId, Long roomId, LocalDate date, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        return showtimeRepository.findAll(pageable).map(this::toResponse);
+        // Gọi repository chứa câu lệnh Query phân trang kết hợp filter
+        Page<Showtime> showtimePage = showtimeRepository.filterShowtimes(movieId, roomId, date, pageable);
+
+        // Dịch mượt mà từ Page<Showtime> sang Page<ShowtimeResponse> nhờ hàm helper có sẵn của bạn
+        return showtimePage.map(this::toResponse);
     }
 
     @Override
@@ -230,13 +235,21 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     }
 
     private boolean isSoldOut(Showtime showtime) {
-        if (showtime.getBookings() == null) {
+        if (showtime.getBookings() == null || showtime.getRoom() == null) {
             return false;
         }
+
         int bookedSeats = showtime.getBookings()
                 .stream()
-                .filter(b -> b.getBookingStatus() == BookingStatus.PENDING)
-                .mapToInt(b -> b.getBookingSeat().split(",").length)
+                // Hãy đổi sang trạng thái chuẩn của hệ thống (PAID hoặc SUCCESS)
+                .filter(b -> b.getBookingStatus() == BookingStatus.PAID)
+                .mapToInt(b -> {
+                    if (b.getBookingSeat() == null || b.getBookingSeat().isEmpty()) {
+                        return 0;
+                    }
+                    // Tách chuỗi ghế dạng "A1,A2" thành mảng để đếm số lượng ghế
+                    return b.getBookingSeat().split(",").length;
+                })
                 .sum();
 
         return bookedSeats >= showtime.getRoom().getTotalSeats();

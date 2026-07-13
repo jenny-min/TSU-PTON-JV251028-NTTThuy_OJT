@@ -30,35 +30,41 @@
             <div class="card-body">
                 <form method="get" th:action="@{/admin/showtimes}">
                     <div class="row">
+                        <!-- Bộ lọc phim -->
                         <div class="col-md-4">
-                            <label class="form-label">
-                                Phim
-                            </label>
-                            <select class="form-select">
-                                <option>Tất cả</option>
-                            </select>
-
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="form-label">
-                                Phòng
-                            </label>
-                            <select class="form-select">
-                                <option>Tất cả</option>
+                            <label class="form-label">Phim</label>
+                            <select class="form-select" name="movieId">
+                                <option value="">Tất cả</option>
+                                <!-- Sửa movie.id -> movie.movieId và movie.title phù hợp với Entity/DTO của bạn -->
+                                <option th:each="movie : ${movies}"
+                                        th:value="${movie.movieId}"
+                                        th:text="${movie.title}"
+                                        th:selected="${param.movieId != null and param.movieId[0] == #strings.toString(movie.movieId)}"></option>
                             </select>
                         </div>
 
+                        <!-- Bộ lọc phòng -->
                         <div class="col-md-3">
-                            <label class="form-label">
-                                Ngày
-                            </label>
-                            <input type="date" class="form-control">
+                            <label class="form-label">Phòng</label>
+                            <select class="form-select" name="roomId">
+                                <option value="">Tất cả</option>
+                                <!-- Sửa room.id -> room.roomId và room.name -> room.roomName -->
+                                <option th:each="room : ${rooms}"
+                                        th:value="${room.roomId}"
+                                        th:text="${room.roomName}"
+                                        th:selected="${param.roomId != null and param.roomId[0] == #strings.toString(room.roomId)}"></option>
+                            </select>
+                        </div>
+
+                        <!-- Bộ lọc ngày chiếu -->
+                        <div class="col-md-3">
+                            <label class="form-label">Ngày</label>
+                            <input type="date" class="form-control" name="date" th:value="${param.date}">
                         </div>
 
                         <div class="col-md-2 d-flex align-items-end">
-                            <button class="btn btn-primary w-100">
-                                Tìm kiếm
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-search"></i> Tìm kiếm
                             </button>
                         </div>
                     </div>

@@ -9,11 +9,14 @@ import com.example.ojt.services.interfaces.ShowtimeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/admin/showtimes")
@@ -26,16 +29,26 @@ public class ShowtimeController {
     //Danh sách suất chiếu
     @GetMapping
     public String showtimePage(
+            @RequestParam(value = "movieId", required = false) Long movieId,
+            @RequestParam(value = "roomId", required = false) Long roomId,
+            @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate date,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             Model model) {
 
-        Page<ShowtimeResponse> showtimePage = showtimeService.getShowtimes(page, size);
+        //Lấy dữ liệu phân trang kết hợp các tham số bộ lọc
+        Page<ShowtimeResponse> showtimePage = showtimeService.getShowtimes(movieId, roomId, date, page, size);
 
+        //Đổ dữ liệu phân trang ra View
         model.addAttribute("showtimePage", showtimePage);
         model.addAttribute("showtimes", showtimePage.getContent());
         model.addAttribute("pageData", showtimePage);
         model.addAttribute("baseUrl", "/admin/showtimes");
+
+        //Đổ danh sách Phim và Phòng để hiển thị lên 2 ô select của bộ lọc
+        model.addAttribute("movies", movieService.getAllMovies());
+        model.addAttribute("rooms", roomService.getAllRooms());
 
         return "admin/showtimes/index";
     }

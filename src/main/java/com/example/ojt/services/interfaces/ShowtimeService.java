@@ -6,10 +6,12 @@ import com.example.ojt.dtos.showtime.UpdateShowtimeRequest;
 import com.example.ojt.entities.Movie;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ShowtimeService{
-    Page<ShowtimeResponse> getShowtimes(int page, int size);
+
+    Page<ShowtimeResponse> getShowtimes(Long movieId, Long roomId, LocalDate date, int page, int size);
 
     List<ShowtimeResponse> getAllShowtimes();
 

@@ -6,7 +6,7 @@
             <li class="page-item"
                 th:classappend="${pageData.first} ? 'disabled'">
                 <a class="page-link"
-                   th:href="${baseUrl + '?page=' + (pageData.number - 1)}">
+                   th:href="@{${baseUrl}(page=${pageData.number - 1}, movieId=${param.movieId}, roomId=${param.roomId}, date=${param.date})}">
                     Trước
                 </a>
             </li>
@@ -15,10 +15,9 @@
             <li class="page-item"
                 th:each="i : ${#numbers.sequence(0, pageData.totalPages - 1)}"
                 th:classappend="${i == pageData.number} ? 'active'">
-
                 <a class="page-link"
-                   th:href="${baseUrl + '?page=' + i}"
-                   th:text="${i + 1}">>
+                   th:href="@{${baseUrl}(page=${i}, movieId=${param.movieId}, roomId=${param.roomId}, date=${param.date})}"
+                   th:text="${i + 1}">
                 </a>
             </li>
 
@@ -26,7 +25,7 @@
             <li class="page-item"
                 th:classappend="${pageData.last} ? 'disabled'">
                 <a class="page-link"
-                   th:href="${baseUrl + '?page=' + (pageData.number + 1)}">
+                   th:href="@{${baseUrl}(page=${pageData.number + 1}, movieId=${param.movieId}, roomId=${param.roomId}, date=${param.date})}">
                     Sau
                 </a>
             </li>

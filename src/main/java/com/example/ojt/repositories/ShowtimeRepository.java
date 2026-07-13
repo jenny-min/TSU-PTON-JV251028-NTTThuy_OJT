@@ -1,11 +1,13 @@
 package com.example.ojt.repositories;
 
 import com.example.ojt.entities.Showtime;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,13 +17,13 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
     List<Showtime> findByMovieMovieId(Long movieId);
 
     @Query("""
-    SELECT COUNT(s)
-    FROM Showtime s
-    WHERE s.room.roomId = :roomId
-    AND (:showtimeId IS NULL OR s.showtimeId <> :showtimeId)
-    AND :startTime < s.endTime
-    AND :endTime > s.startTime
-""")
+        SELECT COUNT(s)
+        FROM Showtime s
+        WHERE s.room.roomId = :roomId
+        AND (:showtimeId IS NULL OR s.showtimeId <> :showtimeId)
+        AND :startTime < s.endTime
+        AND :endTime > s.startTime
+    """)
     long countConflicts(Long roomId, Long showtimeId, LocalDateTime startTime, LocalDateTime endTime);
 
     // Lấy các suất chiếu sắp diễn ra tính từ thời điểm hiện tại
@@ -35,4 +37,15 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
             "ORDER BY s.startTime ASC")
     List<Showtime> findUpcomingByMovieId(@Param("movieId") Long movieId,
                                          @Param("now") LocalDateTime now);
+
+    // Hàm Phân trang + Bộ lọc
+    @Query("SELECT s FROM Showtime s WHERE " +
+            "(:movieId IS NULL OR s.movie.movieId = :movieId) AND " +
+            "(:roomId IS NULL OR s.room.roomId = :roomId) AND " +
+            "(:date IS NULL OR CAST(s.startTime AS localdate) = :date)")
+    Page<Showtime> filterShowtimes(
+            @Param("movieId") Long movieId,
+            @Param("roomId") Long roomId,
+            @Param("date") LocalDate date,
+            Pageable pageable);
 }
