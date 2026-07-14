@@ -5,13 +5,13 @@ import com.example.ojt.dtos.profile.ProfileResponse;
 import com.example.ojt.dtos.profile.UpdateProfileRequest;
 import com.example.ojt.entities.User;
 import com.example.ojt.enums.Gender;
+import com.example.ojt.services.CustomOAuth2User;
 import com.example.ojt.services.CustomUserDetails;
 import com.example.ojt.services.interfaces.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,8 +91,7 @@ public class ProfileController {
 
     @PostMapping("/profile/update")
     public String updateProfile(
-            @AuthenticationPrincipal
-            CustomUserDetails principal,
+            Authentication authentication,
             @Valid
             @ModelAttribute("profile")
             UpdateProfileRequest request,
@@ -100,23 +99,47 @@ public class ProfileController {
             @RequestParam("avatarFile")
             MultipartFile file
     ) throws IOException {
-        if (result.hasErrors()) {return "profile/index";}
+        if (result.hasErrors()) {
+            return "profile/index";
+        }
 
-        us.updateProfile(principal.getUser().getId(), request, file);
+        // Dùng username (getName) để form login + Google login đều chạy
+        User currentUser = us.findByUsername(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
-        User updatedUser = us.findById(principal.getUser().getId());
+        us.updateProfile(currentUser.getId(), request, file);
 
-        CustomUserDetails newPrincipal = new CustomUserDetails(updatedUser);
-
-        Authentication auth =
-                new UsernamePasswordAuthenticationToken(
-                        newPrincipal,
-                        null,
-                        newPrincipal.getAuthorities()
-                );
-
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        User updatedUser = us.findById(currentUser.getId());
+        refreshPrincipal(authentication, updatedUser);
 
         return "redirect:/profile";
+    }
+
+    /**
+     * Cập nhật principal trong session sau khi sửa profile
+     * (giữ đúng loại: form login = CustomUserDetails, Google = CustomOAuth2User).
+     */
+    private void refreshPrincipal(Authentication authentication, User updatedUser) {
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof CustomOAuth2User oauth2User) {
+            CustomOAuth2User newPrincipal =
+                    new CustomOAuth2User(oauth2User.getOauth2User(), updatedUser);
+            Authentication auth = new UsernamePasswordAuthenticationToken(
+                    newPrincipal,
+                    authentication.getCredentials(),
+                    newPrincipal.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            return;
+        }
+
+        CustomUserDetails newPrincipal = new CustomUserDetails(updatedUser);
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+                newPrincipal,
+                null,
+                newPrincipal.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(auth);
     }
 }
