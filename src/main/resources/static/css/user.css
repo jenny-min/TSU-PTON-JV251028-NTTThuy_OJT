@@ -245,10 +245,33 @@ body {
 }
 
 .legend-seat {
-    width: 18px;
-    height: 18px;
+    padding: 0 8px;
     border-radius: 4px;
     border: 1px solid;
+}
+
+.legend-seat.available {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #475569;
+}
+
+.legend-seat.selected {
+    background: #22c55e;
+    border-color: #16a34a;
+    color: #ffffff;
+}
+
+.legend-seat.booked {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #ef4444;
+}
+
+.legend-seat.vip {
+    background: #f3e8ff;
+    border-color: #c084fc;
+    color: #6b21a8;
 }
 
 /*  BOOKING SUMMARY & BILLING  */
