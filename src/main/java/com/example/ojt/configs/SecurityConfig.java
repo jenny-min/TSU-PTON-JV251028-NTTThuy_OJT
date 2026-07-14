@@ -16,7 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomAuthenticationSuccessHandler successHandler;
-    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
@@ -24,7 +23,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            CustomOAuth2UserService customOAuth2UserService
+    ) throws Exception {
         http
                 .csrf(Customizer.withDefaults())
 
