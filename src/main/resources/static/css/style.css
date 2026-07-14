@@ -1,106 +1,85 @@
+/* GLOBAL RESET & BASE STYLES */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    background-color: #0d0c0ce6;
-    color: #eeeeee!important;
-    font-family:'Segoe UI',sans-serif;
+body {
+    background-color: #0d0c0c;
+    color: #eeeeee;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
 }
 
-.card{
-    background:#1f1f1f;
-}
-
-.btn-danger{
-    background:#e50914;
-}
-
-.text-white {
-    color:#ffffff;
-}
-
-.text-dark {
-    color: black;
-}
-
-.text-red {
-    color: #e50914;
-}
+/* Các tiện ích định dạng màu chữ hệ thống */
+.text-white { color: #ffffff; }
+.text-dark  { color: #1e293b; }
+.text-red   { color: #e50914; }
 
 .page-content {
-    background: linear-gradient(
-            135deg,
-            #1c1c1c 0%,
-            #121212 50%,
-            #0d0d0d 100%
-    );
-    min-height: 100%;
-    color: white;
+    background: linear-gradient(135deg, #1c1c1c 0%, #121212 50%, #0d0d0d 100%);
+    min-height: 100vh;
 }
 
-/****************************************/
-/*Hero Section*/
-.hero-section {
-    padding: 80px 0;
-}
+/*  HERO SECTION  */
 
 .cinema-hero {
-    min-height: 70vh;
+    min-height: 75vh;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background:
-            linear-gradient(
-                    rgba(0,0,0,.7),
-                    rgba(0,0,0,.7)
-            ),
-            url('/images/banners/cinema-banner.jpg');
-
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85)),
+    url('/images/banners/cinema-banner.jpg') no-repeat center center;
     background-size: cover;
-    background-position: center;
+    position: relative;
+    padding: 60px 20px;
 }
 
 .hero-btn {
-    transition: all .3s ease;
+    transition: all 0.2s ease;
 }
 
 .hero-btn:hover {
     transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(225, 9, 20, 0.3);
 }
 
 .hero-btn:active {
-    transform: scale(.97);
+    transform: scale(0.97);
 }
 
-/****************************************/
-/*QUICK BOOKING*/
+/*  QUICK BOOKING (Thanh đặt vé nhanh cao cấp)  */
+
 .quick-booking {
-    margin-top: -30px;
+    margin-top: -40px;
     position: relative;
     z-index: 10;
+    padding: 0 15px;
 }
 
 .quick-booking .card {
-    background: #ffffff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
-    border: none !important;
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .quick-booking .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .quick-booking .form-label {
     font-size: 0.85rem;
+    font-weight: 600;
     letter-spacing: 0.5px;
-    margin-bottom: 0.5rem;
-    color: #475569 !important;
+    margin-bottom: 8px;
+    color: #94a3b8;
     display: flex;
     align-items: center;
 }
@@ -108,25 +87,28 @@ body{
 .quick-booking .form-select-lg {
     font-size: 0.95rem;
     font-weight: 500;
-    color: #1e293b;
-    border: 2px solid #e2e8f0;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     padding: 0.75rem 1rem;
-    background-color: #f8fafc;
+    background-color: rgba(255, 255, 255, 0.05);
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23cbd5e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
 
 .quick-booking .form-select-lg:focus {
-    border-color: #dc3545;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15);
+    border-color: #e50914;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 4px rgba(229, 9, 20, 0.25);
+    color: #ffffff;
+    outline: none;
 }
 
 .quick-booking .form-select-lg:disabled {
-    background-color: #f1f5f9;
-    border-color: #e2e8f0;
-    color: #94a3b8;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
+    color: #475569;
     cursor: not-allowed;
 }
 
@@ -134,65 +116,53 @@ body{
     border-radius: 10px;
     padding: 0.75rem 1rem;
     font-size: 0.95rem;
-    letter-spacing: 1px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     border: none;
-    background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);
+    background: linear-gradient(135deg, #e50914 0%, #b02a37 100%);
     color: #ffffff;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(229, 9, 20, 0.2);
 }
 
 .quick-booking #btnQuickBook:not(:disabled):hover {
-    background: linear-gradient(135deg, #fd3d4f 0%, #dc3545 100%);
-    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4) !important;
-    transform: scale(1.02);
-}
-
-.quick-booking #btnQuickBook:not(:disabled):active {
-    transform: scale(0.98);
+    background: linear-gradient(135deg, #ff1f2d 0%, #e50914 100%);
+    box-shadow: 0 6px 20px rgba(229, 9, 20, 0.45);
+    transform: translateY(-1px);
 }
 
 .quick-booking #btnQuickBook:disabled {
-    background: #cbd5e1 !important;
+    background: rgba(255, 255, 255, 0.1) !important;
     color: #64748b;
-    border: none;
-    box-shadow: none !important;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
-@media (max-width: 768px) {
-    .quick-booking {
-        margin-top: 20px;
-        padding: 0 10px;
-    }
+/* MOVIE OVERVIEW GRID */
 
-    .quick-booking .card-body {
-        padding: 1.25rem !important;
-    }
-}
-/****************************************/
-/*OVERVIEW-MOVIE*/
 .overview-movie {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 60px 0;
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
+    padding: 0 4px;
 }
 
 .section-header h2 {
-    color: #fff;
+    color: #ffffff;
+    font-size: 1.75rem;
     font-weight: 700;
-    margin: 0;
 }
 
 .movie-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 28px;
 }
 
 .movie-card {
@@ -201,120 +171,161 @@ body{
     flex-direction: column;
     border-radius: 14px;
     overflow: hidden;
-    transition: 0.2s ease;
+    background: rgba(31, 31, 31, 0.5)!important;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    color: #0d0d0d!important;
 }
 
 .movie-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.movie-card .card-body {
-    background: rgba(31, 31, 31, 0.95);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: white;
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .poster-wrapper {
     width: 100%;
     aspect-ratio: 2 / 3;
     overflow: hidden;
+    position: relative;
 }
 
 .movie-poster {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.movie-card:hover .movie-poster {
+    transform: scale(1.04);
 }
 
 .movie-age {
     position: absolute;
     top: 12px;
     left: 12px;
-
     background: #e50914;
-    color: #fff;
-
-    padding: 5px 10px;
-    border-radius: 8px;
-
-    font-size: .8rem;
-    font-weight: 600;
-}
-
-.card-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 12px;
-}
-
-.card-body .mt-auto {
-    margin-top: auto;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .movie-content {
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .movie-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #fff;
-    min-height: 42px;
+    color: #ffffff;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    min-height: 44px;
+
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-bottom: 10px;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .movie-info {
-    color: #aaa;
-    font-size: .9rem;
+    color: #94a3b8;
+    font-size: 0.85rem;
     margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .movie-actions {
     display: flex;
     gap: 10px;
+    margin-top: auto;
 }
 
 .movie-actions .btn {
     flex: 1;
-    border-radius: 10px;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.movie-actions .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.movie-actions .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .movie-actions .btn-danger {
     background: #e50914;
-    border: none;
+    color: #ffffff;
 }
 
 .movie-actions .btn-danger:hover {
     background: #ff1f2d;
+    box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
 }
 
+
+/*  RESPONSIVE MEDIA QUERIES  */
+/* Màn hình Laptop nhỏ (Dưới 1200px) */
 @media (max-width: 1200px) {
     .movie-grid {
         grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 }
 
+/* Màn hình Máy tính bảng (Dưới 992px) */
 @media (max-width: 992px) {
     .movie-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
+/* Màn hình Điện thoại (Dưới 768px) */
+@media (max-width: 768px) {
+    .cinema-hero {
+        min-height: 50vh;
+    }
+
+    .quick-booking {
+        margin-top: 20px;
+    }
+}
+
+/* Màn hình Điện thoại nhỏ (Dưới 576px) */
 @media (max-width: 576px) {
     .movie-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
 
     .section-header {
         flex-direction: column;
-        gap: 15px;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .movie-card {
+        max-width: 360px;
+        margin: 0 auto;
     }
 }

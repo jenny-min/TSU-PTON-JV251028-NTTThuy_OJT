@@ -1,28 +1,82 @@
+/*  CINEMA FOOTER - DARK THEME LAYOUT (Desktop) */
+
 .cinema-footer {
-    background: #0f0f0f;
-    box-shadow: 0 2px 10px rgba(0,0,0,.3);
+    background-color: #0f0f0f;
+    color: #ffffff;
+    padding: 40px 0 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.cinema-footer h3,
+.cinema-footer h5 {
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
 }
 
 .cinema-footer p {
-    color: #fff!important;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 
+/* Đường gạch ngang phân cách */
 .footer-divider {
-    border-color: #adb5bd;
+    border-color: rgba(173, 181, 189, 0.2);
+    margin: 24px 0;
 }
 
+/* ===== FOOTER LINKS ===== */
 .footer-link {
-    color: #fff;
+    display: inline-block;
+    color: #ffffff;
     text-decoration: none;
-    transition: all .3s ease;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    transition: color 0.25s ease, transform 0.25s ease;
 }
 
+/* Hiệu ứng hover đổi màu đỏ đô và dịch sang phải mượt mà, không làm giật chữ */
 .footer-link:hover {
-    color: #dc3545;
-    padding-left: 4px;
+    color: #ef4444;
+    transform: translateX(4px);
 }
 
-.cinema-footer h5,
-.cinema-footer h3 {
-    letter-spacing: 0.5px;
+
+/*  RESPONSIVE MEDIA QUERIES (Tối ưu thiết bị di động)  */
+
+/* --- Dành cho Màn hình Tablet (Dưới 768px) --- */
+@media (max-width: 768px) {
+    .cinema-footer {
+        padding: 30px 0 15px;
+    }
+
+
+    .cinema-footer .col-md-3,
+    .cinema-footer .col-md-4 {
+        margin-bottom: 24px;
+    }
+}
+
+/* --- Dành cho Màn hình Mobile (Dưới 576px) --- */
+@media (max-width: 576px) {
+    .cinema-footer {
+        text-align: center;
+    }
+
+    .cinema-footer h3,
+    .cinema-footer h5 {
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+
+    .footer-link:hover {
+        transform: none;
+        color: #ef4444;
+    }
+
+    .footer-divider {
+        margin: 20px 0;
+    }
 }

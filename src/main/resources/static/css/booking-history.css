@@ -1,41 +1,47 @@
+/*  BASE CONFIG & TICKET CARDS LAYOUT (Desktop)  */
+
 .overview h2 {
     color: #0d0d0d;
+    font-weight: 700;
 }
 
+/* ===== TICKET CARD BASE ===== */
 .ticket-card {
-    border: none !important;
-    border-left: 6px solid #6c757d !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    border: none;
+    border-left: 6px solid #6c757d;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    background-color: #ffffff;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hiệu ứng zoom nhẹ khi di chuột qua thẻ vé */
 .ticket-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Tùy biến màu sắc viền */
-.ticket-card.CONFIRMED { border-left-color: #198754 !important; }
-.ticket-card.PENDING { border-left-color: #ffc107 !important; }
-.ticket-card.CANCELLED { border-left-color: #dc3545 !important; }
+.ticket-card.CONFIRMED { border-left-color: #198754; }
+.ticket-card.PENDING   { border-left-color: #ffc107; }
+.ticket-card.CANCELLED { border-left-color: #dc3545; }
 
+/* ===== CARD PARTS ===== */
 .card-header {
-    border-bottom: 1px dashed #e2e8f0 !important;
-    background-color: #ffffff !important;
-    padding: 1rem 1.5rem !important;
+    border-bottom: 1px dashed #e2e8f0;
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
 }
 
 .movie-title {
     color: #2c3e50;
     font-size: 1.2rem;
+    font-weight: 600;
     letter-spacing: -0.3px;
+    margin: 0;
 }
 
 .card-body {
-    padding: 1.5rem !important;
+    padding: 1.5rem;
     background-color: #ffffff;
 }
 
@@ -44,28 +50,38 @@
     color: #4a5568;
     display: flex;
     align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.card-body p:last-child {
+    margin-bottom: 0;
 }
 
 .card-body p i {
     font-size: 1.1rem;
     width: 24px;
     text-align: center;
+    margin-right: 8px;
 }
 
+/* ===== BADGES & BUTTONS ===== */
 .seat-badge {
-    background-color: #2d3748 !important;
-    font-size: 0.9rem !important;
-    padding: 0.4rem 0.8rem !important;
+    background-color: #2d3748;
+    color: #ffffff;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
     letter-spacing: 0.5px;
-    border-radius: 6px !important;
+    border-radius: 6px;
 }
 
 .status-badge {
-    padding: 0.5rem 0.8rem !important;
-    font-size: 0.8rem !important;
+    display: inline-block;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-radius: 20px !important;
+    border-radius: 20px;
+    font-weight: 600;
 }
 
 .btn-outline-success {
@@ -73,9 +89,10 @@
     font-weight: 500;
     transition: all 0.2s;
 }
+
 .btn-outline-success:hover {
     background-color: #198754;
-    color: white;
+    color: #ffffff;
 }
 
 .btn-danger {
@@ -84,8 +101,70 @@
     padding: 0.375rem 0.75rem;
 }
 
+/* ===== NOTIFICATION / ALERT ===== */
 .alert {
     border: none;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+/*  RESPONSIVE MEDIA QUERIES (Tối ưu thiết bị di động)  */
+
+/* --- Dành cho Màn hình Tablet (Dưới 768px) --- */
+@media (max-width: 768px) {
+    .card-header {
+        padding: 1rem 1.25rem;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .movie-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* --- Dành cho Màn hình Mobile (Dưới 576px) --- */
+@media (max-width: 576px) {
+    .overview h2 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .card-header {
+        padding: 0.85rem 1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .movie-title {
+        font-size: 1rem;
+    }
+
+    .card-body p {
+        font-size: 0.88rem;
+    }
+
+    .ticket-card .card-footer,
+    .ticket-card .d-flex-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .btn-outline-success,
+    .btn-danger {
+        width: 100%;
+        text-align: center;
+        padding: 8px 12px;
+    }
+
+    .ticket-card:hover {
+        transform: none;
+    }
 }

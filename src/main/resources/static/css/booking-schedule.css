@@ -1,4 +1,5 @@
-/* Tùy chỉnh màu sắc và chữ chủ đạo */
+/* BRAND TITLE & DATE NAVIGATION (Thanh chọn ngày) */
+
 .brand-title {
     letter-spacing: 1px;
     color: #0d0d0d;
@@ -7,24 +8,79 @@
 .title-line {
     width: 60px;
     height: 4px;
-    background-color: #dc3545; /* Màu đỏ đô thương hiệu */
+    background-color: #dc3545;
     margin: 12px auto 0;
     border-radius: 2px;
 }
 
-/* Tùy chỉnh các Thẻ suất chiếu */
-.showtime-card {
-    border-radius: 16px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+/* Thanh điều hướng chọn ngày */
+.date-nav-wrapper {
     background: #ffffff;
-    border: 1px solid #eaeaea !important;
+    border: 1px solid #ededed;
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    overflow-x: auto;
 }
 
-/* Hiệu ứng bay lên nhẹ khi di chuột vào thẻ còn vé */
+.date-nav-item {
+    cursor: pointer;
+    min-width: 70px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+    margin: 0 4px;
+    flex-shrink: 0;
+}
+
+.date-nav-item:hover {
+    background-color: #f8f9fa;
+    color: #dc3545;
+}
+
+/* Trạng thái ngày được chọn (Active) */
+.date-nav-item.active {
+    background: linear-gradient(135deg, #dc3545, #ff4d5a);
+    color: #ffffff;
+    box-shadow: 0 6px 14px rgba(220, 53, 69, 0.25);
+}
+
+.date-nav-item.active .small-day-text,
+.date-nav-item.active .main-date-text {
+    color: #ffffff;
+}
+
+.small-day-text {
+    color: #8c8c8c;
+    font-size: 0.75rem;
+}
+
+.main-date-text {
+    color: #2b2b2b;
+    font-weight: 700;
+}
+
+
+/*  SHOWTIME CARDS (Khung suất chiếu)  */
+
+.showtime-card {
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    padding: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
 .showtime-card:not(.disabled-card):hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08) !important;
-    border-color: #dc3545-subtle !important;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+    border-color: rgba(220, 53, 69, 0.3);
 }
 
 .movie-name {
@@ -34,19 +90,26 @@
     overflow: hidden;
     line-height: 1.4;
     font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a1a1a;
 }
 
 /* Khung bọc thời gian */
 .time-box {
-    background-color: #f8f9fa !important;
+    background-color: #f8f9fa;
     border: 1px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 6px 12px;
 }
 
-/* Nút đặt vé lung linh */
+/* Nút đặt vé */
 .btn-booking {
     background: linear-gradient(45deg, #dc3545, #ff4d5a);
     border: none;
-    color: #fff;
+    color: #ffffff;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 10px 16px;
     transition: all 0.2s ease;
 }
 
@@ -54,26 +117,33 @@
     background: linear-gradient(45deg, #c82333, #e63946);
     box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
     transform: scale(1.03);
-    color: #fff;
+    color: #ffffff;
 }
 
 /* Định dạng cho thẻ bị vô hiệu hóa (Hết ghế / Hết giờ) */
 .disabled-card {
-    opacity: 0.65;
+    opacity: 0.6;
     background-color: #fafafa;
+    cursor: not-allowed;
 }
 
 .disabled-card .time-box {
-    background-color: #e9ecef !important;
+    background-color: #e9ecef;
+    border-style: solid;
 }
 
-/* Tiện ích bổ sung */
-.fw-extrabold {
-    font-weight: 800;
-}
+
+/*  UTILITIES & ANIMATIONS  */
+
+.fw-extrabold { font-weight: 800; }
+.cursor-pointer { cursor: pointer; }
 
 .no-showtime-card {
-    border: 2px dashed #dee2e6 !important;
+    border: 2px dashed #dee2e6;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
 }
 
 @keyframes bounce {
@@ -84,54 +154,68 @@
     animation: bounce 2s infinite;
 }
 
-/* Thanh điều hướng lịch tuần */
-.date-nav-wrapper {
-    background: #ffffff;
-    border: 1px solid #ededed;
-}
-
-.date-nav-item {
-    cursor: pointer;
-    transition: all 0.25s ease;
-    border: 1px solid transparent;
-    margin: 0 4px;
-}
-
-.date-nav-item:hover {
-    background-color: #f8f9fa;
-    color: #dc3545;
-}
-
-/* Khi ngày được chọn (Active) */
-.date-nav-item.active {
-    background: linear-gradient(135deg, #dc3545, #ff4d5a) !important;
-    color: #ffffff !important;
-    box-shadow: 0 6px 14px rgba(220, 53, 69, 0.25);
-}
-
-.date-nav-item.active .small-day-text,
-.date-nav-item.active .main-date-text {
-    color: #ffffff !important;
-}
-
-.small-day-text {
-    color: #8c8c8c;
-    font-size: 0.75rem;
-}
-
-.main-date-text {
-    color: #2b2b2b;
-}
-
-/* Ẩn thanh cuộn trên mobile */
+/* Ẩn thanh cuộn trình duyệt nhưng vẫn cho cuộn ngang bằng tay/chuột */
 .scrollbar-hidden::-webkit-scrollbar {
     display: none;
 }
 .scrollbar-hidden {
-    -ms-overflow-style: none;
-    scrollbar-width: none;  
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
-.cursor-pointer {
-    cursor: pointer;
+/*  RESPONSIVE MEDIA QUERIES (Tối ưu thiết bị di động)  */
+
+/* --- Màn hình Máy tính bảng (Dưới 768px) --- */
+@media (max-width: 768px) {
+    .movie-name {
+        font-size: 1.05rem;
+    }
+
+    .showtime-card {
+        padding: 14px;
+    }
+}
+
+/* --- Màn hình Điện thoại (Dưới 576px) --- */
+@media (max-width: 576px) {
+    .brand-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .date-nav-wrapper {
+        padding: 6px;
+        margin-left: -12px;
+        margin-right: -12px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .date-nav-item {
+        min-width: 60px;
+        padding: 6px 8px;
+    }
+
+    .main-date-text {
+        font-size: 0.95rem;
+    }
+
+    .showtime-card {
+        padding: 12px;
+    }
+
+    .movie-name {
+        font-size: 0.95rem;
+    }
+
+    .btn-booking {
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .showtime-card:not(.disabled-card):hover {
+        transform: none;
+    }
 }

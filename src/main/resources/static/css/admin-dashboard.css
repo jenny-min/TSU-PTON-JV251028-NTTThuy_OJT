@@ -1,25 +1,206 @@
-.dashboard-body{
+/*  BASE CONFIG & DARK DASHBOARD STYLES (Giao diện máy tính)  */
+
+.dashboard-body {
     background-color: #0f172a;
     color: #e2e8f0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
 }
+
+.overview {
+    padding: 24px;
+}
+
+.overview-title h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 4px;
+}
+
+.overview-title p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* ===== CARD CUSTOM ===== */
 .card-custom {
     background-color: #1e293b;
     border: 1px solid #334155;
     border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
+
+/* ===== BUTTONS ===== */
+.btn-add-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: 1px solid #dc2626;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    transition: all 0.2s ease;
+}
+
+.btn-add-primary:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+}
+
+.btn-action {
+    border-radius: 6px;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    font-weight: 500;
+}
+
+/* ===== TABLE CUSTOM (DARK MODE) ===== */
+.movie-table-wrapper {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
 .table-custom {
+    width: 100%;
+    border-collapse: collapse;
     background-color: #1e293b;
     color: #e2e8f0;
 }
+
 .table-custom th {
     background-color: #334155;
-    color: #94a3b8;
+    color: #cbd5e1;
+    font-weight: 600;
     border-bottom: 2px solid #475569;
+    padding: 14px 16px;
+    text-align: left;
+    white-space: nowrap;
 }
+
 .table-custom td {
+    padding: 14px 16px;
+    vertical-align: middle;
     border-bottom: 1px solid #334155;
 }
+
+.table-custom tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table-custom tbody tr:hover {
+    background-color: #243249;
+}
+
+/* ===== IMAGE / POSTER ===== */
+.table-custom img {
+    width: 65px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== GENRE TAG ===== */
+.genre-tag {
+    display: inline-block;
+    margin: 2px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background-color: #0369a1;
+    color: #e0f2fe;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ===== STATUS BADGES ===== */
 .status-badge {
+    display: inline-block;
     font-size: 0.8rem;
-    padding: 0.35em 0.65em;
+    padding: 0.35em 0.75em;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.status-showing {
+    background-color: rgba(22, 101, 52, 0.3);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.status-coming {
+    background-color: rgba(29, 78, 216, 0.3);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.status-ended {
+    background-color: rgba(185, 28, 28, 0.3);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+/*  RESPONSIVE MEDIA QUERIES (Tối ưu thiết bị di động)  */
+
+/* --- Dành cho Màn hình Tablet (Dưới 768px) --- */
+@media (max-width: 768px) {
+    .overview {
+        padding: 16px;
+    }
+
+    .overview-title h2 {
+        font-size: 24px;
+    }
+
+    .movie-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-custom th, .table-custom td {
+        padding: 12px;
+    }
+}
+
+/* --- Dành cho Màn hình Mobile (Dưới 576px) --- */
+@media (max-width: 576px) {
+    .overview {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .overview-title h2 {
+        font-size: 20px;
+    }
+
+    .overview-title p {
+        font-size: 0.85rem;
+    }
+
+    .btn-add-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .table-custom img {
+        width: 50px;
+        height: 70px;
+    }
+
+    .table-custom th, .table-custom td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
 }

@@ -1,87 +1,82 @@
-
-/* =========================
-   GLOBAL
-========================= */
+/*  GLOBAL & CARD LAYOUTS (Cấu trúc nền tảng trang người dùng)  */
 body {
     background: #f5f6fa;
     color: #212529;
-    font-family: "Segoe UI", sans-serif;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
 .page-title {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 700;
-    color: #212529;
-    margin-bottom: 25px;
+    color: #1e293b;
+    margin-bottom: 24px;
 }
 
-/* =========================
-   CARD GLOBAL (UNIFIED)
-========================= */
 .card {
     border: none;
-    border-radius: 18px;
-    box-shadow: 0 5px 18px rgba(0,0,0,.08);
-    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    background: #ffffff;
+    overflow: hidden;
 }
 
 .card-header {
-    background: #fff;
-    border-bottom: 1px solid #ececec;
-    padding: 18px 25px;
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 20px 24px;
 }
 
 .card-header h5 {
     font-weight: 700;
-    color: #212529;
+    color: #1e293b;
+    margin: 0;
 }
 
 .card-body {
-    background: #fff;
+    background: #ffffff;
+    padding: 24px;
 }
 
-/* =========================
-   PROFILE
-========================= */
+/*  USER PROFILE & DASHBOARD (Hồ sơ & Thống kê mini)  */
+
 .profile-card {
     background: #ffffff;
-    border-radius: 18px;
-    padding: 35px;
+    border-radius: 16px;
+    padding: 32px 24px;
     text-align: center;
-    box-shadow: 0 5px 18px rgba(0,0,0,.08);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
 }
 
 .profile-avatar {
-    width: 90px;
-    height: 90px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid #e50914;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(229, 9, 20, 0.2);
 }
 
 .profile-name {
-    color: #212529;
-    font-size: 28px;
+    color: #1e293b;
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 .profile-email {
-    color: #6c757d;
-    font-size: 15px;
-    margin-bottom: 18px;
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
 }
 
-/* =========================
-   MINI STAT CARDS
-========================= */
 .mini-card {
-    background: #f8f9fa;
-    border-radius: 14px;
-    padding: 25px 15px;
-    transition: .25s;
-    border: 1px solid #ececec;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 24px 16px;
+    transition: all 0.2s ease;
+    border: 1px solid #e2e8f0;
     height: 100%;
     text-align: center;
 }
@@ -89,306 +84,348 @@ body {
 .mini-card:hover {
     transform: translateY(-4px);
     border-color: #e50914;
-    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    box-shadow: 0 8px 24px rgba(229, 9, 20, 0.08);
 }
 
 .mini-card i {
-    font-size: 30px;
+    font-size: 2rem;
     color: #e50914;
     margin-bottom: 12px;
 }
 
 .mini-card h4 {
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
 }
 
 .mini-card small {
-    color: #6c757d;
+    color: #64748b;
+    font-weight: 500;
 }
 
-/* =========================
-   BOOKING PAGE
-========================= */
+/*  CINEMA SCREEN & SEAT MAP  */
+
 .booking-card {
-    background: #fff;
-    color: #0d0d0d;
+    background: #ffffff;
     border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    padding: 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
 }
 
 .movie-poster {
     width: 100%;
     border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .movie-meta {
     display: flex;
-    gap: 25px;
-    margin-top: 15px;
-    color: #6c757d;
+    gap: 20px;
+    margin-top: 16px;
+    color: #64748b;
     flex-wrap: wrap;
+    font-size: 0.9rem;
 }
 
-/* =========================
-   SCREEN
-========================= */
 .screen-wrapper {
-    margin: 40px 0;
+    margin: 40px 0 60px 0;
     text-align: center;
+    perspective: 400px;
 }
 
 .screen {
-    width: 80%;
-    margin: auto;
-    background: #d9d9d9;
-    border-radius: 100px;
-    padding: 12px;
-    font-weight: bold;
-    letter-spacing: 6px;
-    box-shadow: 0 12px 20px rgba(0,0,0,.15);
+    width: 75%;
+    margin: 0 auto;
+    background: #e2e8f0;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 4px 30px rgba(14, 165, 233, 0.6), 0 10px 50px rgba(14, 165, 233, 0.3);
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    padding-top: 16px;
+    font-weight: 700;
 }
 
-/* =========================
-   SEAT MAP
-========================= */
 .seat-map {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
+    align-items: center;
+    overflow-x: auto;
+    padding: 10px 0;
 }
 
 .seat-row {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
 }
 
 .row-label {
-    width: 35px;
-    font-weight: bold;
-    line-height: 42px;
+    width: 30px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
 .seat {
-    width: 42px;
-    height: 42px;
-    border: none;
-    border-radius: 8px;
+    width: 38px;
+    height: 36px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-size: 0.75rem;
     font-weight: 600;
-    transition: .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
     cursor: pointer;
 }
 
-/* seat states */
-.available {
-    background: #e9ecef;
+.seat.available {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #475569;
+}
+.seat.available:hover {
+    background: #fef08a;
+    border-color: #facc15;
+    transform: scale(1.1);
 }
 
-.available:hover {
-    background: #ffd54f;
+.seat.vip {
+    background: #f3e8ff;
+    border-color: #c084fc;
+    color: #6b21a8;
+}
+.seat.vip:hover {
+    background: #fef08a;
+    border-color: #facc15;
+    transform: scale(1.1);
 }
 
-.selected {
-    background: #ffc107;
+.seat.selected {
+    background: #22c55e !important;
+    border-color: #16a34a !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
 }
 
-.booked {
-    background: #dc3545;
+.seat.booked {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #ef4444;
     cursor: not-allowed;
+    position: relative;
 }
+.seat.booked:hover { transform: none; }
 
-.vip {
-    background: #8e44ad;
-}
-
-.seat.selected{
-    background:#28a745;
-}
-
-/* =========================
-   LEGEND
-========================= */
 .seat-legend {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin-top: 35px;
+    gap: 24px;
+    margin: 32px 0;
     flex-wrap: wrap;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #475569;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .legend-seat {
     width: 18px;
     height: 18px;
     border-radius: 4px;
-    display: inline-block;
-    margin-right: 8px;
+    border: 1px solid;
 }
 
-/* =========================
-   SUMMARY
-========================= */
-.summary-card {
-    background: #fff;
+/*  BOOKING SUMMARY & BILLING  */
+
+.summary-card, .booking-summary {
+    background: #ffffff;
     border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    padding: 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
     position: sticky;
-    top: 20px;
+    top: 24px;
 }
 
 .summary-item {
     display: flex;
     justify-content: space-between;
-    margin: 18px 0;
+    margin: 16px 0;
+    font-size: 0.95rem;
 }
 
 .summary-item span {
-    color: #6c757d;
+    color: #64748b;
+}
+
+.summary-item strong {
+    color: #1e293b;
 }
 
 .summary-total {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 16px;
+    margin-top: 16px;
 }
 
-.summary-total h3 {
+.summary-total h3, .price {
     color: #e50914;
     font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0;
 }
 
-/* =========================
-   BUTTON
-========================= */
+.booking-table {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.booking-table th {
+    width: 120px;
+    color: #64748b;
+    font-weight: 600;
+    padding: 8px 0;
+}
+
+.booking-table td {
+    font-weight: 500;
+    color: #1e293b;
+    padding: 8px 0;
+}
+
 .btn-warning {
     background: #e50914;
     border: none;
-    color: #fff;
+    color: #ffffff;
     border-radius: 10px;
     font-weight: 600;
-    padding: 12px;
+    padding: 14px;
+    width: 100%;
+    transition: background 0.2s ease;
 }
 
 .btn-warning:hover {
-    background: #c40812;
-    color: #fff;
+    background: #b90710;
+    color: #ffffff;
 }
 
-/*Booking confirm*/
-.booking-table{
-    margin-top:10px;
+.btn-confirm {
+    background: #198754;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    height: 48px;
+    font-weight: 600;
+    width: 100%;
+    transition: background 0.2s ease;
 }
 
-.booking-table th{
-    width:140px;
-    color:#666;
-    font-weight:600;
+.btn-confirm:hover {
+    background: #157347;
 }
 
-.booking-table td{
-    font-weight:500;
+.btn-back {
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    background: #ffffff;
+    border-radius: 10px;
+    height: 48px;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.2s ease;
 }
 
-.price{
-    color:#dc3545;
-    font-size:24px;
-    font-weight:700;
-}
-
-.booking-summary{
-    border-radius:16px;
-    padding:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-    position:sticky;
-    top:30px;
-}
-
-.booking-summary h4{
-    font-weight:700;
-    margin-bottom:20px;
-}
-
-.btn-confirm{
-    background:#198754 !important;
-    color:#fff;
-    border:none;
-    height:48px;
-    font-weight:600;
-}
-
-.btn-confirm:hover{
-    background:#157347;
-    color:#fff;
-}
-
-.btn-back{
-    border:1px solid #198754;
-    color:#198754!important;
-    background:#fff;
-    height:48px;
-    font-weight:600;
-}
-
-.btn-back:hover{
-    background:#198754;
-    color:#fff;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-    .profile-card {
-        padding: 20px;
-    }
-
-    .screen {
-        width: 100%;
-        font-size: 12px;
-    }
-
-    .seat {
-        width: 34px;
-        height: 34px;
-    }
+.btn-back:hover {
+    background: #f1f5f9;
+    color: #1e293b;
 }
 
 .showtime-card {
-    border: none;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    transition: 0.25s;
-    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+    padding: 16px;
+    transition: all 0.2s ease;
 }
 
 .showtime-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    border-color: #cbd5e1;
 }
 
 .showtime-movie {
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: #212529;
-    margin-bottom: 10px;
+    color: #1e293b;
+    margin-bottom: 8px;
 }
 
 .showtime-info {
-    color: #6c757d;
-    font-size: 14px;
-    margin-bottom: 8px;
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
 }
 
 .showtime-info i {
     color: #e50914;
-    margin-right: 6px;
+    margin-right: 4px;
 }
 
 .showtime-price {
-    color: #198754;
-    font-size: 16px;
+    color: #16a34a;
+    font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 12px;
+}
+
+/*  RESPONSIVE DESIGN  */
+
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 24px 16px;
+    }
+
+    .screen-wrapper {
+        margin: 30px 0 40px 0;
+    }
+
+    .screen {
+        width: 90%;
+        font-size: 0.65rem;
+        letter-spacing: 4px;
+    }
+
+    .seat {
+        width: 32px;
+        height: 30px;
+        font-size: 0.65rem;
+        border-radius: 4px;
+    }
+
+    .row-label {
+        width: 20px;
+        font-size: 0.8rem;
+    }
+
+    .seat-legend {
+        gap: 16px;
+    }
 }

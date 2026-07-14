@@ -1,48 +1,114 @@
+/*  CARD LAYOUT BASE (Giao diện máy tính mặc định)  */
 
-h2{
-    text-align:center;
-    margin-bottom:30px;
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1e293b;
+    font-weight: 700;
 }
 
-.card{
-    background:white;
-    border-radius:12px;
-    box-shadow:0 2px 8px rgba(0,0,0,.15);
-    margin-bottom:25px;
-    overflow:hidden;
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
 }
 
-.header{
-    background:#0d6efd;
-    color:white;
-    padding:15px 20px;
-    display:flex;
-    justify-content:space-between;
+/* ===== CARD HEADER ===== */
+.header {
+    background: #0d6efd;
+    color: #ffffff;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.movie{
-    font-size:22px;
-    font-weight:bold;
+.movie {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
 }
 
-.status{
-    background:white;
-    color:#0d6efd;
-    padding:5px 12px;
-    border-radius:20px;
-    font-weight:bold;
+.status {
+    background: #ffffff;
+    color: #0d6efd;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
-.content{
-    padding:20px;
+/* ===== CARD CONTENT ===== */
+.content {
+    padding: 20px;
 }
 
-.content p{
-    margin:12px 0;
-    font-size:16px;
+.content p {
+    margin: 12px 0;
+    font-size: 16px;
+    color: #334155;
+    display: flex;
+    align-items: flex-start;
 }
 
-.content strong{
-    display:inline-block;
-    width:140px;
+/* Phần nhãn bên trái  */
+.content strong {
+    display: inline-block;
+    width: 140px;
+    color: #475569;
+    flex-shrink: 0;
+    position: relative;
+}
+
+
+/*  RESPONSIVE MEDIA QUERIES (Tối ưu trên di động)  */
+
+/* --- Dành cho Màn hình Tablet & Mobile (Dưới 768px) --- */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 14px 16px;
+    }
+
+    .movie {
+        font-size: 18px;
+    }
+
+    .status {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+
+    .content {
+        padding: 16px;
+    }
+}
+
+/* --- Dành cho Màn hình Điện thoại Nhỏ (Dưới 576px) --- */
+@media (max-width: 576px) {
+    .content p {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        margin: 16px 0;
+    }
+
+    .content strong {
+        width: 100%;
+        color: #64748b;
+        font-size: 0.9rem;
+    }
 }

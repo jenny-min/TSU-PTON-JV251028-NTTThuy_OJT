@@ -1,73 +1,85 @@
+/*  PAGINATION BASE LAYOUT (Giao diện Máy tính mặc định)  */
 .pagination {
+    display: flex;
     gap: 8px;
     margin-top: 24px;
     justify-content: center;
+    list-style: none;
+    padding: 0;
 }
 
-/* Default */
 .pagination .page-link {
     min-width: 42px;
     height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 16px;
-
-    background: #ffffff;
+    padding: 0 14px;
+    background-color: #ffffff;
     color: #111827;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
-
     font-weight: 600;
-    transition: all .25s ease;
-
+    text-decoration: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hover */
 .pagination .page-link:hover {
-    background: #fff5f5;
+    background-color: #fff5f5;
     border-color: #ef4444;
     color: #dc2626;
-
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
 }
 
-/* Active */
 .pagination .page-item.active .page-link {
-    background: linear-gradient(
-            135deg,
-            #ff4d4f,
-            #dc2626
-    );
+    background: linear-gradient(135deg, #ff4d4f, #dc2626);
     border-color: #dc2626;
     color: #ffffff;
-
-    box-shadow:
-            0 8px 20px rgba(220, 38, 38, 0.35),
-            0 0 12px rgba(239, 68, 68, 0.25);
-
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2),
+    0 8px 20px rgba(220, 38, 38, 0.35);
 }
 
-/* Disabled */
 .pagination .page-item.disabled .page-link {
-    background: #f3f4f6;
+    background-color: #f3f4f6;
     border-color: #e5e7eb;
     color: #9ca3af;
-
     cursor: not-allowed;
     opacity: 0.7;
     box-shadow: none;
+    pointer-events: none;
 }
 
-.pagination .page-item.active .page-link {
-    background: #dc2626;
-    border-color: #dc2626;
-    color: #fff;
+.pagination .page-item.disabled .page-link:hover {
+    transform: none;
+    background-color: #f3f4f6;
+    border-color: #e5e7eb;
+    color: #9ca3af;
+    box-shadow: none;
+}
 
-    box-shadow:
-            0 0 0 4px rgba(220, 38, 38, 0.15),
-            0 8px 20px rgba(220, 38, 38, 0.35);
+
+/*  RESPONSIVE MEDIA QUERIES  */
+
+/* --- Dành cho Màn hình Mobile (Dưới 576px) --- */
+@media (max-width: 576px) {
+    .pagination {
+        gap: 6px;
+        margin-top: 20px;
+    }
+
+    .pagination .page-link {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 10px;
+        font-size: 0.85rem;
+        border-radius: 8px;
+    }
+
+    .pagination .page-link:hover,
+    .pagination .page-item.active .page-link {
+        transform: none;
+    }
 }

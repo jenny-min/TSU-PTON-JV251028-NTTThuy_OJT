@@ -1,27 +1,131 @@
-/****************************************/
-/*REGISTER PAGE*/
+/*  REGISTER CARD - DARK GLASSMORPHISM (Desktop)  */
 .register-card {
-    background: #1a1a1a;
-    color: white;
+    width: 100%;
+    max-width: 550px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
 }
 
 .register-card .card-body {
-    background: #1a1a1a;
+    background: transparent;
+    padding: 40px 32px;
+}
+
+/* ===== FORM ELEMENTS ===== */
+.register-card .form-label {
+    color: #cbd5e1;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
 }
 
 .register-card .form-control,
 .register-card .form-select {
-    background: #2c2c2c;
-    border-color: #444;
-    color: white;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.register-card .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.register-card .form-control::placeholder {
+    color: #64748b;
 }
 
 .register-card .form-control:focus,
 .register-card .form-select:focus {
-    background: #2c2c2c;
-    color: white;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border-color: #dc3545;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.25);
 }
 
-.register-card .form-label {
-    color: #ddd;
+/* ===== BUTTONS & LINKS ===== */
+.register-card .btn-register {
+    background: linear-gradient(135deg, #ff4d4f, #dc2626);
+    border: none;
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    width: 100%;
+    margin-top: 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.25);
+    transition: all 0.2s ease;
+}
+
+.register-card .btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+}
+
+.register-card .btn-register:active {
+    transform: scale(0.98);
+}
+
+.register-card .login-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.register-card .login-link a {
+    color: #ff4d4f;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-card .login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/*  RESPONSIVE MEDIA QUERIES (Tối ưu thiết bị di động)  */
+/* --- Dành cho Màn hình Mobile (Dưới 576px) --- */
+@media (max-width: 576px) {
+    .register-card {
+        max-width: 100%;
+        border-radius: 16px;
+    }
+
+    .register-card .card-body {
+        padding: 30px 20px;
+    }
+
+    .register-card .form-control,
+    .register-card .form-select {
+        padding: 10px 14px;
+        font-size: 16px;
+    }
+
+    .register-card:hover,
+    .register-card .btn-register:hover {
+        transform: none;
+    }
 }
