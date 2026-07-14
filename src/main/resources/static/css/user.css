@@ -328,7 +328,7 @@ body {
 }
 
 .btn-confirm {
-    background: #198754;
+    background: #198754!important;
     color: #ffffff;
     border: none;
     border-radius: 10px;
